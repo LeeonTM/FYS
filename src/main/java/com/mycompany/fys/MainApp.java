@@ -17,10 +17,10 @@ public class MainApp extends Application {
         Scene scene = new Scene(root);
         scene.getStylesheets().add("/styles/Styles.css");
         
-        MyJDBC db = new MyJDBC();
-        db.executeUpdateQuery("INSERT INTO status VALUES ("
-                + "1, 'Onderweg naar huis!')");
-        System.out.println(db.executeStringQuery("SELECT statusID, statusName FROM status"));
+      //  MyJDBC db = new MyJDBC();
+     //   db.executeUpdateQuery("INSERT INTO status VALUES ("
+    //            + "1, 'Onderweg naar huis!')");
+      //  System.out.println(db.executeStringQuery("SELECT statusID, statusName FROM status"));
         
         stage.setTitle("Find my Luggage");
         stage.setScene(scene);
