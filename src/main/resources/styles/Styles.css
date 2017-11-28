@@ -1,0 +1,6 @@
+#loginBack{
+    -fx-background-image: url("/Images/LoginBack.jpg");
+    -fx-background-repeat: stretch;   
+    -fx-background-size: 1788 785;
+    -fx-background-position: center center;
+}
