@@ -28,6 +28,7 @@ public class InstellingenController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        // Leon Test
     }
 
     @FXML
