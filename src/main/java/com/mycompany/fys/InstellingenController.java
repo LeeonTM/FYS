@@ -29,6 +29,7 @@ public class InstellingenController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         // Leon Test
+        //hicham test
     }
 
     @FXML
