@@ -45,6 +45,8 @@ public class InstellingenController implements Initializable {
         AnchorPane basePane = (AnchorPane) stage.getScene().getRoot();
         AnchorPane pane = FXMLLoader.load(getClass().getResource("/fxml/Instellingen.fxml"));
         
+        // doei
+        
         basePane.getChildren().setAll(pane.getChildren());
     }
 
