@@ -38,7 +38,5 @@ public class LoginController implements Initializable {
         AnchorPane pane = FXMLLoader.load(getClass().getResource("/fxml/Overview.fxml"));
         
         baseePane.getChildren().setAll(pane.getChildren());
-        
-        // doei
     }
 }
