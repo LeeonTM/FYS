@@ -33,13 +33,20 @@
                <children>
                   <Pane maxHeight="-Infinity" prefHeight="128.0" prefWidth="564.0" style="-fx-background-color: #ffffff; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 10, 0.5, 0.0, 0.0);" GridPane.columnIndex="1">
                      <children>
-                        <Label layoutX="242.0" layoutY="14.0" text="Taal instellen" />
-                        <JFXComboBox fx:id="jfxCombo" layoutX="9.0" layoutY="60.0" prefHeight="27.0" prefWidth="536.0" promptText="Nederlands" />
+                        <Label layoutX="242.0" layoutY="14.0" text="Taal instellen">
+                           <font>
+                              <Font name="Arial Bold" size="18.0" />
+                           </font></Label>
+                        <JFXComboBox fx:id="jfxCombo" layoutX="10.0" layoutY="37.0" prefHeight="27.0" prefWidth="536.0" promptText="Nederlands" />
+                        <JFXButton buttonType="RAISED" layoutX="448.0" layoutY="87.0" ripplerFill="#0d0d0d" style="-fx-background-color: #f1f1f1;" text="Taal wijzigen" />
                      </children>
                   </Pane>
                   <Pane maxHeight="-Infinity" prefHeight="198.0" prefWidth="564.0" style="-fx-background-color: #ffffff; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 10, 0.5, 0.0, 0.0);" GridPane.columnIndex="1" GridPane.rowIndex="1">
                      <children>
-                        <Label alignment="CENTER" contentDisplay="CENTER" layoutX="217.0" layoutY="14.0" text="Wachtwoord wijzigen" />
+                        <Label alignment="CENTER" contentDisplay="CENTER" layoutX="217.0" layoutY="14.0" text="Wachtwoord wijzigen">
+                           <font>
+                              <Font name="Arial Bold" size="18.0" />
+                           </font></Label>
                         <JFXTextField layoutX="16.0" layoutY="31.0" prefHeight="27.0" prefWidth="536.0" text="Oud wachtwoord..." />
                         <JFXTextField layoutX="16.0" layoutY="71.0" prefHeight="27.0" prefWidth="536.0" text="Nieuw wachtwoord..." />
                         <JFXTextField layoutX="16.0" layoutY="109.0" prefHeight="27.0" prefWidth="536.0" text="Herhaal nieuw wachtwoord..." />
@@ -48,7 +55,10 @@
                   </Pane>
                   <Pane maxHeight="-Infinity" prefHeight="103.0" prefWidth="564.0" style="-fx-background-color: #ffffff; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 10, 0.5, 0.0, 0.0);" GridPane.columnIndex="1" GridPane.rowIndex="2">
                      <children>
-                        <Label layoutX="167.0" layoutY="14.0" text="Excel bestand importeren/exporteren" />
+                        <Label layoutX="167.0" layoutY="14.0" text="Excel bestand importeren/exporteren">
+                           <font>
+                              <Font name="Arial Bold" size="18.0" />
+                           </font></Label>
                      </children>
                   </Pane>
                </children>
