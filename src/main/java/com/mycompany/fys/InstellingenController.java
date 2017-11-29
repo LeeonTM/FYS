@@ -13,8 +13,10 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import com.jfoenix.controls.JFXComboBox;
 
 /**
  *
@@ -24,10 +26,14 @@ public class InstellingenController implements Initializable {
 
     @FXML
     private AnchorPane basePane;
+    
+    @FXML
+    private JFXComboBox jfxCombo;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        jfxCombo.getItems().add(new Label("Nederlands"));
+        jfxCombo.getItems().add(new Label("English"));
     }
 
     @FXML
@@ -56,4 +62,6 @@ public class InstellingenController implements Initializable {
         
         basePane.getChildren().setAll(pane.getChildren());
     }
+    
+    
 }
