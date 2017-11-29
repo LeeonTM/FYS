@@ -3,6 +3,8 @@ package com.mycompany.fys;
 import java.sql.Connection;
 import java.sql.Driver;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Enumeration;
@@ -144,12 +146,14 @@ public class Repository {
      *
      * @param tableName the full name of the table you wish to insert into.
      * @param itemId the Id of the item you wish to update in the database
-     * @param idColumn the name of the column containing the primary Key of the table
-     * @param columnNames the names of the columns you want to update in order with values
+     * @param idColumn the name of the column containing the primary Key of the
+     * table
+     * @param columnNames the names of the columns you want to update in order
+     * with values
      * @param values the values you wish to update in order with columnNames
      * @return the number of rows that have been impacted, -1 on error
      */
-    public int executeUpdate(String tableName, String itemId, String idColumn, String[] columnNames, String[] values) {
+    public int executeUpdate(String tableName, String whereValue, String whereColumn, String[] columnNames, String[] values) {
         try {
             Statement s = this.connection.createStatement();
             String setTotal = "SET ";
@@ -163,9 +167,9 @@ public class Repository {
                 }
             }
 
-            String totalQuery = "UPDATE " + tableName + " " + setTotal + " WHERE " + idColumn + " = " + "'" + itemId + "'";            
+            String totalQuery = "UPDATE " + tableName + " " + setTotal + " WHERE " + whereColumn + " = " + "'" + whereValue + "'";
             log(totalQuery);
-            
+
             int n = s.executeUpdate(totalQuery);
             s.close();
             return (n);
@@ -210,6 +214,37 @@ public class Repository {
             //handle exception
             error(ex);
             return -1;
+        }
+    }
+
+    public boolean executeSelect(String tableName) {
+        try {
+            Statement s = this.connection.createStatement();
+            String totalQuery = "SELECT * FROM " + tableName;
+            log(totalQuery);
+
+            // Print out the result
+            ResultSet result = s.executeQuery(totalQuery);
+            ResultSetMetaData rsmd = result.getMetaData();
+            int columnsNumber = rsmd.getColumnCount();
+            while (result.next()) {
+                for (int i = 1; i <= columnsNumber; i++) {
+                    if (i > 1) {
+                        System.out.print(",  ");
+                    }
+                    String columnValue = result.getString(i);
+                    System.out.print(columnValue);
+                }
+                System.out.println("");
+            }
+
+            boolean n = s.execute(totalQuery);
+            s.close();
+            return (n);
+        } catch (SQLException ex) {
+            //handle exception
+            error(ex);
+            return false;
         }
     }
 
