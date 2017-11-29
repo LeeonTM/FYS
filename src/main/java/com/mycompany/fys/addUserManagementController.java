@@ -53,19 +53,19 @@ public class addUserManagementController implements Initializable {
     }
 
     @FXML
-    private void handleOverview(ActionEvent event) throws IOException {
+    private void handleManagerOverview(ActionEvent event) throws IOException {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         AnchorPane basePane = (AnchorPane) stage.getScene().getRoot();
-        AnchorPane pane = FXMLLoader.load(getClass().getResource("/fxml/Overview.fxml"));
+        AnchorPane pane = FXMLLoader.load(getClass().getResource("/fxml/managerStats.fxml"));
         
         basePane.getChildren().setAll(pane.getChildren());
     }
     
     @FXML
-    private void handleBagageMatch(ActionEvent event) throws IOException {
+    private void handleUserManage(ActionEvent event) throws IOException {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         AnchorPane basePane = (AnchorPane) stage.getScene().getRoot();
-        AnchorPane pane = FXMLLoader.load(getClass().getResource("/fxml/Bagagematchen.fxml"));
+        AnchorPane pane = FXMLLoader.load(getClass().getResource("/fxml/userManagement.fxml"));
         
         basePane.getChildren().setAll(pane.getChildren());
     }

@@ -119,12 +119,12 @@
                         <Insets left="20.0" />
                      </GridPane.margin>
                   </ImageView>
-                  <JFXButton buttonType="RAISED" onAction="#handleBagageMatch" prefHeight="166.0" prefWidth="417.0" ripplerFill="WHITE" text="Bagage matchen" textFill="WHITE">
+                  <JFXButton buttonType="RAISED" onAction="#handleUserManage" prefHeight="166.0" prefWidth="417.0" ripplerFill="WHITE" text="Gebruikers beheren" textFill="WHITE">
                      <font>
                         <Font name="Arial Bold" size="20.0" />
                      </font>
                   </JFXButton>
-                  <JFXButton buttonType="RAISED" onAction="#handleOverview" prefHeight="185.0" prefWidth="502.0" ripplerFill="WHITE" text="Bagage overzicht" textFill="WHITE" GridPane.columnIndex="1">
+                  <JFXButton buttonType="RAISED" onAction="#handleManagerOverview" prefHeight="185.0" prefWidth="502.0" ripplerFill="WHITE" text="Bagage statistieken" textFill="WHITE" GridPane.columnIndex="1">
                      <font>
                         <Font name="Arial Bold" size="20.0" />
                      </font>
@@ -139,6 +139,7 @@
                         <Font name="Arial Bold" size="20.0" />
                      </font>
                   </JFXButton>
+               </children>
                </children>
             </GridPane>
          </children>
