@@ -7,26 +7,24 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-
 public class MainApp extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("/fxml/Login.fxml"));
-        
+
         Scene scene = new Scene(root);
         scene.getStylesheets().add("/styles/Styles.css");
-        
-      //  MyJDBC db = new MyJDBC();
-     //   db.executeUpdateQuery("INSERT INTO status VALUES ("
-    //            + "1, 'Onderweg naar huis!')");
-      //  System.out.println(db.executeStringQuery("SELECT statusID, statusName FROM status"));
+
+        //Repository repo = new Repository();
+        //repo.executeInsert("status", new String[]{"3", "Test"});
+        //repo.executeUpdate("status", "3", "statusId", new String[]{"statusId", "statusName"}, new String[]{"3", "Test 1"});
         
         stage.setTitle("Find my Luggage");
         stage.setScene(scene);
         stage.show();
     }
-    
+
     public static void main(String[] args) {
         launch(args);
     }
