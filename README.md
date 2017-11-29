@@ -4,9 +4,7 @@ Hier wordt het Fasten Your Seatbelts project van IS102-4 ontwikkelt.
 
 ## Getting Started
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
-
-### Prerequisites
+### What to install
 
 Installeer netbeans.
 Zorg dat je gekoppeld bent als Contributor door Leon.
