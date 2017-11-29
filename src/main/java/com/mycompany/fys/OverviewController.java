@@ -58,4 +58,13 @@ public class OverviewController implements Initializable {
         
         basePane.getChildren().setAll(pane.getChildren());
     }
+    
+    @FXML
+    private void handleBagageMatch(ActionEvent event) throws IOException {
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        AnchorPane basePane = (AnchorPane) stage.getScene().getRoot();
+        AnchorPane pane = FXMLLoader.load(getClass().getResource("/fxml/Bagagematchen.fxml"));
+        
+        basePane.getChildren().setAll(pane.getChildren());
+    }
 }

@@ -35,7 +35,7 @@ public class LoginController implements Initializable {
     private void handleLogin(ActionEvent event) throws IOException {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         AnchorPane baseePane = (AnchorPane) stage.getScene().getRoot();
-        AnchorPane pane = FXMLLoader.load(getClass().getResource("/fxml/Overview.fxml"));
+        AnchorPane pane = FXMLLoader.load(getClass().getResource("/fxml/Bagagematchen.fxml"));
         
         baseePane.getChildren().setAll(pane.getChildren());
     }
