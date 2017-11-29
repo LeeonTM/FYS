@@ -87,22 +87,27 @@
                         <Insets left="20.0" />
                      </GridPane.margin>
                   </ImageView>
-                  <JFXButton buttonType="RAISED" onAction="#h" prefHeight="166.0" prefWidth="417.0" ripplerFill="WHITE" text="Bagage matchen" textFill="WHITE">
+                  <JFXButton buttonType="RAISED" onAction="#handleBagageMatch" prefHeight="166.0" prefWidth="417.0" ripplerFill="WHITE" text="Bagage matchen" textFill="WHITE">
                      <font>
                         <Font name="Arial Bold" size="20.0" />
                      </font>
                   </JFXButton>
-                  <JFXButton buttonType="RAISED" onAction="#a" prefHeight="185.0" prefWidth="502.0" ripplerFill="WHITE" text="Bagage overzicht" textFill="WHITE" GridPane.columnIndex="1">
+                  <JFXButton buttonType="RAISED" onAction="#handleOverview" prefHeight="185.0" prefWidth="502.0" ripplerFill="WHITE" text="Bagage overzicht" textFill="WHITE" GridPane.columnIndex="1">
                      <font>
                         <Font name="Arial Bold" size="20.0" />
                      </font>
                   </JFXButton>
-                  <JFXButton buttonType="RAISED" onAction="#c" prefHeight="185.0" prefWidth="502.0" ripplerFill="WHITE" text="Instellingen" textFill="WHITE" GridPane.columnIndex="2">
+                  <JFXButton buttonType="RAISED" onAction="#handleSettings" prefHeight="185.0" prefWidth="502.0" ripplerFill="WHITE" text="Instellingen" textFill="WHITE" GridPane.columnIndex="2">
                      <font>
                         <Font name="Arial Bold" size="20.0" />
                      </font>
                   </JFXButton>
-                  <JFXButton buttonType="RAISED" onAction="#q" prefHeight="185.0" prefWidth="502.0" ripplerFill="WHITE" text="Uitloggen" textFill="WHITE" GridPane.columnIndex="3">
+                  <JFXButton buttonType="RAISED" onAction="#handleLogout" prefHeight="185.0" prefWidth="502.0" ripplerFill="WHITE" text="Uitloggen" textFill="WHITE" GridPane.columnIndex="3">
+                     <font>
+                        <Font name="Arial Bold" size="20.0" />
+                     </font>
+                  </JFXButton>
+                  <JFXButton buttonType="RAISED" layoutX="10.0" layoutY="10.0" onAction="#handleBagageMatch" prefHeight="166.0" prefWidth="417.0" ripplerFill="WHITE" text="Bagage matchen" textFill="WHITE">
                      <font>
                         <Font name="Arial Bold" size="20.0" />
                      </font>
