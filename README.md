@@ -29,7 +29,7 @@ De template kan je downloaden via de FYS Drive, deze staat in Fase 3 van onze pr
 
 * [Netbeans](https://netbeans.org/) - Het programmeerprogramma.
 * [Scenebuilder](http://gluonhq.com/products/scene-builder/) - Het FX design programma.
-* [JFoenix](https://jfoenix.com) - Voor de FX design.
+* [JFoenix](http://www.jfoenix.com/) - Voor de FX design.
 
 ## Authors
 
