@@ -150,19 +150,27 @@
                   <Image url="@../Images/Corendon.png" />
                </image>
             </ImageView>
-            <Label text="Help" textFill="#d81e05" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.valignment="CENTER">
+            <JFXButton buttonType="RAISED" prefHeight="49.0" prefWidth="160.0" ripplerFill="#971818" style="-fx-background-color: #d81e05;" text="Manager" textFill="WHITE" visible="false" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                <font>
-                  <Font size="25.0" />
+                  <Font name="Arial Bold" size="18.0" />
                </font>
-            </Label>
-            <Label text="?" textFill="#d81e05" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.valignment="CENTER">
                <GridPane.margin>
-                  <Insets right="60.0" />
+                  <Insets />
                </GridPane.margin>
+            </JFXButton>
+                        <JFXButton buttonType="RAISED" prefHeight="55.0" prefWidth="178.0" ripplerFill="#971818" style="-fx-background-color: #d81e05;" text="Help" textFill="WHITE" GridPane.columnIndex="2" GridPane.halignment="RIGHT">
                <font>
-                  <Font name="System Bold" size="60.0" />
+                  <Font name="Arial Bold" size="18.0" />
                </font>
-            </Label>
+            </JFXButton>
+            <ImageView fitHeight="55.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.halignment="RIGHT">
+               <image>
+                  <Image url="@../Icons/HelpIcon.png" />
+               </image>
+               <GridPane.margin>
+                  <Insets right="125.0" />
+               </GridPane.margin>
+            </ImageView>
          </children>
       </GridPane>
     </children>

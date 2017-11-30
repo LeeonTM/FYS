@@ -171,15 +171,19 @@
                   <Image url="@../Images/Corendon_Airlines_2014_logo.svg%20(1).png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="62.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.halignment="RIGHT">
+            <JFXButton buttonType="RAISED" prefHeight="55.0" prefWidth="178.0" ripplerFill="#971818" style="-fx-background-color: #d81e05;" text="Help" textFill="WHITE" GridPane.columnIndex="2" GridPane.halignment="RIGHT">
+               <font>
+                  <Font name="Arial Bold" size="18.0" />
+               </font>
+            </JFXButton>
+            <ImageView fitHeight="55.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.halignment="RIGHT">
                <image>
                   <Image url="@../Icons/HelpIcon.png" />
                </image>
                <GridPane.margin>
-                  <Insets />
+                  <Insets right="125.0" />
                </GridPane.margin>
             </ImageView>
-            <JFXButton prefHeight="73.0" prefWidth="190.0" GridPane.columnIndex="2" GridPane.halignment="RIGHT" />
          </children>
       </GridPane>
     </children>

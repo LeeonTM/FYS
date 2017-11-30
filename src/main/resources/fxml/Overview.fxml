@@ -119,18 +119,30 @@
          <children>
             <ImageView fitHeight="150.0" fitWidth="400.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                <image>
-                  <Image url="@../../../../../Instellingen/src/instellingen/icons/Corendon-Logo.jpg" />
+                  <Image url="@../Images/Corendon.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="62.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.halignment="RIGHT">
+            <JFXButton buttonType="RAISED" prefHeight="49.0" prefWidth="160.0" ripplerFill="#971818" style="-fx-background-color: #d81e05;" text="Manager" textFill="WHITE" visible="false" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+               <font>
+                  <Font name="Arial Bold" size="18.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets />
+               </GridPane.margin>
+            </JFXButton>
+            <JFXButton buttonType="RAISED" prefHeight="55.0" prefWidth="178.0" ripplerFill="#971818" style="-fx-background-color: #d81e05;" text="Help" textFill="WHITE" GridPane.columnIndex="2" GridPane.halignment="RIGHT">
+               <font>
+                  <Font name="Arial Bold" size="18.0" />
+               </font>
+            </JFXButton>
+            <ImageView fitHeight="55.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.halignment="RIGHT">
                <image>
                   <Image url="@../Icons/HelpIcon.png" />
                </image>
                <GridPane.margin>
-                  <Insets />
+                  <Insets right="125.0" />
                </GridPane.margin>
             </ImageView>
-            <JFXButton prefHeight="73.0" prefWidth="190.0" GridPane.columnIndex="2" GridPane.halignment="RIGHT" />
          </children>
       </GridPane>
       <AnchorPane layoutX="40.0" layoutY="240.0" prefHeight="73.0" prefWidth="1198.0">
@@ -153,7 +165,7 @@
                      <graphic>
                         <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../../../../../Instellingen/src/instellingen/icons/add.png" />
+                              <Image url="@../Icons/add.png" />
                            </image>
                         </ImageView>
                      </graphic>
@@ -165,7 +177,7 @@
                      <graphic>
                         <ImageView fitHeight="31.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../../../../../Instellingen/src/instellingen/icons/garbage.png" />
+                              <Image url="@../Icons/garbage.png" />
                            </image>
                         </ImageView>
                      </graphic>
