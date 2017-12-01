@@ -51,20 +51,21 @@ public class AddMissingLuggageController implements Initializable {
         
         basePane.getChildren().setAll(pane.getChildren());
     }
+
     @FXML
-    private void handleUserManage(ActionEvent event) throws IOException {
+    private void handleOverview(ActionEvent event) throws IOException {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         AnchorPane basePane = (AnchorPane) stage.getScene().getRoot();
-        AnchorPane pane = FXMLLoader.load(getClass().getResource("/fxml/userManagement.fxml"));
+        AnchorPane pane = FXMLLoader.load(getClass().getResource("/fxml/Overview.fxml"));
         
         basePane.getChildren().setAll(pane.getChildren());
     }
-
-    @FXML
-    private void handleManagerOverview(ActionEvent event) throws IOException {
+    
+        @FXML
+    private void handleBagageMatch(ActionEvent event) throws IOException {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         AnchorPane basePane = (AnchorPane) stage.getScene().getRoot();
-        AnchorPane pane = FXMLLoader.load(getClass().getResource("/fxml/managerStats.fxml"));
+        AnchorPane pane = FXMLLoader.load(getClass().getResource("/fxml/Bagagematchen.fxml"));
         
         basePane.getChildren().setAll(pane.getChildren());
     }

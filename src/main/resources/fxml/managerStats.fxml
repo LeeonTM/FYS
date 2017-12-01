@@ -168,7 +168,7 @@
          <children>
             <ImageView fitHeight="150.0" fitWidth="400.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                <image>
-                  <Image url="@../Images/Corendon_Airlines_2014_logo.svg%20(1).png" />
+                  <Image url="@../Images/Corendon.png" />
                </image>
             </ImageView>
             <JFXButton buttonType="RAISED" prefHeight="55.0" prefWidth="178.0" ripplerFill="#971818" style="-fx-background-color: #d81e05;" text="Help" textFill="WHITE" GridPane.columnIndex="2" GridPane.halignment="RIGHT">
