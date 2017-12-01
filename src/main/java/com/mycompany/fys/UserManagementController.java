@@ -21,7 +21,7 @@ import javafx.stage.Stage;
  *
  * @author yannick
  */
-public class managerStatsController implements Initializable {
+public class UserManagementController implements Initializable {
 
     @FXML
     private AnchorPane basePane;
@@ -32,7 +32,7 @@ public class managerStatsController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-    }    
+    }
 
     @FXML
     private void handleLogout(ActionEvent event) throws IOException {
@@ -51,21 +51,20 @@ public class managerStatsController implements Initializable {
         
         basePane.getChildren().setAll(pane.getChildren());
     }
+    @FXML
+    private void handleUserManage(ActionEvent event) throws IOException {
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        AnchorPane basePane = (AnchorPane) stage.getScene().getRoot();
+        AnchorPane pane = FXMLLoader.load(getClass().getResource("/fxml/userManagement.fxml"));
+        
+        basePane.getChildren().setAll(pane.getChildren());
+    }
 
     @FXML
     private void handleManagerOverview(ActionEvent event) throws IOException {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         AnchorPane basePane = (AnchorPane) stage.getScene().getRoot();
         AnchorPane pane = FXMLLoader.load(getClass().getResource("/fxml/managerStats.fxml"));
-        
-        basePane.getChildren().setAll(pane.getChildren());
-    }
-    
-    @FXML
-    private void handleUserManage(ActionEvent event) throws IOException {
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        AnchorPane basePane = (AnchorPane) stage.getScene().getRoot();
-        AnchorPane pane = FXMLLoader.load(getClass().getResource("/fxml/userManagement.fxml"));
         
         basePane.getChildren().setAll(pane.getChildren());
     }
