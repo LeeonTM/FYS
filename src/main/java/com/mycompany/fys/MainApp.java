@@ -16,10 +16,11 @@ public class MainApp extends Application {
         Scene scene = new Scene(root);
         scene.getStylesheets().add("/styles/Styles.css");
 
-        Repository repo = new Repository();
-        //repo.executeInsert("status", new String[]{"3", "Test"});
-        //repo.executeUpdate("status", "3", "statusId", new String[]{"statusId", "statusName"}, new String[]{"3", "Test 1"});
-        repo.executeSelect("status");
+        //Repository repo = new Repository();
+        // INSERT voorbeeld - repo.executeInsert("status", new String[]{"3", "Test"});
+        // UPDATE voorbeeld - repo.executeUpdate("status", "3", "statusId", new String[]{"statusId", "statusName"}, new String[]{"3", "Test 1"});
+        // SELECT alles voorbeeld - repo.executeSelect("status");
+        // SELECT met multiple of single WHERE - repo.executeSelect("status", new String[]{"statusId", "statusName"}, new String[]{"3", "Test"});
         
         stage.setTitle("Find my Luggage");
         stage.setScene(scene);
