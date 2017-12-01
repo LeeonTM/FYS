@@ -92,7 +92,7 @@
                                                 <Font name="System Bold" size="18.0" />
                                              </font>
                                           </Label>
-                                          <JFXTextField prefHeight="30.0" prefWidth="375.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="TOP" />
+                                          <JFXTextField fx:id="userName" prefHeight="30.0" prefWidth="375.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="TOP" />
                                           <JFXButton buttonType="RAISED" onAction="#handleLogin" prefHeight="91.0" prefWidth="324.0" ripplerFill="WHITE" style="-fx-background-color: #d81e05;" text="Inloggen" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="5">
                                              <font>
                                                 <Font size="18.0" />
@@ -100,7 +100,7 @@
                                              <GridPane.margin>
                                                 <Insets top="20.0" />
                                              </GridPane.margin></JFXButton>
-                                          <JFXPasswordField prefHeight="30.0" prefWidth="375.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="TOP" />
+                                          <JFXPasswordField fx:id="passWord" prefHeight="30.0" prefWidth="375.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="TOP" />
                                        </children>
                                     </GridPane>
                                  </children>

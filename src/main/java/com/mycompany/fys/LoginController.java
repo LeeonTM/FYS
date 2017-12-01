@@ -5,6 +5,8 @@
  */
 package com.mycompany.fys;
 
+import com.jfoenix.controls.JFXTextField;
+import com.jfoenix.controls.JFXPasswordField;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -21,10 +23,16 @@ import javafx.stage.Stage;
  *
  * @author Leon
  */
-public class LoginController implements Initializable {
+public class LoginController extends BaseController {
 
     @FXML
     private AnchorPane basePane;
+    
+    @FXML
+    private JFXTextField userName;
+    
+    @FXML
+    private JFXPasswordField passWord;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -33,6 +41,9 @@ public class LoginController implements Initializable {
 
     @FXML
     private void handleLogin(ActionEvent event) throws IOException {
+        
+        //super.repo.executeSelect("user", new String[]{"username", "password"}, new String[]{userName.getText(), passWord.getText()});
+        
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         AnchorPane baseePane = (AnchorPane) stage.getScene().getRoot();
         AnchorPane pane = FXMLLoader.load(getClass().getResource("/fxml/Bagagematchen.fxml"));
