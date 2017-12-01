@@ -144,8 +144,8 @@ public class Repository {
     }
 
     /**
-     * *
-     * Executes a DDL, DML or DCL query that does not yield a result set
+     * **
+ Executes a DDL, DML or DCL query that does not yield a rs set
      *
      * @param tableName the full name of the table you wish to insert into.
      * @param itemId the Id of the item you wish to update in the database
@@ -184,8 +184,8 @@ public class Repository {
     }
 
     /**
-     * *
-     * Executes a DDL, DML or DCL insert query that does not yield a result set
+     * **
+ Executes a DDL, DML or DCL insert query that does not yield a rs set
      *
      * @param tableName the full name of the table you wish to insert into.
      * @param values the values you wish to insert into the table.
@@ -220,38 +220,36 @@ public class Repository {
         }
     }
 
-    public boolean executeSelect(String tableName) {
+    public List<Object> executeSelect(String tableName) {
         try {
             Statement s = this.connection.createStatement();
             String totalQuery = "SELECT * FROM " + tableName;
             log(totalQuery);
 
-            // Print out the result
-            ResultSet result = s.executeQuery(totalQuery);
-            ResultSetMetaData rsmd = result.getMetaData();
+            // Print out the rs
+            ResultSet rs = s.executeQuery(totalQuery);
+            ResultSetMetaData rsmd = rs.getMetaData();
             int columnsNumber = rsmd.getColumnCount();
-            while (result.next()) {
+            List<Object> result = new ArrayList<>();
+            
+            while (rs.next()) {
+                List<String> col = new LinkedList<>();
                 for (int i = 1; i <= columnsNumber; i++) {
-                    if (i > 1) {
-                        System.out.print(",  ");
-                    }
-                    String columnValue = result.getString(i);
-                    System.out.print(columnValue);
+                    col.add(rs.getString(i));
                 }
-                System.out.println("");
+                result.add((Object) col);
             }
-
-            boolean n = s.execute(totalQuery);
+            
             s.close();
-            return (n);
+            return (result);
         } catch (SQLException ex) {
             //handle exception
             error(ex);
-            return false;
+            return new LinkedList<>();
         }
     }
 
-    public boolean executeSelect(String tableName, String[] whereColumns, String[] whereValues) {
+    public List<Object> executeSelect(String tableName, String[] whereColumns, String[] whereValues) {
         try {
             Statement s = this.connection.createStatement();
             String totalQuery = "SELECT * FROM " + tableName + " WHERE ";
@@ -266,28 +264,26 @@ public class Repository {
             
             log(totalQuery);
             
-            // Print out the result
-            ResultSet result = s.executeQuery(totalQuery);
-            ResultSetMetaData rsmd = result.getMetaData();
+            // Print out the rs
+            ResultSet rs = s.executeQuery(totalQuery);
+            ResultSetMetaData rsmd = rs.getMetaData();
             int columnsNumber = rsmd.getColumnCount();
-            while (result.next()) {
+            List<Object> result = new ArrayList<>();
+            
+            while (rs.next()) {
+                List<String> col = new LinkedList<>();
                 for (int i = 1; i <= columnsNumber; i++) {
-                    if (i > 1) {
-                        System.out.print(",  ");
-                    }
-                    String columnValue = result.getString(i);
-                    System.out.print(columnValue);
+                    col.add(rs.getString(i));
                 }
-                System.out.println("");
+                result.add((Object) col);
             }
 
-            boolean n = s.execute(totalQuery);
             s.close();
-            return (n);
+            return (result);
         } catch (SQLException ex) {
             //handle exception
             error(ex);
-            return false;
+            return new LinkedList<>();
         }
     }
 
