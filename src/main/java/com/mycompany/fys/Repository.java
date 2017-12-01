@@ -7,7 +7,10 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  *
@@ -223,6 +226,46 @@ public class Repository {
             String totalQuery = "SELECT * FROM " + tableName;
             log(totalQuery);
 
+            // Print out the result
+            ResultSet result = s.executeQuery(totalQuery);
+            ResultSetMetaData rsmd = result.getMetaData();
+            int columnsNumber = rsmd.getColumnCount();
+            while (result.next()) {
+                for (int i = 1; i <= columnsNumber; i++) {
+                    if (i > 1) {
+                        System.out.print(",  ");
+                    }
+                    String columnValue = result.getString(i);
+                    System.out.print(columnValue);
+                }
+                System.out.println("");
+            }
+
+            boolean n = s.execute(totalQuery);
+            s.close();
+            return (n);
+        } catch (SQLException ex) {
+            //handle exception
+            error(ex);
+            return false;
+        }
+    }
+
+    public boolean executeSelect(String tableName, String[] whereColumns, String[] whereValues) {
+        try {
+            Statement s = this.connection.createStatement();
+            String totalQuery = "SELECT * FROM " + tableName + " WHERE ";
+
+            for (int i = 0; i < whereColumns.length; i++) {
+                if (whereColumns[i] == whereColumns[whereColumns.length - 1]) {
+                    totalQuery += tableName + "." + whereColumns[i] + " = " + "'" + whereValues[i] + "'";
+                } else {
+                    totalQuery += tableName + "." + whereColumns[i] + " = " + "'" + whereValues[i] + "' AND ";
+                }
+            }
+            
+            log(totalQuery);
+            
             // Print out the result
             ResultSet result = s.executeQuery(totalQuery);
             ResultSetMetaData rsmd = result.getMetaData();
