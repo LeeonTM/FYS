@@ -39,7 +39,7 @@
                         <TreeTableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                      </columnResizePolicy>
                   </JFXTreeTableView>
-                  <JFXButton buttonType="RAISED" prefHeight="55.0" prefWidth="212.0" ripplerFill="#971818" style="-fx-background-color: #d81e05;" text="Voeg gebruiker toe" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                  <JFXButton buttonType="RAISED" onAction="#handleAddUser" prefHeight="55.0" prefWidth="212.0" ripplerFill="#971818" style="-fx-background-color: #d81e05;" text="Voeg gebruiker toe" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                      <font>
                         <Font name="Arial Bold" size="18.0" />
                      </font>
