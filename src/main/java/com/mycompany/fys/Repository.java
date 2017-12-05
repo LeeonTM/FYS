@@ -51,6 +51,8 @@ public class Repository {
                 password = "";
             }
 
+            // Create dummy database with dummy data
+            //createDummy();
             // establish a connection to a named database on a specified server	
             String connStr = DB_DRIVER_PREFIX + serverURL + "/" + dbName + DB_DRIVER_PARAMETERS;
             log("Connecting " + connStr);
@@ -145,7 +147,7 @@ public class Repository {
 
     /**
      * **
- Executes a DDL, DML or DCL query that does not yield a rs set
+     * Executes a DDL, DML or DCL query that does not yield a rs set
      *
      * @param tableName the full name of the table you wish to insert into.
      * @param itemId the Id of the item you wish to update in the database
@@ -185,28 +187,30 @@ public class Repository {
 
     /**
      * **
- Executes a DDL, DML or DCL insert query that does not yield a rs set
+     * Executes a DDL, DML or DCL insert query that does not yield a rs set
      *
      * @param tableName the full name of the table you wish to insert into.
      * @param values the values you wish to insert into the table.
      * @return the number of rows that have been impacted, -1 on error
      */
-    public int executeInsert(String tableName, String[] values) {
+    public int executeInsert(String tableName, String[] columnNames, String[] values) {
         try {
             Statement s = this.connection.createStatement();
             String valuesTotal = "";
+            String columnNamesTotal = "";
 
             // Add each value to a total string of values to insert
-            for (String value : values) {
-                if (value == values[values.length - 1]) {
-                    valuesTotal += "'" + value + "'";
+            for (int i = 0; i < values.length; i++) {
+                if (columnNames[i] == columnNames[columnNames.length - 1]) {
+                    valuesTotal += "'" + values[i] + "'";
+                    columnNamesTotal += columnNames[i];
                 } else {
-                    valuesTotal += "'" + value + "', ";
-
+                    valuesTotal += "'" + values[i] + "', ";
+                    columnNamesTotal += "" + columnNames[i] + ", ";
                 }
             }
 
-            String totalQuery = "INSERT INTO " + tableName + " VALUES(" + valuesTotal + ")";
+            String totalQuery = "INSERT INTO " + tableName + " (" + columnNamesTotal + ")" + " VALUES (" + valuesTotal + ")";
 
             log(totalQuery);
             int n = s.executeUpdate(totalQuery);
@@ -231,7 +235,7 @@ public class Repository {
             ResultSetMetaData rsmd = rs.getMetaData();
             int columnsNumber = rsmd.getColumnCount();
             List<Object> result = new ArrayList<>();
-            
+
             while (rs.next()) {
                 List<String> col = new LinkedList<>();
                 for (int i = 1; i <= columnsNumber; i++) {
@@ -239,7 +243,7 @@ public class Repository {
                 }
                 result.add((Object) col);
             }
-            
+
             s.close();
             return (result);
         } catch (SQLException ex) {
@@ -261,15 +265,15 @@ public class Repository {
                     totalQuery += tableName + "." + whereColumns[i] + " = " + "'" + whereValues[i] + "' AND ";
                 }
             }
-            
+
             log(totalQuery);
-            
+
             // Print out the rs
             ResultSet rs = s.executeQuery(totalQuery);
             ResultSetMetaData rsmd = rs.getMetaData();
             int columnsNumber = rsmd.getColumnCount();
             List<Object> result = new ArrayList<>();
-            
+
             while (rs.next()) {
                 List<String> col = new LinkedList<>();
                 for (int i = 1; i <= columnsNumber; i++) {
@@ -297,5 +301,281 @@ public class Repository {
 
     public String getErrorMessage() {
         return errorMessage;
+    }
+
+    public void addDummyData() {
+        // INSERT voorbeeld - repo.executeInsert("status", new String[]{"Name"},new String[]{"Test"});
+
+        // Insert dummy roles
+        executeInsert("role", new String[]{"Name"}, new String[]{"Medewerker"});
+        executeInsert("role", new String[]{"Name"}, new String[]{"Administratie"});
+
+        // Insert dummy airports
+        executeInsert("airport", new String[]{"IATACode", "Name", "Country"}, new String[]{"SCHIP", "Schiphol", "Amsterdam"});
+        executeInsert("airport", new String[]{"IATACode", "Name", "Country"}, new String[]{"BARCE", "Barcelona Airport", "Barcelona"});
+
+        // Insert Dummy Adrresses
+        executeInsert("address", new String[]{"Street", "Number", "Place", "PostalCode", "Country"}, new String[]{"Kerkstraat", "11", "Amsterdam", "1234AH", "Nederland"});
+        executeInsert("address", new String[]{"Street", "Number", "Place", "PostalCode", "Country"}, new String[]{"Espana", "165", "Barcelona", "1234YG", "Spanje"});
+
+        // Insert Dummy statuses
+        executeInsert("status", new String[]{"Name"}, new String[]{"Vermist"});
+        executeInsert("status", new String[]{"Name"}, new String[]{"Gevonden"});
+        executeInsert("status", new String[]{"Name"}, new String[]{"In verzending"});
+        executeInsert("status", new String[]{"Name"}, new String[]{"Afgeleverd"});
+
+        // Insert Dummy users
+        executeInsert("user", new String[]{"Username", "Password", "Email", "RoleId", "AirportId"}, 
+                new String[]{"user1", "Welkom01.", "user1@gmail.com", "1", "1"});
+        executeInsert("user", new String[]{"Username", "Password", "Email", "RoleId", "AirportId"}, 
+                new String[]{"user2", "Welkom01.", "user1@gmail.com", "2", "1"});
+        
+        // Insert Dummy passengers
+        executeInsert("passenger", new String[]{"Firstname", "Lastname", "Email", "Phone", "AddressId"}, new String[]{"Peter", "Pepernoot", "Pepernootje@gmail.com", "0612345678", "1"});
+        executeInsert("passenger", new String[]{"Firstname", "Lastname", "Email", "Phone", "AddressId"}, new String[]{"Ricardo", "Spanjaardo", "Spanjaard@gmail.com", "0612345678", "2"});
+
+        // Insert Dummy luggages
+        executeInsert("luggage", new String[]{"Destination", "LabelNumber", "FlightNumber", "TypeOfLuggage", "Remarks", "AirportId", "StatusId"}, 
+                new String[]{"Spanje", "AB2645", "4563", "Tas", "Een scheur bij hendel", "2", "1"});
+        executeInsert("luggage", new String[]{"Destination", "LabelNumber", "FlightNumber", "TypeOfLuggage", "Remarks", "AirportId", "StatusId"}, 
+                new String[]{"Amsterdam", "AB2645", "4563", "Koffer", "Een paar duekjes", "1", "2"});
+    }
+
+    public void createDummy() {
+        try {
+            Statement s = this.connection.createStatement();
+            String createDB
+                    = "-- MySQL Script generated by MySQL Workbench"
+                    + "-- Mon Dec  4 23:14:15 2017"
+                    + "-- Model: New Model    Version: 1.0"
+                    + "-- MySQL Workbench Forward Engineering"
+                    + ""
+                    + "SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;"
+                    + "SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;"
+                    + "SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';"
+                    + ""
+                    + "-- -----------------------------------------------------"
+                    + "-- Schema FindMyLuggage"
+                    + "-- -----------------------------------------------------"
+                    + ""
+                    + "-- -----------------------------------------------------"
+                    + "-- Schema FindMyLuggage"
+                    + "-- -----------------------------------------------------"
+                    + "CREATE SCHEMA IF NOT EXISTS `" + DB_DEFAULT_DATABASE + "` DEFAULT CHARACTER SET utf8 ;"
+                    + "USE `" + DB_DEFAULT_DATABASE + "` ;"
+                    + ""
+                    + "-- -----------------------------------------------------"
+                    + "-- Table `FindMyLuggage`.`Airport`"
+                    + "-- -----------------------------------------------------"
+                    + "CREATE TABLE IF NOT EXISTS `FindMyLuggage`.`Airport` ("
+                    + "  `Id` INT NOT NULL AUTO_INCREMENT,"
+                    + "  `IATACode` VARCHAR(45) NOT NULL,"
+                    + "  `Name` VARCHAR(200) NULL,"
+                    + "  `Country` VARCHAR(200) NULL,"
+                    + "  PRIMARY KEY (`Id`),"
+                    + "  UNIQUE INDEX `Id_UNIQUE` (`Id` ASC))"
+                    + "ENGINE = InnoDB;"
+                    + ""
+                    + "-- -----------------------------------------------------"
+                    + "-- Table `FindMyLuggage`.`Role`"
+                    + "-- -----------------------------------------------------"
+                    + "CREATE TABLE IF NOT EXISTS `FindMyLuggage`.`Role` ("
+                    + "  `Id` INT NOT NULL AUTO_INCREMENT,"
+                    + "  `Name` VARCHAR(200) NULL,"
+                    + "  PRIMARY KEY (`Id`),"
+                    + "  UNIQUE INDEX `Id_UNIQUE` (`Id` ASC))"
+                    + "ENGINE = InnoDB;"
+                    + ""
+                    + "-- -----------------------------------------------------"
+                    + "-- Table `FindMyLuggage`.`User`"
+                    + "-- -----------------------------------------------------"
+                    + "CREATE TABLE IF NOT EXISTS `FindMyLuggage`.`User` ("
+                    + "  `Id` INT NOT NULL AUTO_INCREMENT,"
+                    + "  `Username` VARCHAR(200) NOT NULL,"
+                    + "  `Password` VARCHAR(200) NOT NULL,"
+                    + "  `Email` VARCHAR(200) NOT NULL,"
+                    + "  `LastLoginDate` DATETIME NULL,"
+                    + "  `RoleId` INT NOT NULL,"
+                    + "  `AirportId` INT NOT NULL,"
+                    + "  `UpdatedAt` DATETIME NULL,"
+                    + "  `CreatedAt` DATETIME NULL,"
+                    + "  `DeletedAt` DATETIME NULL,"
+                    + "  `IsDeleted` BIT NULL DEFAULT 0,"
+                    + "  PRIMARY KEY (`Id`),"
+                    + "  UNIQUE INDEX `Id_UNIQUE` (`Id` ASC),"
+                    + "  UNIQUE INDEX `Username_UNIQUE` (`Username` ASC),"
+                    + "  INDEX `UserAirportId_idx` (`AirportId` ASC),"
+                    + "  INDEX `UserRoleId_idx` (`RoleId` ASC),"
+                    + "  CONSTRAINT `UserAirportId`"
+                    + "    FOREIGN KEY (`AirportId`)"
+                    + "    REFERENCES `FindMyLuggage`.`Airport` (`Id`)"
+                    + "    ON DELETE NO ACTION"
+                    + "    ON UPDATE NO ACTION,"
+                    + "  CONSTRAINT `UserRoleId`"
+                    + "    FOREIGN KEY (`RoleId`)"
+                    + "    REFERENCES `FindMyLuggage`.`Role` (`Id`)"
+                    + "    ON DELETE NO ACTION"
+                    + "    ON UPDATE NO ACTION)"
+                    + "ENGINE = InnoDB;"
+                    + ""
+                    + "-- -----------------------------------------------------"
+                    + "-- Table `FindMyLuggage`.`Address`"
+                    + "-- -----------------------------------------------------"
+                    + "CREATE TABLE IF NOT EXISTS `FindMyLuggage`.`Address` ("
+                    + "  `Id` INT NOT NULL AUTO_INCREMENT,"
+                    + "  `Street` VARCHAR(200) NULL,"
+                    + "  `Number` INT NOT NULL,"
+                    + "  `Place` VARCHAR(200) NULL,"
+                    + "  `PostalCode` VARCHAR(25) NOT NULL,"
+                    + "  `Country` VARCHAR(200) NULL,"
+                    + "  PRIMARY KEY (`Id`),"
+                    + "  UNIQUE INDEX `Id_UNIQUE` (`Id` ASC))"
+                    + "ENGINE = InnoDB;"
+                    + ""
+                    + "-- -----------------------------------------------------"
+                    + "-- Table `FindMyLuggage`.`Passenger`"
+                    + "-- -----------------------------------------------------"
+                    + "CREATE TABLE IF NOT EXISTS `FindMyLuggage`.`Passenger` ("
+                    + "  `Id` INT NOT NULL AUTO_INCREMENT,"
+                    + "  `Firstname` VARCHAR(200) NULL,"
+                    + "  `Insertion` VARCHAR(100) NULL,"
+                    + "  `Lastname` VARCHAR(200) NULL,"
+                    + "  `Email` VARCHAR(200) NULL,"
+                    + "  `Phone` BIGINT(50) NULL,"
+                    + "  `AddressId` INT NOT NULL,"
+                    + "  `UpdatedAt` DATETIME NULL,"
+                    + "  `CreatedAt` DATETIME NULL,"
+                    + "  `DeletedAt` DATETIME NULL,"
+                    + "  `IsDeleted` BIT NULL DEFAULT 0,"
+                    + "  PRIMARY KEY (`Id`),"
+                    + "  UNIQUE INDEX `Id_UNIQUE` (`Id` ASC),"
+                    + "  INDEX `PassengerAddressId_idx` (`AddressId` ASC),"
+                    + "  CONSTRAINT `PassengerAddressId`"
+                    + "    FOREIGN KEY (`AddressId`)"
+                    + "    REFERENCES `FindMyLuggage`.`Address` (`Id`)"
+                    + "    ON DELETE NO ACTION"
+                    + "    ON UPDATE NO ACTION)"
+                    + "ENGINE = InnoDB;"
+                    + ""
+                    + "-- -----------------------------------------------------"
+                    + "-- Table `FindMyLuggage`.`Status`"
+                    + "-- -----------------------------------------------------"
+                    + "CREATE TABLE IF NOT EXISTS `FindMyLuggage`.`Status` ("
+                    + "  `Id` INT NOT NULL AUTO_INCREMENT,"
+                    + "  `Name` VARCHAR(200) NULL,"
+                    + "  PRIMARY KEY (`Id`),"
+                    + "  UNIQUE INDEX `Id_UNIQUE` (`Id` ASC))"
+                    + "ENGINE = InnoDB;"
+                    + ""
+                    + "-- -----------------------------------------------------"
+                    + "-- Table `FindMyLuggage`.`Luggage`"
+                    + "-- -----------------------------------------------------"
+                    + "CREATE TABLE IF NOT EXISTS `FindMyLuggage`.`Luggage` ("
+                    + "  `Id` INT NOT NULL AUTO_INCREMENT,"
+                    + "  `Destination` VARCHAR(200) NULL,"
+                    + "  `LabelNumber` VARCHAR(200) NULL,"
+                    + "  `FlightNumber` VARCHAR(200) NULL,"
+                    + "  `WFCode` VARCHAR(200) NULL,"
+                    + "  `TypeOfLuggage` VARCHAR(200) NULL,"
+                    + "  `Brand` VARCHAR(200) NULL,"
+                    + "  `Colour` VARCHAR(200) NULL,"
+                    + "  `Remarks` VARCHAR(255) NULL,"
+                    + "  `PassengerId` INT NOT NULL,"
+                    + "  `AirportId` INT NOT NULL,"
+                    + "  `StatusId` INT NOT NULL,"
+                    + "  `UpdatedAt` DATETIME NULL,"
+                    + "  `CreatedAt` DATETIME NULL,"
+                    + "  `DeletedAt` DATETIME NULL,"
+                    + "  `IsDeleted` BIT NULL DEFAULT 0,"
+                    + "  PRIMARY KEY (`Id`),"
+                    + "  UNIQUE INDEX `Id_UNIQUE` (`Id` ASC),"
+                    + "  INDEX `LuggageAirportId_idx` (`AirportId` ASC),"
+                    + "  INDEX `LuggagePassengerId_idx` (`PassengerId` ASC),"
+                    + "  INDEX `LuggageStatusId_idx` (`StatusId` ASC),"
+                    + "  CONSTRAINT `LuggageAirportId`"
+                    + "    FOREIGN KEY (`AirportId`)"
+                    + "    REFERENCES `FindMyLuggage`.`Airport` (`Id`)"
+                    + "    ON DELETE NO ACTION"
+                    + "    ON UPDATE NO ACTION,"
+                    + "  CONSTRAINT `LuggagePassengerId`"
+                    + "    FOREIGN KEY (`PassengerId`)"
+                    + "    REFERENCES `FindMyLuggage`.`Passenger` (`Id`)"
+                    + "    ON DELETE NO ACTION"
+                    + "    ON UPDATE NO ACTION,"
+                    + "  CONSTRAINT `LuggageStatusId`"
+                    + "    FOREIGN KEY (`StatusId`)"
+                    + "    REFERENCES `FindMyLuggage`.`Status` (`Id`)"
+                    + "    ON DELETE NO ACTION"
+                    + "    ON UPDATE NO ACTION)"
+                    + "ENGINE = InnoDB;"
+                    + ""
+                    + "-- -----------------------------------------------------"
+                    + "-- Table `FindMyLuggage`.`DamageClaim`"
+                    + "-- -----------------------------------------------------"
+                    + "CREATE TABLE IF NOT EXISTS `FindMyLuggage`.`DamageClaim` ("
+                    + "  `Id` INT NOT NULL AUTO_INCREMENT,"
+                    + "  `Description` VARCHAR(255) NULL,"
+                    + "  `EstimatePrice` DOUBLE ZEROFILL NULL,"
+                    + "  `InsuranceCompany` VARCHAR(255) NULL,"
+                    + "  `LuggageId` INT NOT NULL,"
+                    + "  `UpdatedAt` DATETIME NULL,"
+                    + "  `CreatedAt` DATETIME NULL,"
+                    + "  `DeletedAt` DATETIME NULL,"
+                    + "  `IsDeleted` BIT NULL DEFAULT 0,"
+                    + "  PRIMARY KEY (`Id`),"
+                    + "  UNIQUE INDEX `Id_UNIQUE` (`Id` ASC),"
+                    + "  INDEX `DamageClaimLuggageId_idx` (`LuggageId` ASC),"
+                    + "  CONSTRAINT `DamageClaimLuggageId`"
+                    + "    FOREIGN KEY (`LuggageId`)"
+                    + "    REFERENCES `FindMyLuggage`.`Luggage` (`Id`)"
+                    + "    ON DELETE NO ACTION"
+                    + "    ON UPDATE NO ACTION)"
+                    + "ENGINE = InnoDB;"
+                    + ""
+                    + "-- -----------------------------------------------------"
+                    + "-- Table `FindMyLuggage`.`Repatriation`"
+                    + "-- -----------------------------------------------------"
+                    + "CREATE TABLE IF NOT EXISTS `FindMyLuggage`.`Repatriation` ("
+                    + "  `Id` INT NOT NULL AUTO_INCREMENT,"
+                    + "  `FromAirport` VARCHAR(255) NULL,"
+                    + "  `ToAddress` VARCHAR(255) NULL,"
+                    + "  `Transporter` VARCHAR(200) NULL,"
+                    + "  `TransporterType` VARCHAR(200) NULL,"
+                    + "  `Date` DATETIME NULL,"
+                    + "  `StatusId` INT NOT NULL,"
+                    + "  `PassengerId` INT NOT NULL,"
+                    + "  `LuggageId` INT NOT NULL,"
+                    + "  `UpdatedAt` DATETIME NULL,"
+                    + "  `CreatedAt` DATETIME NULL,"
+                    + "  `DeletedAt` DATETIME NULL,"
+                    + "  `IsDeleted` BIT NULL DEFAULT 0,"
+                    + "  PRIMARY KEY (`Id`),"
+                    + "  UNIQUE INDEX `Id_UNIQUE` (`Id` ASC),"
+                    + "  INDEX `RepatriationLuggageId_idx` (`LuggageId` ASC),"
+                    + "  INDEX `RepatriationStatusId_idx` (`StatusId` ASC),"
+                    + "  CONSTRAINT `RepatriationLuggageId`"
+                    + "    FOREIGN KEY (`LuggageId`)"
+                    + "    REFERENCES `FindMyLuggage`.`Luggage` (`Id`)"
+                    + "    ON DELETE NO ACTION"
+                    + "    ON UPDATE NO ACTION,"
+                    + "  CONSTRAINT `RepatriationStatusId`"
+                    + "    FOREIGN KEY (`StatusId`)"
+                    + "    REFERENCES `FindMyLuggage`.`Status` (`Id`)"
+                    + "    ON DELETE NO ACTION"
+                    + "    ON UPDATE NO ACTION)"
+                    + "ENGINE = InnoDB;"
+                    + ""
+                    + "SET SQL_MODE=@OLD_SQL_MODE;"
+                    + "SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;"
+                    + "SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;";
+
+            s.executeUpdate(createDB);
+
+            // Add dummy data to created db
+            addDummyData();
+        } catch (SQLException ex) {
+            //handle exception
+            error(ex);
+        }
     }
 }
