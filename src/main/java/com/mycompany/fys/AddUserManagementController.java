@@ -5,33 +5,65 @@
  */
 package com.mycompany.fys;
 
+import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXComboBox;
+import com.jfoenix.controls.JFXPasswordField;
+import com.jfoenix.controls.JFXTextField;
+import com.mycompany.fys.DbClasses.Airport;
+import com.mycompany.fys.DbClasses.Role;
+import com.mycompany.fys.DbClasses.User;
 import java.io.IOException;
 import java.net.URL;
+import java.util.LinkedList;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 /**
  * FXML Controller class
  *
  * @author yannick
  */
-public class AddUserManagementController implements Initializable {
+public class AddUserManagementController extends BaseController {
 
     @FXML
     private AnchorPane basePane;
+    
+    @FXML
+    private JFXTextField usernameField;
+    
+    @FXML
+    private JFXPasswordField passwordField;
+    
+    @FXML
+    private JFXPasswordField repeatPassField;
+    
+    @FXML
+    private JFXTextField emailField;
+    
+    @FXML
+    private JFXComboBox roleField;
+    
+    @FXML
+    private JFXComboBox airportField;
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        roleField.getItems().add(new String("Medewerker"));
+        roleField.getItems().add(new String("Administratie"));
+        
+        airportField.getItems().add(new String("Schiphol"));
+        airportField.getItems().add(new String("Barcelona Airport"));
     }    
 
     @FXML
@@ -69,4 +101,52 @@ public class AddUserManagementController implements Initializable {
         basePane.getChildren().setAll(pane.getChildren());
     }
     
+    @FXML
+    private void clearTextBox(javafx.scene.input.MouseEvent event) {
+        if (usernameField.isFocused()) {
+            usernameField.clear();
+        }
+        if (emailField.isFocused()) {
+            emailField.clear();
+        }
+    }
+    
+    @FXML
+    private void addUserToDB(ActionEvent event) throws IOException {
+        if (usernameField.getText().trim().isEmpty()  || usernameField.getText().equals("Voer een gebruikersnaam in...") || passwordField.getText().trim().isEmpty()
+                || emailField.getText().trim().isEmpty() || emailField.getText().equals("Voer een emailadres in...")) {
+            
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Informatie");
+            alert.setHeaderText(null);
+            alert.initStyle(StageStyle.UNDECORATED);
+            alert.setContentText("Vul alle velden in!");
+            alert.showAndWait();
+        }
+        else {
+        LinkedList resultRole = repo.executeSelect("role", new String[]{"Name"}, new String[]{(String)roleField.getValue()});
+        Role role = new Role();
+        role.fromLinkedList((LinkedList)resultRole.get(0));
+        
+        LinkedList resultAirport = repo.executeSelect("airport", new String[]{"Name"}, new String[]{(String)airportField.getValue()});
+        Airport airport = new Airport();
+        airport.fromLinkedList((LinkedList)resultAirport.get(0));
+        
+        repo.executeInsert("user", new String[]{"Username", "Password", "Email", "RoleId", "AirportId"}, 
+               new String[]{usernameField.getText(), passwordField.getText(), emailField.getText(), Integer.toString(role.getId()), Integer.toString(airport.getId())});
+        
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Bevestiging");
+            alert.setHeaderText(null);
+            alert.initStyle(StageStyle.UNDECORATED);
+            alert.setContentText("Gebruiker met accountnaam " + usernameField.getText() + " is aangemaakt!");
+            alert.showAndWait();
+            
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            AnchorPane basePane = (AnchorPane) stage.getScene().getRoot();
+            AnchorPane pane = FXMLLoader.load(getClass().getResource("/fxml/userManagement.fxml"));
+
+            basePane.getChildren().setAll(pane.getChildren());
+        }
+    }
 }
