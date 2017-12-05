@@ -5,6 +5,8 @@
  */
 package com.mycompany.fys.DbClasses;
 
+import java.util.LinkedList;
+
 /**
  *
  * @author Leon
@@ -14,6 +16,11 @@ public class Role {
     public int id;
     public String name;
 
+    public void fromLinkedList(LinkedList role){
+        this.setId(Integer.parseInt(role.get(0).toString()));
+        this.setName(role.get(1).toString());
+    }
+    
     public int getId() {
         return id;
     }

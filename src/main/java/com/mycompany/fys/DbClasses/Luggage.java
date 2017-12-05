@@ -6,13 +6,14 @@
 package com.mycompany.fys.DbClasses;
 
 import java.util.Date;
+import java.util.LinkedList;
 
 /**
  *
  * @author Leon
  */
 public class Luggage {
-    
+
     public int id;
     public String destination;
     public String labelNumber;
@@ -28,6 +29,13 @@ public class Luggage {
     public Date createdAt;
     public Date deletedAt;
     public boolean isDeleted;
+
+    public void fromLinkedList(LinkedList luggage) {
+        this.setId(Integer.parseInt(luggage.get(0).toString()));
+        this.setDestination(luggage.get(1).toString());
+        this.setLabelNumber(luggage.get(2).toString());
+        this.setWFCode(wFCode);
+    }
 
     public int getId() {
         return id;
