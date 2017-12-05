@@ -5,6 +5,8 @@
  */
 package com.mycompany.fys.DbClasses;
 
+import java.util.LinkedList;
+
 /**
  *
  * @author Leon
@@ -16,6 +18,13 @@ public class Airport {
     public String name;
     public String country;
 
+    public void fromLinkedList(LinkedList airport){
+        this.setId(Integer.parseInt(airport.get(0).toString()));
+        this.setIATACode(airport.get(1).toString());
+        this.setName(airport.get(2).toString());
+        this.setCountry(airport.get(3).toString());
+    }
+    
     public int getId() {
         return id;
     }
