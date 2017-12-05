@@ -8,11 +8,14 @@ package com.mycompany.fys;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.chart.PieChart;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
@@ -25,13 +28,16 @@ public class ManagerStatsController implements Initializable {
 
     @FXML
     private AnchorPane basePane;
+    
+    @FXML
+    private PieChart pie;
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        populatePieCharT(pie);
     }    
 
     @FXML
@@ -67,6 +73,18 @@ public class ManagerStatsController implements Initializable {
         AnchorPane pane = FXMLLoader.load(getClass().getResource("/fxml/managerStats.fxml"));
         
         basePane.getChildren().setAll(pane.getChildren());
+    }
+    
+        private void populatePieCharT(PieChart pie) {
+
+        ObservableList<PieChart.Data> pieChartData
+                = FXCollections.observableArrayList(
+                        new PieChart.Data("Vermist", 113),
+                        new PieChart.Data("Gevonden", 252));
+        pie.setTitle("Lost Luggage 2016");
+        
+        pie.getData().addAll(pieChartData);
+
     }
     
 }
