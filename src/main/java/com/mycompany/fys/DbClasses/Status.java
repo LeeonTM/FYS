@@ -29,4 +29,9 @@ public class Status {
     public void setName(String Name) {
         this.name = Name;
     }
+    
+    public void setAll(Status status){
+        this.name = status.name;
+        this.id = status.id;
+    }
 }

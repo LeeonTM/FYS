@@ -18,7 +18,8 @@ public class MainApp extends Application {
         Scene scene = new Scene(root);
         scene.getStylesheets().add("/styles/Styles.css");
 
-        //Repository repo = new Repository();
+        Repository repo = new Repository();
+        System.out.println(repo.executeCustomSelect("SELECT * FROM status"));
         // Create dummy data for databse - repo.addDummyData();
         // INSERT voorbeeld - repo.executeInsert("status", new String[]{"Name"},new String[]{"Test"});
         // UPDATE voorbeeld - repo.executeUpdate("status", "1", "Id", new String[]{"Name"}, new String[]{"Test 1"});

@@ -101,6 +101,7 @@
                                                 <Insets top="20.0" />
                                              </GridPane.margin></JFXButton>
                                           <JFXPasswordField fx:id="passWord" prefHeight="30.0" prefWidth="375.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="TOP" />
+                                          <Label fx:id="loginError" textFill="#d81e05" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="6" GridPane.valignment="CENTER" />
                                        </children>
                                     </GridPane>
                                  </children>

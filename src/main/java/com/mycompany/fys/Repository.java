@@ -237,6 +237,33 @@ public class Repository {
             List<Object> result = new ArrayList<>();
 
             while (rs.next()) {
+                Object aa = new Object();
+                List<String> col = new LinkedList<>();
+                for (int i = 1; i <= columnsNumber; i++) {
+                    col.add(rs.getString(i));
+                }
+                result.add(Object.class.cast(col));
+            }
+
+            s.close();
+            return (result);
+        } catch (SQLException ex) {
+            //handle exception
+            error(ex);
+            return new LinkedList<>();
+        }
+    }
+    
+    public List<Object> executeCustomSelect(String query){
+        try{
+            Statement s = this.connection.createStatement();
+            
+            ResultSet rs = s.executeQuery(query);
+            ResultSetMetaData rsmd = rs.getMetaData();
+            int columnsNumber = rsmd.getColumnCount();
+            List<Object> result = new ArrayList<>();
+
+            while (rs.next()) {
                 List<String> col = new LinkedList<>();
                 for (int i = 1; i <= columnsNumber; i++) {
                     col.add(rs.getString(i));
@@ -246,10 +273,11 @@ public class Repository {
 
             s.close();
             return (result);
-        } catch (SQLException ex) {
-            //handle exception
+        }
+        catch(SQLException ex){
+            //Log error
             error(ex);
-            return new LinkedList<>();
+            return new LinkedList();
         }
     }
 
@@ -325,19 +353,19 @@ public class Repository {
         executeInsert("status", new String[]{"Name"}, new String[]{"Afgeleverd"});
 
         // Insert Dummy users
-        executeInsert("user", new String[]{"Username", "Password", "Email", "RoleId", "AirportId"}, 
+        executeInsert("user", new String[]{"Username", "Password", "Email", "RoleId", "AirportId"},
                 new String[]{"user1", "Welkom01.", "user1@gmail.com", "1", "1"});
-        executeInsert("user", new String[]{"Username", "Password", "Email", "RoleId", "AirportId"}, 
+        executeInsert("user", new String[]{"Username", "Password", "Email", "RoleId", "AirportId"},
                 new String[]{"user2", "Welkom01.", "user1@gmail.com", "2", "1"});
-        
+
         // Insert Dummy passengers
         executeInsert("passenger", new String[]{"Firstname", "Lastname", "Email", "Phone", "AddressId"}, new String[]{"Peter", "Pepernoot", "Pepernootje@gmail.com", "0612345678", "1"});
         executeInsert("passenger", new String[]{"Firstname", "Lastname", "Email", "Phone", "AddressId"}, new String[]{"Ricardo", "Spanjaardo", "Spanjaard@gmail.com", "0612345678", "2"});
 
         // Insert Dummy luggages
-        executeInsert("luggage", new String[]{"Destination", "LabelNumber", "FlightNumber", "TypeOfLuggage", "Remarks", "AirportId", "StatusId"}, 
+        executeInsert("luggage", new String[]{"Destination", "LabelNumber", "FlightNumber", "TypeOfLuggage", "Remarks", "AirportId", "StatusId"},
                 new String[]{"Spanje", "AB2645", "4563", "Tas", "Een scheur bij hendel", "2", "1"});
-        executeInsert("luggage", new String[]{"Destination", "LabelNumber", "FlightNumber", "TypeOfLuggage", "Remarks", "AirportId", "StatusId"}, 
+        executeInsert("luggage", new String[]{"Destination", "LabelNumber", "FlightNumber", "TypeOfLuggage", "Remarks", "AirportId", "StatusId"},
                 new String[]{"Amsterdam", "AB2645", "4563", "Koffer", "Een paar duekjes", "1", "2"});
     }
 
