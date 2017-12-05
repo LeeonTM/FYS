@@ -10,6 +10,7 @@ import com.jfoenix.controls.JFXPasswordField;
 import com.mycompany.fys.DbClasses.*;
 import java.io.IOException;
 import java.net.URL;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -48,30 +49,28 @@ public class LoginController extends BaseController {
     @FXML
     private void handleLogin(ActionEvent event) throws IOException {
 
-        //List<User> res = (List<User>) (Object) super.repo.executeSelect("user", new String[]{"Username", "Password"}, new String[]{userName.getText(), passWord.getText()});
-        List<Status> stat = (List<Status>) (Object) super.repo.executeSelect("status");
+        LinkedList result = super.repo.executeSelect("user", new String[]{"Username", "Password"}, new String[]{userName.getText(), passWord.getText()});
         
-        System.out.println(stat.getClass());
-    
-        //System.out.println(res.);
-//        if (!res.isEmpty()) {
-//            // TO DO: Make this not hard coded
-//            System.out.println(res.get(0).getRoleId());
-////            if (res.get(0).roleId == 1) {
-////                // Medewerker Login
-////                Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-////                AnchorPane baseePane = (AnchorPane) stage.getScene().getRoot();
-////                AnchorPane pane = FXMLLoader.load(getClass().getResource("/fxml/Bagagematchen.fxml"));
-////
-////                baseePane.getChildren().setAll(pane.getChildren());
-////            } else {
-////                // Administratie Login
-////                
-////            }
-//        }
-//        else{
-//            passWord.setText("");
-//            loginError.setText("Gebruikersnaam en/of wachtwoord is incorrect.");
-//        }
+        if (!result.isEmpty()) {
+            //TO DO: Make this not hard coded
+            User user = new User();
+            user.fromLinkedList((LinkedList)result.get(0));
+            System.out.println(user.roleId);
+            if (user.getRoleId() == 1) {
+                // Medewerker Login
+                Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                AnchorPane baseePane = (AnchorPane) stage.getScene().getRoot();
+                AnchorPane pane = FXMLLoader.load(getClass().getResource("/fxml/Bagagematchen.fxml"));
+
+                baseePane.getChildren().setAll(pane.getChildren());
+            } else {
+                // Administratie Login
+                
+            }
+        }
+        else{
+            passWord.setText("");
+            loginError.setText("Gebruikersnaam en/of wachtwoord is incorrect.");
+        }
     }
 }
