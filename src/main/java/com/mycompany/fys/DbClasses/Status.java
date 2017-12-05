@@ -5,6 +5,8 @@
  */
 package com.mycompany.fys.DbClasses;
 
+import java.util.LinkedList;
+
 /**
  *
  * @author Leon
@@ -13,6 +15,11 @@ public class Status {
 
     public int id;
     public String name;
+    
+    public void fromLinkedList(LinkedList status){
+        this.setId(Integer.parseInt(status.get(0).toString()));
+        this.setName((String) status.get(1));
+    }
     
     public int getId() {
         return id;
@@ -28,10 +35,5 @@ public class Status {
 
     public void setName(String Name) {
         this.name = Name;
-    }
-    
-    public void setAll(Status status){
-        this.name = status.name;
-        this.id = status.id;
     }
 }

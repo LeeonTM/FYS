@@ -224,7 +224,7 @@ public class Repository {
         }
     }
 
-    public List<Object> executeSelect(String tableName) {
+    public LinkedList<LinkedList> executeSelect(String tableName) {
         try {
             Statement s = this.connection.createStatement();
             String totalQuery = "SELECT * FROM " + tableName;
@@ -234,17 +234,16 @@ public class Repository {
             ResultSet rs = s.executeQuery(totalQuery);
             ResultSetMetaData rsmd = rs.getMetaData();
             int columnsNumber = rsmd.getColumnCount();
-            List<Object> result = new ArrayList<>();
+            LinkedList result = new LinkedList();
 
             while (rs.next()) {
-                Object aa = new Object();
-                List<String> col = new LinkedList<>();
+                LinkedList col = new LinkedList();
                 for (int i = 1; i <= columnsNumber; i++) {
                     col.add(rs.getString(i));
                 }
-                result.add(Object.class.cast(col));
+                result.add(col);
             }
-
+            
             s.close();
             return (result);
         } catch (SQLException ex) {
@@ -254,21 +253,21 @@ public class Repository {
         }
     }
     
-    public List<Object> executeCustomSelect(String query){
+    public LinkedList<LinkedList> executeCustomSelect(String query){
         try{
             Statement s = this.connection.createStatement();
             
             ResultSet rs = s.executeQuery(query);
             ResultSetMetaData rsmd = rs.getMetaData();
             int columnsNumber = rsmd.getColumnCount();
-            List<Object> result = new ArrayList<>();
+            LinkedList result = new LinkedList();
 
             while (rs.next()) {
-                List<String> col = new LinkedList<>();
+                LinkedList col = new LinkedList();
                 for (int i = 1; i <= columnsNumber; i++) {
                     col.add(rs.getString(i));
                 }
-                result.add((Object) col);
+                result.add(col);
             }
 
             s.close();
@@ -281,7 +280,7 @@ public class Repository {
         }
     }
 
-    public List<Object> executeSelect(String tableName, String[] whereColumns, String[] whereValues) {
+    public LinkedList<LinkedList> executeSelect(String tableName, String[] whereColumns, String[] whereValues) {
         try {
             Statement s = this.connection.createStatement();
             String totalQuery = "SELECT * FROM " + tableName + " WHERE ";
@@ -300,14 +299,14 @@ public class Repository {
             ResultSet rs = s.executeQuery(totalQuery);
             ResultSetMetaData rsmd = rs.getMetaData();
             int columnsNumber = rsmd.getColumnCount();
-            List<Object> result = new ArrayList<>();
+            LinkedList result = new LinkedList();
 
             while (rs.next()) {
-                List<String> col = new LinkedList<>();
+                LinkedList col = new LinkedList();
                 for (int i = 1; i <= columnsNumber; i++) {
                     col.add(rs.getString(i));
                 }
-                result.add((Object) col);
+                result.add(col);
             }
 
             s.close();
