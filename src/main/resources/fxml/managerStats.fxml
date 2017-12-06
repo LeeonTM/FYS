@@ -70,7 +70,7 @@
                         <Insets top="150.0" />
                      </GridPane.margin>
                   </JFXComboBox>
-                  <JFXButton buttonType="RAISED" onAction="#handleButtonAction" prefHeight="27.0" prefWidth="339.0" ripplerFill="#971818" style="-fx-background-color: #d81e05;" text="Maak de statistieken!" textFill="WHITE" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                  <JFXButton buttonType="RAISED" onAction="#handleButtonAction" prefHeight="27.0" prefWidth="339.0" ripplerFill="#971818" style="-fx-background-color: #d81e05;" text="Maak piechart aan!" textFill="WHITE" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                      <GridPane.margin>
                         <Insets top="300.0" />
                      </GridPane.margin>
@@ -85,6 +85,22 @@
                         <Insets top="-50.0" />
                      </GridPane.margin>
                   </JFXDatePicker>
+                  <Label fx:id="warning" alignment="CENTER" contentDisplay="CENTER" prefHeight="29.0" prefWidth="295.0" text="Voer alle velden in aub..." textFill="RED" visible="false" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                     <GridPane.margin>
+                        <Insets top="380.0" />
+                     </GridPane.margin>
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="noSearchResults" alignment="CENTER" prefHeight="70.0" prefWidth="628.0" text="Geen vermiste en/of gevonden koffers in  de database bij deze searcheigenschappen!" visible="false" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                     <GridPane.margin>
+                        <Insets top="-350.0" />
+                     </GridPane.margin>
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Label>
                </children>
             </GridPane>
          </children>

@@ -11,7 +11,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.time.LocalDate;
 import java.util.LinkedList;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
@@ -47,6 +46,18 @@ public class ManagerStatsController extends BaseController {
 
     @FXML
     private JFXComboBox luchthaven;
+
+    @FXML
+    private Label warning;
+
+    @FXML
+    private Label noSearchResults;
+
+    @FXML
+    private int gevonden;
+
+    @FXML
+    private int vermist;
 
     /**
      * Initializes the controller class.
@@ -103,8 +114,25 @@ public class ManagerStatsController extends BaseController {
     @FXML
     private void handleButtonAction(ActionEvent event) {
 
-        int vermist;
-        int gevonden;
+        System.out.println(luchthaven.getValue());
+        System.out.println(date1.getValue());
+        System.out.println(date2.getValue());
+
+        if (date2.getValue() == null || date1.getValue() == null || luchthaven.getValue() == null) {
+            //TO DO: Make this not hard coded
+            warning.setVisible(true);
+
+        } else {
+
+            warning.setVisible(false);
+            gegevensVerwerken();
+            setPieChart();
+        }
+
+    }
+
+    @FXML
+    private void gegevensVerwerken() {
         int vermistId = 1;
         int gevondenId = 2;
 
@@ -125,20 +153,26 @@ public class ManagerStatsController extends BaseController {
         vermist = Integer.parseInt(getal1.toString().replace("[", "").replace("]", ""));
         gevonden = Integer.parseInt(getal2.toString().replace("[", "").replace("]", ""));
 
+    }
+
+    private void setPieChart() {
         ObservableList<PieChart.Data> pieChartData
                 = FXCollections.observableArrayList(
-                        new PieChart.Data("Vermist", vermist),
-                        new PieChart.Data("Gevonden", gevonden));
-        
-        pie.setTitle("Lost Luggage 2016");
+                        new PieChart.Data(vermist + " Vermist", vermist),
+                        new PieChart.Data(gevonden + " Gevonden", gevonden));
+
+        pie.setTitle("Vermiste en gevonden bagage van " + date1.getValue() + " tot en met " + date2.getValue());
 
         if (vermist <= 0 && gevonden <= 0) {
             System.out.println("het is leeg");
+            noSearchResults.setVisible(true);
             pie.setVisible(false);
         } else {
+            noSearchResults.setVisible(false);
             pie.getData().setAll(pieChartData);
             pie.setVisible(true);
         }
+
     }
 
 }
