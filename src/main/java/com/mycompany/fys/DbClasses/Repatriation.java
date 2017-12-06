@@ -6,6 +6,7 @@
 package com.mycompany.fys.DbClasses;
 
 import java.util.Date;
+import java.util.LinkedList;
 
 /**
  *
@@ -27,6 +28,22 @@ public class Repatriation {
     public Date deletedAt;
     public boolean isDeleted;
 
+    public void fromLinkedList(LinkedList repatriation){
+        this.setId(Integer.parseInt(repatriation.get(0).toString()));
+        this.setFromAirport(repatriation.get(1).toString());
+        this.setToAddress(repatriation.get(2).toString());
+        this.setTransporter(repatriation.get(3).toString());
+        this.setTransporterType(repatriation.get(4).toString());
+        this.setDate((Date) repatriation.get(5));
+        this.setStatusId(Integer.parseInt(repatriation.get(6).toString()));
+        this.setPassengerId(Integer.parseInt(repatriation.get(7).toString()));
+        this.setLuggageId(Integer.parseInt(repatriation.get(8).toString()));
+        this.setUpdatedAt((Date)repatriation.get(9));
+        this.setCreatedAt((Date)repatriation.get(10));
+        this.setDeletedAt((Date)repatriation.get(11));
+        this.setIsDeleted(Boolean.parseBoolean(repatriation.get(12).toString()));
+    }
+    
     public int getId() {
         return id;
     }
