@@ -5,8 +5,14 @@
  */
 package com.mycompany.fys;
 
+import com.jfoenix.controls.JFXComboBox;
+import com.jfoenix.controls.JFXDatePicker;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.time.LocalDate;
+import java.util.LinkedList;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -16,6 +22,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.chart.PieChart;
+import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
@@ -24,28 +31,45 @@ import javafx.stage.Stage;
  *
  * @author yannick
  */
-public class ManagerStatsController implements Initializable {
+public class ManagerStatsController extends BaseController {
 
     @FXML
     private AnchorPane basePane;
-    
+
     @FXML
     private PieChart pie;
+
+    @FXML
+    private JFXDatePicker date1;
+
+    @FXML
+    private JFXDatePicker date2;
+
+    @FXML
+    private JFXComboBox luchthaven;
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        populatePieCharT(pie);
-    }    
+        String query = "select count(Id) from Airport";
+        LinkedList test = repo.executeCustomSelect(query);
+        int limit = Integer.parseInt(test.toString().replace("[", "").replace("]", ""));
+
+        for (int i = 1; i <= limit; i++) {
+            LinkedList list = repo.executeCustomSelect("SELECT Name FROM Airport where Id = " + i);
+            luchthaven.getItems().add(list.toString().replace("[", "").replace("]", ""));
+        }
+
+    }
 
     @FXML
     private void handleLogout(ActionEvent event) throws IOException {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         AnchorPane basePane = (AnchorPane) stage.getScene().getRoot();
         AnchorPane pane = FXMLLoader.load(getClass().getResource("/fxml/Login.fxml"));
-        
+
         basePane.getChildren().setAll(pane.getChildren());
     }
 
@@ -54,15 +78,16 @@ public class ManagerStatsController implements Initializable {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         AnchorPane basePane = (AnchorPane) stage.getScene().getRoot();
         AnchorPane pane = FXMLLoader.load(getClass().getResource("/fxml/Instellingen.fxml"));
-        
+
         basePane.getChildren().setAll(pane.getChildren());
     }
+
     @FXML
     private void handleUserManage(ActionEvent event) throws IOException {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         AnchorPane basePane = (AnchorPane) stage.getScene().getRoot();
         AnchorPane pane = FXMLLoader.load(getClass().getResource("/fxml/userManagement.fxml"));
-        
+
         basePane.getChildren().setAll(pane.getChildren());
     }
 
@@ -71,20 +96,49 @@ public class ManagerStatsController implements Initializable {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         AnchorPane basePane = (AnchorPane) stage.getScene().getRoot();
         AnchorPane pane = FXMLLoader.load(getClass().getResource("/fxml/managerStats.fxml"));
-        
+
         basePane.getChildren().setAll(pane.getChildren());
     }
-    
-        private void populatePieCharT(PieChart pie) {
+
+    @FXML
+    private void handleButtonAction(ActionEvent event) {
+
+        int vermist;
+        int gevonden;
+        int vermistId = 1;
+        int gevondenId = 2;
+
+        String stap = "select Id from Airport where Name = '" + luchthaven.getValue() + "'";
+        LinkedList stap2 = repo.executeCustomSelect(stap);
+        int vliegveldId = Integer.parseInt(stap2.toString().replace("[", "").replace("]", ""));
+
+        String query1 = "select count(Id) from luggage where CreatedAt between '"
+                + date1.getValue() + "' and '" + date2.getValue()
+                + "' and AirportId = " + vliegveldId + " and StatusId = '" + vermistId + "'";
+        String query2 = "select count(Id) from luggage where CreatedAt between '"
+                + date1.getValue() + "' and '" + date2.getValue()
+                + "' and AirportId = " + vliegveldId + " and StatusId = '" + gevondenId + "'";
+
+        LinkedList getal1 = repo.executeCustomSelect(query1);
+        LinkedList getal2 = repo.executeCustomSelect(query2);
+
+        vermist = Integer.parseInt(getal1.toString().replace("[", "").replace("]", ""));
+        gevonden = Integer.parseInt(getal2.toString().replace("[", "").replace("]", ""));
 
         ObservableList<PieChart.Data> pieChartData
                 = FXCollections.observableArrayList(
-                        new PieChart.Data("Vermist", 113),
-                        new PieChart.Data("Gevonden", 252));
-        pie.setTitle("Lost Luggage 2016");
+                        new PieChart.Data("Vermist", vermist),
+                        new PieChart.Data("Gevonden", gevonden));
         
-        pie.getData().addAll(pieChartData);
+        pie.setTitle("Lost Luggage 2016");
 
+        if (vermist <= 0 && gevonden <= 0) {
+            System.out.println("het is leeg");
+            pie.setVisible(false);
+        } else {
+            pie.getData().setAll(pieChartData);
+            pie.setVisible(true);
+        }
     }
-    
+
 }
