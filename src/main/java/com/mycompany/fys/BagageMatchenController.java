@@ -5,6 +5,7 @@
  */
 package com.mycompany.fys;
 
+import com.jfoenix.controls.JFXButton;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -21,17 +22,22 @@ import javafx.stage.Stage;
  *
  * @author Hicham
  */
-public class BagageMatchenController implements Initializable {
+public class BagageMatchenController extends BaseController {
 
     @FXML
     private AnchorPane basePane;
+    
+    @FXML
+    private JFXButton managerButton;
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        if (BaseController.loggedInUser.getRoleId() == 2) {
+            managerButton.setVisible(true);
+        }
     }    
 
     @FXML
