@@ -73,7 +73,7 @@ public class UserManagementController implements Initializable {
     private void handleAddUser(ActionEvent event) throws IOException {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         AnchorPane basePane = (AnchorPane) stage.getScene().getRoot();
-        AnchorPane pane = FXMLLoader.load(getClass().getResource("/fxml/managerStats.fxml"));
+        AnchorPane pane = FXMLLoader.load(getClass().getResource("/fxml/addUserManagement.fxml"));
         
         basePane.getChildren().setAll(pane.getChildren());
     }

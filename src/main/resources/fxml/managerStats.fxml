@@ -2,7 +2,7 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXComboBox?>
-<?import com.jfoenix.controls.JFXTextField?>
+<?import com.jfoenix.controls.JFXDatePicker?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.chart.PieChart?>
 <?import javafx.scene.control.Label?>
@@ -33,10 +33,10 @@
                         <Font name="Arial Bold" size="24.0" />
                      </font>
                      <GridPane.margin>
-                        <Insets top="-450.0" />
+                        <Insets top="-400.0" />
                      </GridPane.margin>
                   </Label>
-                  <Label text="Tijdsperiode" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                  <Label text="Begin datum" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                      <font>
                         <Font name="Arial Bold" size="14.0" />
                      </font>
@@ -44,40 +44,35 @@
                         <Insets top="-300.0" />
                      </padding>
                   </Label>
-                  <JFXComboBox prefHeight="27.0" prefWidth="322.0" promptText="Kies hier uw tijdsperiode..." GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                  <JFXDatePicker fx:id="date1" prefHeight="27.0" prefWidth="322.0" promptText="Selecteer de begindatum" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                      <GridPane.margin>
                         <Insets top="-220.0" />
                      </GridPane.margin>
-                  </JFXComboBox>
-                  <Label alignment="CENTER" prefHeight="17.0" prefWidth="334.0" text="Desbetreffende week/maand/jaar" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
-                     <GridPane.margin>
-                        <Insets top="-100.0" />
-                     </GridPane.margin>
+                  </JFXDatePicker>
+                  <Label text="Eind datum" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                      <font>
                         <Font name="Arial Bold" size="14.0" />
                      </font>
-                  </Label>
-                  <JFXTextField maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="27.0" prefWidth="324.0" text="Vul hier de weeknummer/maandnaam/jaargetal in..." GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                      <GridPane.margin>
-                        <Insets top="-40.0" />
+                        <Insets top="-120.0" />
                      </GridPane.margin>
-                  </JFXTextField>
+                  </Label>
                   <Label text="Luchthaven" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                      <GridPane.margin>
-                        <Insets top="40.0" />
+                        <Insets top="70.0" />
                      </GridPane.margin>
                      <font>
                         <Font name="Arial Bold" size="14.0" />
                      </font>
                   </Label>
-                  <JFXComboBox prefHeight="27.0" prefWidth="322.0" promptText="Kies hier de luchthaven..." GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                  <JFXComboBox fx:id="luchthaven" prefHeight="27.0" prefWidth="322.0" promptText="Kies hier de luchthaven..." GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                      <GridPane.margin>
-                        <Insets top="100.0" />
+                        <Insets top="150.0" />
                      </GridPane.margin>
                   </JFXComboBox>
-                  <JFXButton buttonType="RAISED" prefHeight="27.0" prefWidth="339.0" ripplerFill="#971818" style="-fx-background-color: #d81e05;" text="Maak de statistieken!" textFill="WHITE" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                  <JFXButton buttonType="RAISED" onAction="#handleButtonAction" prefHeight="27.0" prefWidth="339.0" ripplerFill="#971818" style="-fx-background-color: #d81e05;" text="Maak piechart aan!" textFill="WHITE" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                      <GridPane.margin>
-                        <Insets top="250.0" />
+                        <Insets top="300.0" />
                      </GridPane.margin>
                      <font>
                         <Font name="Arial Bold" size="14.0" />
@@ -85,6 +80,27 @@
                   </JFXButton>
                   <Line startY="-477.0" GridPane.columnIndex="1" />
                   <PieChart fx:id="pie" GridPane.columnIndex="1" />
+                  <JFXDatePicker fx:id="date2" prefHeight="27.0" prefWidth="322.0" promptText="Selecteer de einddatum" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                     <GridPane.margin>
+                        <Insets top="-50.0" />
+                     </GridPane.margin>
+                  </JFXDatePicker>
+                  <Label fx:id="warning" alignment="CENTER" contentDisplay="CENTER" prefHeight="29.0" prefWidth="295.0" text="Voer alle velden in aub..." textFill="RED" visible="false" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                     <GridPane.margin>
+                        <Insets top="380.0" />
+                     </GridPane.margin>
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="noSearchResults" alignment="CENTER" prefHeight="70.0" prefWidth="628.0" text="Geen vermiste en/of gevonden koffers in  de database bij deze searcheigenschappen!" visible="false" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                     <GridPane.margin>
+                        <Insets top="-350.0" />
+                     </GridPane.margin>
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Label>
                </children>
             </GridPane>
          </children>
