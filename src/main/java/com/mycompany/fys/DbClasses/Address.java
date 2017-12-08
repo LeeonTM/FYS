@@ -5,6 +5,8 @@
  */
 package com.mycompany.fys.DbClasses;
 
+import java.util.LinkedList;
+
 /**
  *
  * @author Leon
@@ -18,6 +20,15 @@ public class Address {
     public String postalCode;
     public String country;
 
+    public void LinkedList(LinkedList address){
+        this.setId(Integer.parseInt(address.get(0).toString()));
+        this.setStreet(address.get(1).toString());
+        this.setNumber(Integer.parseInt(address.get(2).toString()));
+        this.setPlace(address.get(3).toString());
+        this.setPostalCode(address.get(4).toString());
+        this.setCountry(address.get(5).toString());
+    }
+    
     public int getId() {
         return id;
     }
