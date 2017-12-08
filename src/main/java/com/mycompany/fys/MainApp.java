@@ -1,6 +1,7 @@
 package com.mycompany.fys;
 
 import com.mycompany.fys.DbClasses.*;
+import java.util.LinkedList;
 import java.util.List;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
@@ -17,8 +18,8 @@ public class MainApp extends Application {
 
         Scene scene = new Scene(root);
         scene.getStylesheets().add("/styles/Styles.css");
-                
-        if(!Repository.dbExists()){
+
+        if (!Repository.dbExists()) {
             Repository.createDummy();
             Repository.addDummyData();
         }
@@ -30,7 +31,7 @@ public class MainApp extends Application {
         // UPDATE voorbeeld - repo.executeUpdate("status", "1", "Id", new String[]{"Name"}, new String[]{"Test 1"});
         // SELECT alles voorbeeld - List<Status> res = (List<Status>) (Object) repo.executeSelect("status");
         // SELECT met multiple of single WHERE - List<Status> res = (List<Status>) (Object) repo.executeSelect("status", new String[]{"Id", "Name"}, new String[]{"1", "Test 1"});
-
+        
         stage.setTitle("Find my Luggage");
         stage.setScene(scene);
         stage.show();

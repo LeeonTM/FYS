@@ -275,7 +275,7 @@
                   <Insets right="125.0" />
                </GridPane.margin>
             </ImageView>
-            <JFXButton buttonType="RAISED" prefHeight="49.0" prefWidth="160.0" ripplerFill="#971818" style="-fx-background-color: #d81e05;" text="Manager" textFill="WHITE" visible="false" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+            <JFXButton fx:id="managerButton" buttonType="RAISED" onAction="#handleManagerOverview" prefHeight="49.0" prefWidth="160.0" ripplerFill="#971818" style="-fx-background-color: #d81e05;" text="Manager" textFill="WHITE" visible="false" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                <font>
                   <Font name="Arial Bold" size="18.0" />
                </font>
