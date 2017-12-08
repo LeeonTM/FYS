@@ -6,7 +6,6 @@
 package com.mycompany.fys.DbClasses;
 
 import java.util.Date;
-import java.util.LinkedList;
 
 /**
  *
@@ -24,18 +23,6 @@ public class DamageClaim {
     public Date deletedAt;
     public boolean isDeleted;
 
-    public void fromLinkedList(LinkedList damageClaim){
-        this.setId(Integer.parseInt(damageClaim.get(0).toString()));
-        this.setDescription(damageClaim.get(1).toString());
-        this.setEstimatePrice(Double.parseDouble(damageClaim.get(2).toString()));
-        this.setInsuranceCompany(damageClaim.get(3).toString());
-        this.setLuggageId(Integer.parseInt(damageClaim.get(4).toString()));
-        this.setCreatedAt((Date) damageClaim.get(5));
-        this.setUpdatedAt((Date) damageClaim.get(6));
-        this.setDeletedAt((Date) damageClaim.get(7));
-        this.setIsDeleted(Boolean.parseBoolean(damageClaim.get(8).toString()));
-    }
-    
     public int getId() {
         return id;
     }
