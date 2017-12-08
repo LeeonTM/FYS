@@ -17,8 +17,11 @@ public class MainApp extends Application {
 
         Scene scene = new Scene(root);
         scene.getStylesheets().add("/styles/Styles.css");
-
-        Repository.createDummy();
+                
+        if(!Repository.dbExists()){
+            Repository.createDummy();
+            Repository.addDummyData();
+        }
         
         //Repository repo = new Repository();
         //System.out.println(repo.executeCustomSelect("SELECT * FROM status"));

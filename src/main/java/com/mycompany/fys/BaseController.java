@@ -19,10 +19,10 @@ public class BaseController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        
     }
     
     public BaseController() {
-        repo = new Repository();
+        //repo = new Repository();
     }
 }

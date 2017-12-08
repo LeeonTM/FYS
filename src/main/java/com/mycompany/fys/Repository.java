@@ -315,7 +315,7 @@ public class Repository {
         }
     }
 
-    private int executeUpdateQuery(String sql) {
+    public int executeUpdateQuery(String sql) {
         try {
             Statement s = this.connection.createStatement();
             log(sql);
@@ -327,6 +327,26 @@ public class Repository {
             error(ex);
             return 0;
         }
+    }
+
+    public static boolean dbExists() {
+        Repository repo = new Repository("sys");
+
+        try {
+            Statement s = repo.connection.createStatement();
+            String sql = "SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = " + "'" + DB_DEFAULT_DATABASE + "'";
+            repo.log(sql);
+            ResultSet n = s.executeQuery(sql);
+            if (n.next()) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (SQLException ex) {
+            repo.error(ex);
+        }
+
+        return false;
     }
 
     public boolean isVerbose() {
@@ -341,79 +361,49 @@ public class Repository {
         return errorMessage;
     }
 
-    private static void addDummyData() {
-        // INSERT voorbeeld - repo.executeInsert("status", new String[]{"Name"},new String[]{"Test"});
-        Repository repo2 = new Repository(DB_DEFAULT_DATABASE);
-        LinkedList result = repo2.executeSelect("user", new String[]{"Username", "Password"}, new String[]{"user1", "Welkom01."});
+    public static void addDummyData() {
+        Repository repo = new Repository();
+        
+        // Insert dummy roles
+        repo.executeInsert("role", new String[]{"Name"}, new String[]{"Medewerker"});
+        repo.executeInsert("role", new String[]{"Name"}, new String[]{"Administratie"});
 
-        if (result.isEmpty()) {
-            // Insert dummy roles
-            repo2.executeInsert("role", new String[]{"Name"}, new String[]{"Medewerker"});
-            repo2.executeInsert("role", new String[]{"Name"}, new String[]{"Administratie"});
+        // Insert dummy airports
+        repo.executeInsert("airport", new String[]{"IATACode", "Name", "Country"}, new String[]{"SCHIP", "Schiphol", "Amsterdam"});
+        repo.executeInsert("airport", new String[]{"IATACode", "Name", "Country"}, new String[]{"BARCE", "Barcelona Airport", "Barcelona"});
 
-            // Insert dummy airports
-            repo2.executeInsert("airport", new String[]{"IATACode", "Name", "Country"}, new String[]{"SCHIP", "Schiphol", "Amsterdam"});
-            repo2.executeInsert("airport", new String[]{"IATACode", "Name", "Country"}, new String[]{"BARCE", "Barcelona Airport", "Barcelona"});
+        // Insert Dummy Adrresses
+        repo.executeInsert("address", new String[]{"Street", "Number", "Place", "PostalCode", "Country"}, new String[]{"Kerkstraat", "11", "Amsterdam", "1234AH", "Nederland"});
+        repo.executeInsert("address", new String[]{"Street", "Number", "Place", "PostalCode", "Country"}, new String[]{"Espana", "165", "Barcelona", "1234YG", "Spanje"});
 
-            // Insert Dummy Adrresses
-            repo2.executeInsert("address", new String[]{"Street", "Number", "Place", "PostalCode", "Country"}, new String[]{"Kerkstraat", "11", "Amsterdam", "1234AH", "Nederland"});
-            repo2.executeInsert("address", new String[]{"Street", "Number", "Place", "PostalCode", "Country"}, new String[]{"Espana", "165", "Barcelona", "1234YG", "Spanje"});
+        // Insert Dummy statuses
+        repo.executeInsert("status", new String[]{"Name"}, new String[]{"Vermist"});
+        repo.executeInsert("status", new String[]{"Name"}, new String[]{"Gevonden"});
+        repo.executeInsert("status", new String[]{"Name"}, new String[]{"In verzending"});
+        repo.executeInsert("status", new String[]{"Name"}, new String[]{"Afgeleverd"});
 
-            // Insert Dummy statuses
-            repo2.executeInsert("status", new String[]{"Name"}, new String[]{"Vermist"});
-            repo2.executeInsert("status", new String[]{"Name"}, new String[]{"Gevonden"});
-            repo2.executeInsert("status", new String[]{"Name"}, new String[]{"In verzending"});
-            repo2.executeInsert("status", new String[]{"Name"}, new String[]{"Afgeleverd"});
+        // Insert Dummy users
+        repo.executeInsert("user", new String[]{"Username", "Password", "Email", "RoleId", "AirportId"},
+                new String[]{"user1", "Welkom01.", "user1@gmail.com", "1", "1"});
+        repo.executeInsert("user", new String[]{"Username", "Password", "Email", "RoleId", "AirportId"},
+                new String[]{"user2", "Welkom01.", "user1@gmail.com", "2", "1"});
 
-            // Insert Dummy users
-            repo2.executeInsert("user", new String[]{"Username", "Password", "Email", "RoleId", "AirportId"},
-                    new String[]{"user1", "Welkom01.", "user1@gmail.com", "1", "1"});
-            repo2.executeInsert("user", new String[]{"Username", "Password", "Email", "RoleId", "AirportId"},
-                    new String[]{"user2", "Welkom01.", "user1@gmail.com", "2", "1"});
+        // Insert Dummy passengers
+        repo.executeInsert("passenger", new String[]{"Firstname", "Lastname", "Email", "Phone", "AddressId"}, new String[]{"Peter", "Pepernoot", "Pepernootje@gmail.com", "0612345678", "1"});
+        repo.executeInsert("passenger", new String[]{"Firstname", "Lastname", "Email", "Phone", "AddressId"}, new String[]{"Ricardo", "Spanjaardo", "Spanjaard@gmail.com", "0612345678", "2"});
 
-            // Insert Dummy passengers
-            repo2.executeInsert("passenger", new String[]{"Firstname", "Lastname", "Email", "Phone", "AddressId"}, new String[]{"Peter", "Pepernoot", "Pepernootje@gmail.com", "0612345678", "1"});
-            repo2.executeInsert("passenger", new String[]{"Firstname", "Lastname", "Email", "Phone", "AddressId"}, new String[]{"Ricardo", "Spanjaardo", "Spanjaard@gmail.com", "0612345678", "2"});
+        // Insert Dummy luggages
+        repo.executeInsert("luggage", new String[]{"Destination", "LabelNumber", "FlightNumber", "TypeOfLuggage", "Remarks", "AirportId", "StatusId"},
+                new String[]{"Spanje", "AB2645", "4563", "Tas", "Een scheur bij hendel", "2", "1"});
+        repo.executeInsert("luggage", new String[]{"Destination", "LabelNumber", "FlightNumber", "TypeOfLuggage", "Remarks", "AirportId", "StatusId"},
+                new String[]{"Amsterdam", "AB2645", "4563", "Koffer", "Een paar duekjes", "1", "2"});
+        // Insert dummy roles
+        repo.executeInsert("role", new String[]{"Name"}, new String[]{"Medewerker"});
+        repo.executeInsert("role", new String[]{"Name"}, new String[]{"Administratie"});
 
-            // Insert Dummy luggages
-            repo2.executeInsert("luggage", new String[]{"Destination", "LabelNumber", "FlightNumber", "TypeOfLuggage", "Remarks", "AirportId", "StatusId"},
-                    new String[]{"Spanje", "AB2645", "4563", "Tas", "Een scheur bij hendel", "2", "1"});
-            repo2.executeInsert("luggage", new String[]{"Destination", "LabelNumber", "FlightNumber", "TypeOfLuggage", "Remarks", "AirportId", "StatusId"},
-                    new String[]{"Amsterdam", "AB2645", "4563", "Koffer", "Een paar duekjes", "1", "2"});
-            // Insert dummy roles
-            repo2.executeInsert("role", new String[]{"Name"}, new String[]{"Medewerker"});
-            repo2.executeInsert("role", new String[]{"Name"}, new String[]{"Administratie"});
-
-            // Insert dummy airports
-            repo2.executeInsert("airport", new String[]{"IATACode", "Name", "Country"}, new String[]{"SCHIP", "Schiphol", "Amsterdam"});
-            repo2.executeInsert("airport", new String[]{"IATACode", "Name", "Country"}, new String[]{"BARCE", "Barcelona Airport", "Barcelona"});
-
-            // Insert Dummy Adrresses
-            repo2.executeInsert("address", new String[]{"Street", "Number", "Place", "PostalCode", "Country"}, new String[]{"Kerkstraat", "11", "Amsterdam", "1234AH", "Nederland"});
-            repo2.executeInsert("address", new String[]{"Street", "Number", "Place", "PostalCode", "Country"}, new String[]{"Espana", "165", "Barcelona", "1234YG", "Spanje"});
-
-            // Insert Dummy statuses
-            repo2.executeInsert("status", new String[]{"Name"}, new String[]{"Vermist"});
-            repo2.executeInsert("status", new String[]{"Name"}, new String[]{"Gevonden"});
-            repo2.executeInsert("status", new String[]{"Name"}, new String[]{"In verzending"});
-            repo2.executeInsert("status", new String[]{"Name"}, new String[]{"Afgeleverd"});
-
-            // Insert Dummy users
-            repo2.executeInsert("user", new String[]{"Username", "Password", "Email", "RoleId", "AirportId"},
-                    new String[]{"user1", "Welkom01.", "user1@gmail.com", "1", "1"});
-            repo2.executeInsert("user", new String[]{"Username", "Password", "Email", "RoleId", "AirportId"},
-                    new String[]{"user2", "Welkom01.", "user1@gmail.com", "2", "1"});
-
-            // Insert Dummy passengers
-            repo2.executeInsert("passenger", new String[]{"Firstname", "Lastname", "Email", "Phone", "AddressId"}, new String[]{"Peter", "Pepernoot", "Pepernootje@gmail.com", "0612345678", "1"});
-            repo2.executeInsert("passenger", new String[]{"Firstname", "Lastname", "Email", "Phone", "AddressId"}, new String[]{"Ricardo", "Spanjaardo", "Spanjaard@gmail.com", "0612345678", "2"});
-
-            // Insert Dummy luggages
-            repo2.executeInsert("luggage", new String[]{"Destination", "LabelNumber", "FlightNumber", "TypeOfLuggage", "Remarks", "AirportId", "StatusId"},
-                    new String[]{"Spanje", "AB2645", "4563", "Tas", "Een scheur bij hendel", "2", "1"});
-            repo2.executeInsert("luggage", new String[]{"Destination", "LabelNumber", "FlightNumber", "TypeOfLuggage", "Remarks", "AirportId", "StatusId"},
-                    new String[]{"Amsterdam", "AB2645", "4563", "Koffer", "Een paar duekjes", "1", "2"});
-        }
+        // Insert dummy airports
+        repo.executeInsert("airport", new String[]{"IATACode", "Name", "Country"}, new String[]{"SCHIP", "Schiphol", "Amsterdam"});
+        repo.executeInsert("airport", new String[]{"IATACode", "Name", "Country"}, new String[]{"BARCE", "Barcelona Airport", "Barcelona"});
     }
 
     public static void createDummy() {
@@ -422,184 +412,179 @@ public class Repository {
         int result = repo.executeUpdateQuery("CREATE DATABASE IF NOT EXISTS " + DB_DEFAULT_DATABASE);
         repo.close();
 
-        if (result == 1) {
-            Repository repo2 = new Repository(DB_DEFAULT_DATABASE);
-            repo2.executeUpdateQuery("CREATE TABLE IF NOT EXISTS Airport ("
-                    + "  Id INT NOT NULL AUTO_INCREMENT,"
-                    + "  IATACode VARCHAR(45) NOT NULL,"
-                    + "  Name VARCHAR(200) NULL,"
-                    + "  Country VARCHAR(200) NULL,"
-                    + "  PRIMARY KEY (Id),"
-                    + "  UNIQUE INDEX Id_UNIQUE (Id ASC))"
-                    + "ENGINE = InnoDB;");
+        Repository repo2 = new Repository(DB_DEFAULT_DATABASE);
+        repo2.executeUpdateQuery("CREATE TABLE IF NOT EXISTS Airport ("
+                + "  Id INT NOT NULL AUTO_INCREMENT,"
+                + "  IATACode VARCHAR(45) NOT NULL,"
+                + "  Name VARCHAR(200) NULL,"
+                + "  Country VARCHAR(200) NULL,"
+                + "  PRIMARY KEY (Id),"
+                + "  UNIQUE INDEX Id_UNIQUE (Id ASC))"
+                + "ENGINE = InnoDB;");
 
-            repo2.executeUpdateQuery("CREATE TABLE IF NOT EXISTS Role ("
-                    + "  Id INT NOT NULL AUTO_INCREMENT,"
-                    + "  Name VARCHAR(200) NULL,"
-                    + "  PRIMARY KEY (Id),"
-                    + "  UNIQUE INDEX Id_UNIQUE (Id ASC))"
-                    + "ENGINE = InnoDB;");
+        repo2.executeUpdateQuery("CREATE TABLE IF NOT EXISTS Role ("
+                + "  Id INT NOT NULL AUTO_INCREMENT,"
+                + "  Name VARCHAR(200) NULL,"
+                + "  PRIMARY KEY (Id),"
+                + "  UNIQUE INDEX Id_UNIQUE (Id ASC))"
+                + "ENGINE = InnoDB;");
 
-            repo2.executeUpdateQuery("CREATE TABLE IF NOT EXISTS Address ("
-                    + "  Id INT NOT NULL AUTO_INCREMENT,"
-                    + "  Street VARCHAR(200) NULL,"
-                    + "  Number INT NOT NULL,"
-                    + "  Place VARCHAR(200) NULL,"
-                    + "  PostalCode VARCHAR(25) NOT NULL,"
-                    + "  Country VARCHAR(200) NULL,"
-                    + "  PRIMARY KEY (Id),"
-                    + "  UNIQUE INDEX Id_UNIQUE (Id ASC))"
-                    + "ENGINE = InnoDB;");
+        repo2.executeUpdateQuery("CREATE TABLE IF NOT EXISTS Address ("
+                + "  Id INT NOT NULL AUTO_INCREMENT,"
+                + "  Street VARCHAR(200) NULL,"
+                + "  Number INT NOT NULL,"
+                + "  Place VARCHAR(200) NULL,"
+                + "  PostalCode VARCHAR(25) NOT NULL,"
+                + "  Country VARCHAR(200) NULL,"
+                + "  PRIMARY KEY (Id),"
+                + "  UNIQUE INDEX Id_UNIQUE (Id ASC))"
+                + "ENGINE = InnoDB;");
 
-            repo2.executeUpdateQuery("CREATE TABLE IF NOT EXISTS Status ("
-                    + "  Id INT NOT NULL AUTO_INCREMENT,"
-                    + "  Name VARCHAR(200) NULL,"
-                    + "  PRIMARY KEY (Id),"
-                    + "  UNIQUE INDEX Id_UNIQUE (Id ASC))"
-                    + "ENGINE = InnoDB;");
+        repo2.executeUpdateQuery("CREATE TABLE IF NOT EXISTS Status ("
+                + "  Id INT NOT NULL AUTO_INCREMENT,"
+                + "  Name VARCHAR(200) NULL,"
+                + "  PRIMARY KEY (Id),"
+                + "  UNIQUE INDEX Id_UNIQUE (Id ASC))"
+                + "ENGINE = InnoDB;");
 
-            repo2.executeUpdateQuery("CREATE TABLE IF NOT EXISTS User ("
-                    + "  Id INT NOT NULL AUTO_INCREMENT,"
-                    + "  Username VARCHAR(200) NOT NULL,"
-                    + "  Password VARCHAR(200) NOT NULL,"
-                    + "  Email VARCHAR(200) NOT NULL,"
-                    + "  LastLoginDate DATETIME NULL DEFAULT NULL,"
-                    + "  RoleId INT NOT NULL,"
-                    + "  AirportId INT NOT NULL,"
-                    + "  UpdatedAt DATETIME NULL DEFAULT NULL,"
-                    + "  CreatedAt DATETIME NULL DEFAULT NULL,"
-                    + "  DeletedAt DATETIME NULL DEFAULT NULL,"
-                    + "  IsDeleted BIT NULL DEFAULT 0,"
-                    + "  PRIMARY KEY (Id),"
-                    + "  UNIQUE INDEX Id_UNIQUE (Id ASC),"
-                    + "  UNIQUE INDEX Username_UNIQUE (Username ASC),"
-                    + "  INDEX UserAirportId_idx (AirportId ASC),"
-                    + "  INDEX UserRoleId_idx (RoleId ASC),"
-                    + "  CONSTRAINT UserAirportId"
-                    + "    FOREIGN KEY (AirportId)"
-                    + "    REFERENCES Airport (Id)"
-                    + "    ON DELETE NO ACTION"
-                    + "    ON UPDATE NO ACTION,"
-                    + "  CONSTRAINT UserRoleId"
-                    + "    FOREIGN KEY (RoleId)"
-                    + "    REFERENCES Role (Id)"
-                    + "    ON DELETE NO ACTION"
-                    + "    ON UPDATE NO ACTION)"
-                    + "ENGINE = InnoDB;");
+        repo2.executeUpdateQuery("CREATE TABLE IF NOT EXISTS User ("
+                + "  Id INT NOT NULL AUTO_INCREMENT,"
+                + "  Username VARCHAR(200) NOT NULL,"
+                + "  Password VARCHAR(200) NOT NULL,"
+                + "  Email VARCHAR(200) NOT NULL,"
+                + "  LastLoginDate DATETIME NULL DEFAULT NULL,"
+                + "  RoleId INT NOT NULL,"
+                + "  AirportId INT NOT NULL,"
+                + "  UpdatedAt DATETIME NULL DEFAULT NULL,"
+                + "  CreatedAt DATETIME NULL DEFAULT NULL,"
+                + "  DeletedAt DATETIME NULL DEFAULT NULL,"
+                + "  IsDeleted BIT NULL DEFAULT 0,"
+                + "  PRIMARY KEY (Id),"
+                + "  UNIQUE INDEX Id_UNIQUE (Id ASC),"
+                + "  UNIQUE INDEX Username_UNIQUE (Username ASC),"
+                + "  INDEX UserAirportId_idx (AirportId ASC),"
+                + "  INDEX UserRoleId_idx (RoleId ASC),"
+                + "  CONSTRAINT UserAirportId"
+                + "    FOREIGN KEY (AirportId)"
+                + "    REFERENCES Airport (Id)"
+                + "    ON DELETE NO ACTION"
+                + "    ON UPDATE NO ACTION,"
+                + "  CONSTRAINT UserRoleId"
+                + "    FOREIGN KEY (RoleId)"
+                + "    REFERENCES Role (Id)"
+                + "    ON DELETE NO ACTION"
+                + "    ON UPDATE NO ACTION)"
+                + "ENGINE = InnoDB;");
 
-            repo2.executeUpdateQuery("CREATE TABLE IF NOT EXISTS Passenger ("
-                    + "  Id INT NOT NULL AUTO_INCREMENT,"
-                    + "  Firstname VARCHAR(200) NULL,"
-                    + "  Insertion VARCHAR(100) NULL,"
-                    + "  Lastname VARCHAR(200) NULL,"
-                    + "  Email VARCHAR(200) NULL,"
-                    + "  Phone BIGINT(50) NULL,"
-                    + "  AddressId INT NOT NULL,"
-                    + "  UpdatedAt DATETIME NULL DEFAULT NULL,"
-                    + "  CreatedAt DATETIME NULL DEFAULT NULL,"
-                    + "  DeletedAt DATETIME NULL DEFAULT NULL,"
-                    + "  IsDeleted BIT NULL DEFAULT 0,"
-                    + "  PRIMARY KEY (Id),"
-                    + "  UNIQUE INDEX Id_UNIQUE (Id ASC),"
-                    + "  INDEX PassengerAddressId_idx (AddressId ASC),"
-                    + "  CONSTRAINT PassengerAddressId"
-                    + "    FOREIGN KEY (AddressId)"
-                    + "    REFERENCES Address (Id)"
-                    + "    ON DELETE NO ACTION"
-                    + "    ON UPDATE NO ACTION)"
-                    + "ENGINE = InnoDB;");
+        repo2.executeUpdateQuery("CREATE TABLE IF NOT EXISTS Passenger ("
+                + "  Id INT NOT NULL AUTO_INCREMENT,"
+                + "  Firstname VARCHAR(200) NULL,"
+                + "  Insertion VARCHAR(100) NULL,"
+                + "  Lastname VARCHAR(200) NULL,"
+                + "  Email VARCHAR(200) NULL,"
+                + "  Phone BIGINT(50) NULL,"
+                + "  AddressId INT NOT NULL,"
+                + "  UpdatedAt DATETIME NULL DEFAULT NULL,"
+                + "  CreatedAt DATETIME NULL DEFAULT NULL,"
+                + "  DeletedAt DATETIME NULL DEFAULT NULL,"
+                + "  IsDeleted BIT NULL DEFAULT 0,"
+                + "  PRIMARY KEY (Id),"
+                + "  UNIQUE INDEX Id_UNIQUE (Id ASC),"
+                + "  INDEX PassengerAddressId_idx (AddressId ASC),"
+                + "  CONSTRAINT PassengerAddressId"
+                + "    FOREIGN KEY (AddressId)"
+                + "    REFERENCES Address (Id)"
+                + "    ON DELETE NO ACTION"
+                + "    ON UPDATE NO ACTION)"
+                + "ENGINE = InnoDB;");
 
-            repo2.executeUpdateQuery("CREATE TABLE IF NOT EXISTS Luggage ("
-                    + "  Id INT NOT NULL AUTO_INCREMENT,"
-                    + "  Destination VARCHAR(200) NULL,"
-                    + "  LabelNumber VARCHAR(200) NULL,"
-                    + "  FlightNumber VARCHAR(200) NULL,"
-                    + "  WFCode VARCHAR(200) NULL,"
-                    + "  TypeOfLuggage VARCHAR(200) NULL,"
-                    + "  Brand VARCHAR(200) NULL,"
-                    + "  Colour VARCHAR(200) NULL,"
-                    + "  Remarks VARCHAR(255) NULL,"
-                    + "  PassengerId INT NULL,"
-                    + "  AirportId INT NOT NULL,"
-                    + "  StatusId INT NOT NULL,"
-                    + "  UpdatedAt DATETIME NULL DEFAULT NULL,"
-                    + "  CreatedAt DATETIME NULL DEFAULT NULL,"
-                    + "  DeletedAt DATETIME NULL DEFAULT NULL,"
-                    + "  IsDeleted BIT NULL DEFAULT 0,"
-                    + "  PRIMARY KEY (Id),"
-                    + "  UNIQUE INDEX Id_UNIQUE (Id ASC),"
-                    + "  INDEX LuggageAirportId_idx (AirportId ASC),"
-                    + "  INDEX LuggagePassengerId_idx (PassengerId ASC),"
-                    + "  INDEX LuggageStatusId_idx (StatusId ASC),"
-                    + "  CONSTRAINT LuggageAirportId"
-                    + "    FOREIGN KEY (AirportId)"
-                    + "    REFERENCES Airport (Id)"
-                    + "    ON DELETE NO ACTION"
-                    + "    ON UPDATE NO ACTION,"
-                    + "  CONSTRAINT LuggagePassengerId"
-                    + "    FOREIGN KEY (PassengerId)"
-                    + "    REFERENCES Passenger (Id)"
-                    + "    ON DELETE NO ACTION"
-                    + "    ON UPDATE NO ACTION,"
-                    + "  CONSTRAINT LuggageStatusId"
-                    + "    FOREIGN KEY (StatusId)"
-                    + "    REFERENCES Status (Id)"
-                    + "    ON DELETE NO ACTION"
-                    + "    ON UPDATE NO ACTION)"
-                    + "ENGINE = InnoDB;");
+        repo2.executeUpdateQuery("CREATE TABLE IF NOT EXISTS Luggage ("
+                + "  Id INT NOT NULL AUTO_INCREMENT,"
+                + "  Destination VARCHAR(200) NULL,"
+                + "  LabelNumber VARCHAR(200) NULL,"
+                + "  FlightNumber VARCHAR(200) NULL,"
+                + "  WFCode VARCHAR(200) NULL,"
+                + "  TypeOfLuggage VARCHAR(200) NULL,"
+                + "  Brand VARCHAR(200) NULL,"
+                + "  Colour VARCHAR(200) NULL,"
+                + "  Remarks VARCHAR(255) NULL,"
+                + "  PassengerId INT NULL,"
+                + "  AirportId INT NOT NULL,"
+                + "  StatusId INT NOT NULL,"
+                + "  UpdatedAt DATETIME NULL DEFAULT NULL,"
+                + "  CreatedAt DATETIME NULL DEFAULT NULL,"
+                + "  DeletedAt DATETIME NULL DEFAULT NULL,"
+                + "  IsDeleted BIT NULL DEFAULT 0,"
+                + "  PRIMARY KEY (Id),"
+                + "  UNIQUE INDEX Id_UNIQUE (Id ASC),"
+                + "  INDEX LuggageAirportId_idx (AirportId ASC),"
+                + "  INDEX LuggagePassengerId_idx (PassengerId ASC),"
+                + "  INDEX LuggageStatusId_idx (StatusId ASC),"
+                + "  CONSTRAINT LuggageAirportId"
+                + "    FOREIGN KEY (AirportId)"
+                + "    REFERENCES Airport (Id)"
+                + "    ON DELETE NO ACTION"
+                + "    ON UPDATE NO ACTION,"
+                + "  CONSTRAINT LuggagePassengerId"
+                + "    FOREIGN KEY (PassengerId)"
+                + "    REFERENCES Passenger (Id)"
+                + "    ON DELETE NO ACTION"
+                + "    ON UPDATE NO ACTION,"
+                + "  CONSTRAINT LuggageStatusId"
+                + "    FOREIGN KEY (StatusId)"
+                + "    REFERENCES Status (Id)"
+                + "    ON DELETE NO ACTION"
+                + "    ON UPDATE NO ACTION)"
+                + "ENGINE = InnoDB;");
 
-            repo2.executeUpdateQuery("CREATE TABLE IF NOT EXISTS DamageClaim ("
-                    + "  Id INT NOT NULL AUTO_INCREMENT,"
-                    + "  Description VARCHAR(255) NULL,"
-                    + "  EstimatePrice DOUBLE ZEROFILL NULL,"
-                    + "  InsuranceCompany VARCHAR(255) NULL,"
-                    + "  LuggageId INT NOT NULL,"
-                    + "  UpdatedAt DATETIME NULL DEFAULT NULL,"
-                    + "  CreatedAt DATETIME NULL DEFAULT NULL,"
-                    + "  DeletedAt DATETIME NULL DEFAULT NULL,"
-                    + "  IsDeleted BIT NULL DEFAULT 0,"
-                    + "  PRIMARY KEY (Id),"
-                    + "  UNIQUE INDEX Id_UNIQUE (Id ASC),"
-                    + "  INDEX DamageClaimLuggageId_idx (LuggageId ASC),"
-                    + "  CONSTRAINT DamageClaimLuggageId"
-                    + "    FOREIGN KEY (LuggageId)"
-                    + "    REFERENCES Luggage (Id)"
-                    + "    ON DELETE NO ACTION"
-                    + "    ON UPDATE NO ACTION)"
-                    + "ENGINE = InnoDB;");
+        repo2.executeUpdateQuery("CREATE TABLE IF NOT EXISTS DamageClaim ("
+                + "  Id INT NOT NULL AUTO_INCREMENT,"
+                + "  Description VARCHAR(255) NULL,"
+                + "  EstimatePrice DOUBLE ZEROFILL NULL,"
+                + "  InsuranceCompany VARCHAR(255) NULL,"
+                + "  LuggageId INT NOT NULL,"
+                + "  UpdatedAt DATETIME NULL DEFAULT NULL,"
+                + "  CreatedAt DATETIME NULL DEFAULT NULL,"
+                + "  DeletedAt DATETIME NULL DEFAULT NULL,"
+                + "  IsDeleted BIT NULL DEFAULT 0,"
+                + "  PRIMARY KEY (Id),"
+                + "  UNIQUE INDEX Id_UNIQUE (Id ASC),"
+                + "  INDEX DamageClaimLuggageId_idx (LuggageId ASC),"
+                + "  CONSTRAINT DamageClaimLuggageId"
+                + "    FOREIGN KEY (LuggageId)"
+                + "    REFERENCES Luggage (Id)"
+                + "    ON DELETE NO ACTION"
+                + "    ON UPDATE NO ACTION)"
+                + "ENGINE = InnoDB;");
 
-            repo2.executeUpdateQuery("CREATE TABLE IF NOT EXISTS Repatriation ("
-                    + "  Id INT NOT NULL AUTO_INCREMENT,"
-                    + "  FromAirport VARCHAR(255) NULL,"
-                    + "  ToAddress VARCHAR(255) NULL,"
-                    + "  Transporter VARCHAR(200) NULL,"
-                    + "  TransporterType VARCHAR(200) NULL,"
-                    + "  Date DATETIME NULL,"
-                    + "  StatusId INT NOT NULL,"
-                    + "  PassengerId INT NOT NULL,"
-                    + "  LuggageId INT NOT NULL,"
-                    + "  UpdatedAt DATETIME NULL DEFAULT NULL,"
-                    + "  CreatedAt DATETIME NULL DEFAULT NULL,"
-                    + "  DeletedAt DATETIME NULL DEFAULT NULL,"
-                    + "  IsDeleted BIT NULL DEFAULT 0,"
-                    + "  PRIMARY KEY (Id),"
-                    + "  UNIQUE INDEX Id_UNIQUE (Id ASC),"
-                    + "  INDEX RepatriationLuggageId_idx (LuggageId ASC),"
-                    + "  INDEX RepatriationStatusId_idx (StatusId ASC),"
-                    + "  CONSTRAINT RepatriationLuggageId"
-                    + "    FOREIGN KEY (LuggageId)"
-                    + "    REFERENCES Luggage (Id)"
-                    + "    ON DELETE NO ACTION"
-                    + "    ON UPDATE NO ACTION,"
-                    + "  CONSTRAINT RepatriationStatusId"
-                    + "    FOREIGN KEY (StatusId)"
-                    + "    REFERENCES Status (Id)"
-                    + "    ON DELETE NO ACTION"
-                    + "    ON UPDATE NO ACTION)"
-                    + "ENGINE = InnoDB;");
-
-            // Add dummy data to created db
-            addDummyData();
-        }
+        repo2.executeUpdateQuery("CREATE TABLE IF NOT EXISTS Repatriation ("
+                + "  Id INT NOT NULL AUTO_INCREMENT,"
+                + "  FromAirport VARCHAR(255) NULL,"
+                + "  ToAddress VARCHAR(255) NULL,"
+                + "  Transporter VARCHAR(200) NULL,"
+                + "  TransporterType VARCHAR(200) NULL,"
+                + "  Date DATETIME NULL,"
+                + "  StatusId INT NOT NULL,"
+                + "  PassengerId INT NOT NULL,"
+                + "  LuggageId INT NOT NULL,"
+                + "  UpdatedAt DATETIME NULL DEFAULT NULL,"
+                + "  CreatedAt DATETIME NULL DEFAULT NULL,"
+                + "  DeletedAt DATETIME NULL DEFAULT NULL,"
+                + "  IsDeleted BIT NULL DEFAULT 0,"
+                + "  PRIMARY KEY (Id),"
+                + "  UNIQUE INDEX Id_UNIQUE (Id ASC),"
+                + "  INDEX RepatriationLuggageId_idx (LuggageId ASC),"
+                + "  INDEX RepatriationStatusId_idx (StatusId ASC),"
+                + "  CONSTRAINT RepatriationLuggageId"
+                + "    FOREIGN KEY (LuggageId)"
+                + "    REFERENCES Luggage (Id)"
+                + "    ON DELETE NO ACTION"
+                + "    ON UPDATE NO ACTION,"
+                + "  CONSTRAINT RepatriationStatusId"
+                + "    FOREIGN KEY (StatusId)"
+                + "    REFERENCES Status (Id)"
+                + "    ON DELETE NO ACTION"
+                + "    ON UPDATE NO ACTION)"
+                + "ENGINE = InnoDB;");
     }
 }
