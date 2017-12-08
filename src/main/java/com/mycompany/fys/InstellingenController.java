@@ -82,5 +82,12 @@ public class InstellingenController extends BaseController {
         basePane.getChildren().setAll(pane.getChildren());
     }
     
-    
+    @FXML
+    private void handleManagerOverview(ActionEvent event) throws IOException {
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        AnchorPane basePane = (AnchorPane) stage.getScene().getRoot();
+        AnchorPane pane = FXMLLoader.load(getClass().getResource("/fxml/managerStats.fxml"));
+        
+        basePane.getChildren().setAll(pane.getChildren());
+    }
 }
