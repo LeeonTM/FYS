@@ -7,17 +7,23 @@ package com.mycompany.fys;
 
 import com.jfoenix.controls.JFXTreeTableView;
 import com.mycompany.fys.DbClasses.Luggage;
+import com.mycompany.fys.DbClasses.User;
 import java.io.IOException;
 import java.net.URL;
 import java.util.LinkedList;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
@@ -31,11 +37,29 @@ public class OverviewController extends BaseController {
     private AnchorPane overviewPane;
 
     @FXML
-    private JFXTreeTableView overviewTable;
+    private TableView overviewtable;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
+        ObservableList<Luggage> list = FXCollections.observableArrayList();
+        LinkedList result = super.repo.executeSelect("luggage");
+        for (Object a : result) {
+            Luggage luggage = new Luggage();
+            System.out.println(a);
+            luggage.fromLinkedList((LinkedList) a);
+            
+            list.add(luggage);
+        }
+
+        for (int cnr = 0; cnr < overviewtable.getColumns().size(); cnr++) {
+            TableColumn tc = (TableColumn) overviewtable.getColumns().get(cnr);
+            String propertyName = tc.getId();
+            if (propertyName != null && !propertyName.isEmpty()) {
+                tc.setCellValueFactory(new PropertyValueFactory<>(propertyName));
+            }
+        }
+        overviewtable.setItems(list);
+
     }
 
     @FXML
