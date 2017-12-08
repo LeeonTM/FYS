@@ -24,7 +24,12 @@ public class BaseController implements Initializable {
         
     }
     
-    public BaseController() {
+    public BaseController() {        
+        if (!Repository.dbExists()) {
+            Repository.createDummy();
+            Repository.addDummyData();
+        }
+        
         repo = new Repository();
     }
 }
