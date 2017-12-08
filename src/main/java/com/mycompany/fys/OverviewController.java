@@ -5,6 +5,7 @@
  */
 package com.mycompany.fys;
 
+import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTreeTableView;
 import com.mycompany.fys.DbClasses.Luggage;
 import com.mycompany.fys.DbClasses.User;
@@ -38,9 +39,15 @@ public class OverviewController extends BaseController {
 
     @FXML
     private TableView overviewtable;
+    
+        @FXML
+    private JFXButton managerButton;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+                if (BaseController.loggedInUser.getRoleId() == 2) {
+            managerButton.setVisible(true);
+        }    
         ObservableList<Luggage> list = FXCollections.observableArrayList();
         LinkedList result = super.repo.executeSelect("luggage");
         for (Object a : result) {
