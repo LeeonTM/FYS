@@ -5,9 +5,12 @@
  */
 package com.mycompany.fys;
 
+import com.mycompany.fys.DbClasses.User;
 import javafx.scene.control.TableView;
 import java.io.IOException;
 import java.net.URL;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -49,27 +52,24 @@ public class UserManagementController extends BaseController {
      * Initializes the controller class.
     */
     
-    final ObservableList<UserDetails> data = FXCollections.observableArrayList();
-    
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        data.add(new UserDetails());
+    public void initialize(URL url, ResourceBundle rb) { 
+        ObservableList<User> list = FXCollections.observableArrayList();
+        LinkedList result = super.repo.executeSelect("user");
+        for(Object a : result){
+            User user = new User();
+            user.fromLinkedList((LinkedList)a);
+            list.add(user);
+        }
         
         for (int cnr = 0; cnr < userManagementTableView.getColumns().size(); cnr++) {
             TableColumn tc = (TableColumn)userManagementTableView.getColumns().get(cnr);
             String propertyName = tc.getId();
             if (propertyName != null && !propertyName.isEmpty()) {
                 tc.setCellValueFactory(new PropertyValueFactory<>(propertyName));
-                System.out.println("Attached column '" + propertyName + "' in tableview to matching attribute");
             }
         }
-        
-//        Username.setCellValueFactory(new PropertyValueFactory<>("Username"));
-//        Email.setCellValueFactory(new PropertyValueFactory<>("Email"));
-//        AirportId.setCellValueFactory(new PropertyValueFactory<>("AirportId"));
-//        RoleId.setCellValueFactory(new PropertyValueFactory<>("RoleId"));
-        
-        userManagementTableView.setItems(data);
+        userManagementTableView.setItems(list);
     }
 
     @FXML
