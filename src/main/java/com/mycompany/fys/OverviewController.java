@@ -21,6 +21,9 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
@@ -34,11 +37,27 @@ public class OverviewController extends BaseController {
     private AnchorPane overviewPane;
 
     @FXML
-    private JFXTreeTableView overviewTable;
+    private TableView overviewtable;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
+        ObservableList<Luggage> list = FXCollections.observableArrayList();
+        LinkedList result = super.repo.executeSelect("luggage");
+        for (Object a : result) {
+            Luggage luggage = new Luggage();
+            luggage.fromLinkedList((LinkedList) a);
+            list.add(luggage);
+        }
+
+        for (int cnr = 0; cnr < overviewtable.getColumns().size(); cnr++) {
+            TableColumn tc = (TableColumn) overviewtable.getColumns().get(cnr);
+            String propertyName = tc.getId();
+            if (propertyName != null && !propertyName.isEmpty()) {
+                tc.setCellValueFactory(new PropertyValueFactory<>(propertyName));
+            }
+        }
+        overviewtable.setItems(list);
+
     }
 
     @FXML
