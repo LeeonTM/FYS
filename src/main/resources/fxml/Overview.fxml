@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
-<?import com.jfoenix.controls.JFXTreeTableView?>
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.TreeTableColumn?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -24,16 +24,15 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <JFXTreeTableView fx:id="overviewTable">
-                     <columns>
-                        <TreeTableColumn prefWidth="260.66668701171875" text="Naam van Eigenaar " />
-                        <TreeTableColumn prefWidth="135.33331298828125" text="Aanmelddatum" />
-                        <TreeTableColumn prefWidth="163.99993896484375" text="Vluchtnummer" />
-                        <TreeTableColumn prefWidth="277.0" text="Bagage kenmerken" />
-                        <TreeTableColumn prefWidth="124.0" text="Selecteren" />
-                        <TreeTableColumn prefWidth="227.6666259765625" text="Status" />
-                     </columns>
-                  </JFXTreeTableView>
+                  <TableView fx:id="overviewtable" prefHeight="127.0" prefWidth="472.0">
+                    <columns>
+                      <TableColumn fx:id="naam" prefWidth="203.0" text="Naam van eigenaar" />
+                      <TableColumn fx:id="aanmelddatum" prefWidth="215.0" text="Aanmelddatum" />
+                        <TableColumn fx:id="vluchtnummer" prefWidth="193.0" text="Vluchtnummer" />
+                        <TableColumn fx:id="bagagekenmerken" prefWidth="436.0" text="Bagage kenmerken" />
+                        <TableColumn fx:id="status" prefWidth="140.0" text="Status" />
+                    </columns>
+                  </TableView>
                </children>
             </GridPane>
          </children>
