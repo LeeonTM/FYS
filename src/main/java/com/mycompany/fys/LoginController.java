@@ -55,7 +55,6 @@ public class LoginController extends BaseController {
             //TO DO: Make this not hard coded
             User user = new User();
             user.fromLinkedList((LinkedList)result.get(0));
-            System.out.println(user.roleId);
             if (user.getRoleId() == 1) {
                 // Medewerker Login
                 Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
