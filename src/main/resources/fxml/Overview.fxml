@@ -26,11 +26,11 @@
                <children>
                   <TableView fx:id="overviewtable" prefHeight="127.0" prefWidth="472.0">
                     <columns>
-                      <TableColumn fx:id="naam" prefWidth="203.0" text="Naam van eigenaar" />
-                      <TableColumn fx:id="aanmelddatum" prefWidth="215.0" text="Aanmelddatum" />
-                        <TableColumn fx:id="vluchtnummer" prefWidth="193.0" text="Vluchtnummer" />
-                        <TableColumn fx:id="bagagekenmerken" prefWidth="436.0" text="Bagage kenmerken" />
-                        <TableColumn fx:id="status" prefWidth="140.0" text="Status" />
+                      <TableColumn fx:id="passengerId" prefWidth="203.0" text="Naam van eigenaar" />
+                      <TableColumn fx:id="createdAt" prefWidth="215.0" text="Aanmelddatum" />
+                        <TableColumn fx:id="flightNumber" prefWidth="193.0" text="Vluchtnummer" />
+                        <TableColumn fx:id="remarks" prefWidth="436.0" text="Bagage kenmerken" />
+                        <TableColumn fx:id="statusId" prefWidth="140.0" text="Status" />
                     </columns>
                   </TableView>
                </children>
