@@ -35,18 +35,6 @@ public class UserManagementController extends BaseController {
     private AnchorPane basePane;
     
     @FXML
-    private TableColumn Username;
-    
-    @FXML        
-    private TableColumn Email;
-    
-    @FXML        
-    private TableColumn AirportId;
-    
-    @FXML        
-    private TableColumn RoleId;
-    
-    @FXML
     private TableView userManagementTableView;
     /**
      * Initializes the controller class.

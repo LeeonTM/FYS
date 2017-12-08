@@ -5,6 +5,7 @@
  */
 package com.mycompany.fys;
 
+import com.jfoenix.controls.JFXButton;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -17,21 +18,30 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import com.jfoenix.controls.JFXComboBox;
+import com.mycompany.fys.DbClasses.*;
+import java.util.LinkedList;
 
 /**
  *
  * @author Fien Hoornstra
  */
-public class InstellingenController implements Initializable {
+public class InstellingenController extends BaseController {
 
     @FXML
     private AnchorPane basePane;
     
     @FXML
     private JFXComboBox jfxCombo;
+    
+    @FXML
+    private JFXButton managerButton;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        if (BaseController.loggedInUser.getRoleId() == 2) {
+            managerButton.setVisible(true);
+        }    
+        
         jfxCombo.getItems().add(new Label("Nederlands"));
         jfxCombo.getItems().add(new Label("English"));
     }
@@ -72,5 +82,12 @@ public class InstellingenController implements Initializable {
         basePane.getChildren().setAll(pane.getChildren());
     }
     
-    
+    @FXML
+    private void handleManagerOverview(ActionEvent event) throws IOException {
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        AnchorPane basePane = (AnchorPane) stage.getScene().getRoot();
+        AnchorPane pane = FXMLLoader.load(getClass().getResource("/fxml/managerStats.fxml"));
+        
+        basePane.getChildren().setAll(pane.getChildren());
+    }
 }

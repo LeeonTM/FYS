@@ -5,6 +5,7 @@
  */
 package com.mycompany.fys;
 
+import com.jfoenix.controls.JFXButton;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -21,17 +22,22 @@ import javafx.stage.Stage;
  *
  * @author Hicham
  */
-public class BagageMatchenController implements Initializable {
+public class BagageMatchenController extends BaseController {
 
     @FXML
     private AnchorPane basePane;
+    
+    @FXML
+    private JFXButton managerButton;
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        if (BaseController.loggedInUser.getRoleId() == 2) {
+            managerButton.setVisible(true);
+        }
     }    
 
     @FXML
@@ -70,8 +76,8 @@ public class BagageMatchenController implements Initializable {
         basePane.getChildren().setAll(pane.getChildren());
     }
     
-            @FXML
-    private void handlemanagerstats(ActionEvent event) throws IOException {
+    @FXML
+    private void handleManagerOverview(ActionEvent event) throws IOException {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         AnchorPane basePane = (AnchorPane) stage.getScene().getRoot();
         AnchorPane pane = FXMLLoader.load(getClass().getResource("/fxml/managerStats.fxml"));

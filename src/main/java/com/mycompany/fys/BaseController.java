@@ -5,6 +5,7 @@
  */
 package com.mycompany.fys;
 
+import com.mycompany.fys.DbClasses.User;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.Initializable;
@@ -16,6 +17,7 @@ import javafx.fxml.Initializable;
 public class BaseController implements Initializable {
 
     public Repository repo;
+    public static User loggedInUser;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {

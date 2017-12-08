@@ -52,20 +52,15 @@ public class LoginController extends BaseController {
         LinkedList result = super.repo.executeSelect("user", new String[]{"Username", "Password"}, new String[]{userName.getText(), passWord.getText()});
         
         if (!result.isEmpty()) {
-            //TO DO: Make this not hard coded
             User user = new User();
             user.fromLinkedList((LinkedList)result.get(0));
-            if (user.getRoleId() == 1) {
-                // Medewerker Login
+            BaseController.loggedInUser = user;
+            
                 Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                 AnchorPane baseePane = (AnchorPane) stage.getScene().getRoot();
                 AnchorPane pane = FXMLLoader.load(getClass().getResource("/fxml/Bagagematchen.fxml"));
 
                 baseePane.getChildren().setAll(pane.getChildren());
-            } else {
-                // Administratie Login
-                
-            }
         }
         else{
             passWord.setText("");
