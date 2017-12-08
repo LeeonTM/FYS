@@ -5,8 +5,11 @@
  */
 package com.mycompany.fys;
 
+import com.jfoenix.controls.JFXTreeTableView;
+import com.mycompany.fys.DbClasses.Luggage;
 import java.io.IOException;
 import java.net.URL;
+import java.util.LinkedList;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -22,14 +25,17 @@ import javafx.stage.Stage;
  *
  * @author Leon
  */
-public class OverviewController implements Initializable {
+public class OverviewController extends BaseController {
 
     @FXML
     private AnchorPane overviewPane;
 
+    @FXML
+    private JFXTreeTableView overviewTable;
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-
+        
     }
 
     @FXML
@@ -37,7 +43,7 @@ public class OverviewController implements Initializable {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         AnchorPane basePane = (AnchorPane) stage.getScene().getRoot();
         AnchorPane pane = FXMLLoader.load(getClass().getResource("/fxml/Login.fxml"));
-        
+
         basePane.getChildren().setAll(pane.getChildren());
     }
 
@@ -46,7 +52,7 @@ public class OverviewController implements Initializable {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         AnchorPane basePane = (AnchorPane) stage.getScene().getRoot();
         AnchorPane pane = FXMLLoader.load(getClass().getResource("/fxml/Instellingen.fxml"));
-        
+
         basePane.getChildren().setAll(pane.getChildren());
     }
 
@@ -55,25 +61,25 @@ public class OverviewController implements Initializable {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         AnchorPane basePane = (AnchorPane) stage.getScene().getRoot();
         AnchorPane pane = FXMLLoader.load(getClass().getResource("/fxml/Overview.fxml"));
-        
+
         basePane.getChildren().setAll(pane.getChildren());
     }
-    
+
     @FXML
     private void handleBagageMatch(ActionEvent event) throws IOException {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         AnchorPane basePane = (AnchorPane) stage.getScene().getRoot();
         AnchorPane pane = FXMLLoader.load(getClass().getResource("/fxml/Bagagematchen.fxml"));
-        
+
         basePane.getChildren().setAll(pane.getChildren());
     }
-    
-        @FXML
+
+    @FXML
     private void handleAddLuggage(ActionEvent event) throws IOException {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         AnchorPane basePane = (AnchorPane) stage.getScene().getRoot();
         AnchorPane pane = FXMLLoader.load(getClass().getResource("/fxml/addMissingLuggage.fxml"));
-        
+
         basePane.getChildren().setAll(pane.getChildren());
     }
 }
