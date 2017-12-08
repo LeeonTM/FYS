@@ -23,6 +23,6 @@ public class BaseController implements Initializable {
     }
     
     public BaseController() {
-        //repo = new Repository();
+        repo = new Repository();
     }
 }
