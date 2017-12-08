@@ -45,8 +45,7 @@ public class OverviewController extends BaseController {
         LinkedList result = super.repo.executeSelect("luggage");
         for (Object a : result) {
             Luggage luggage = new Luggage();
-            System.out.println(a);
-            luggage.fromLinkedList((LinkedList) a);
+           // luggage.fromLinkedList((LinkedList) a);
             
             list.add(luggage);
         }
