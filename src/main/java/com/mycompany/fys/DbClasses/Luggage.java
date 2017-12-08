@@ -17,6 +17,7 @@ public class Luggage {
     public int id;
     public String destination;
     public String labelNumber;
+    public String flightNumber;
     public String wFCode;
     public String typeOfLuggage;
     public String brand;
@@ -34,18 +35,19 @@ public class Luggage {
         this.setId(Integer.parseInt(luggage.get(0).toString()));
         this.setDestination(luggage.get(1).toString());
         this.setLabelNumber(luggage.get(2).toString());
-        this.setWFCode(luggage.get(3).toString());
-        this.setTypeOfLuggage(luggage.get(4).toString());
-        this.setBrand(luggage.get(5).toString());
-        this.setColour(luggage.get(6).toString());
-        this.setRemarks(luggage.get(7).toString());
-        this.setPassengerId(Integer.parseInt(luggage.get(8).toString()));
-        this.setAirportId(Integer.parseInt(luggage.get(9).toString()));
-        this.setStatusId(Integer.parseInt(luggage.get(10).toString()));
-        this.setUpdatedAt((Date) luggage.get(11));
-        this.setCreatedAt((Date) luggage.get(12));
-        this.setDeletedAt((Date) luggage.get(13));
-        this.setIsDeleted(Boolean.parseBoolean(luggage.get(14).toString()));
+        this.setFlightNumber(luggage.get(3).toString());
+        this.setWFCode(luggage.get(4).toString());
+        this.setTypeOfLuggage(luggage.get(5).toString());
+        this.setBrand(luggage.get(6).toString());
+        this.setColour(luggage.get(7).toString());
+        this.setRemarks(luggage.get(8).toString());
+        this.setPassengerId(Integer.parseInt(luggage.get(9).toString()));
+        this.setAirportId(Integer.parseInt(luggage.get(10).toString()));
+        this.setStatusId(Integer.parseInt(luggage.get(11).toString()));
+        this.setUpdatedAt((Date) luggage.get(12));
+        this.setCreatedAt((Date) luggage.get(13));
+        this.setDeletedAt((Date) luggage.get(14));
+        this.setIsDeleted(Boolean.parseBoolean(luggage.get(15).toString()));
     }
 
     public int getId() {
@@ -90,6 +92,14 @@ public class Luggage {
 
     public String getBrand() {
         return brand;
+    }
+    
+    public String getFlightNumber() {
+        return flightNumber;
+    }
+
+    public void setFlightNumber(String flightNumber) {
+        this.flightNumber = flightNumber;
     }
 
     public void setBrand(String Brand) {

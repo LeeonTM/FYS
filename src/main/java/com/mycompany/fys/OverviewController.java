@@ -7,12 +7,15 @@ package com.mycompany.fys;
 
 import com.jfoenix.controls.JFXTreeTableView;
 import com.mycompany.fys.DbClasses.Luggage;
+import com.mycompany.fys.DbClasses.User;
 import java.io.IOException;
 import java.net.URL;
 import java.util.LinkedList;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
