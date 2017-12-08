@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
-<?import com.jfoenix.controls.JFXTreeTableView?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TreeTableColumn?>
-<?import javafx.scene.control.TreeTableView?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -28,17 +27,6 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <JFXTreeTableView>
-                     <columns>
-                        <TreeTableColumn prefWidth="199.0" text="Gebruikersnaam" />
-                        <TreeTableColumn prefWidth="321.0" text="Emailadres" />
-                        <TreeTableColumn prefWidth="223.0" text="Vliegveld" />
-                        <TreeTableColumn prefWidth="222.0" text="Aangemaakt door" />
-                     </columns>
-                     <columnResizePolicy>
-                        <TreeTableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-                     </columnResizePolicy>
-                  </JFXTreeTableView>
                   <JFXButton buttonType="RAISED" onAction="#handleAddUser" prefHeight="55.0" prefWidth="212.0" ripplerFill="#971818" style="-fx-background-color: #d81e05;" text="Voeg gebruiker toe" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                      <font>
                         <Font name="Arial Bold" size="18.0" />
@@ -76,6 +64,17 @@
                         <Insets top="50.0" />
                      </GridPane.margin>
                   </Line>
+                  <TableView fx:id="userManagementTableView" editable="true" prefHeight="200.0" prefWidth="200.0">
+                    <columns>
+                      <TableColumn fx:id="Username" editable="false" prefWidth="174.40192413330078" text="Gebruikersnaam" />
+                      <TableColumn fx:id="Email" editable="false" minWidth="0.0" prefWidth="260.7148742675781" text="Emailadres" />
+                        <TableColumn fx:id="AirportId" editable="false" prefWidth="300.64886474609375" text="Vliegveld" />
+                        <TableColumn fx:id="RoleId" editable="false" prefWidth="233.35113525390625" text="Gebruikersrechten" />
+                    </columns>
+                     <columnResizePolicy>
+                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                     </columnResizePolicy>
+                  </TableView>
                </children>
             </GridPane>
          </children>

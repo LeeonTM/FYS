@@ -59,11 +59,24 @@ public class AddUserManagementController extends BaseController {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        roleField.getItems().add(new String("Medewerker"));
-        roleField.getItems().add(new String("Administratie"));
         
-        airportField.getItems().add(new String("Schiphol"));
-        airportField.getItems().add(new String("Barcelona Airport"));
+        String query = "select count(Id) from Airport";
+        LinkedList airports = repo.executeCustomSelect(query);
+        int limit = Integer.parseInt(airports.toString().replace("[", "").replace("]", ""));
+
+        for (int i = 1; i <= limit; i++) {
+            LinkedList list = repo.executeCustomSelect("SELECT Name FROM Airport where Id = " + i);
+            airportField.getItems().add(list.toString().replace("[", "").replace("]", ""));
+        }
+        
+        String query2 = "select count(Id) from Role";
+        LinkedList roles = repo.executeCustomSelect(query);
+        int limit1 = Integer.parseInt(roles.toString().replace("[", "").replace("]", ""));
+
+        for (int i = 1; i <= limit1; i++) {
+            LinkedList list = repo.executeCustomSelect("SELECT Name FROM Role where Id = " + i);
+            roleField.getItems().add(list.toString().replace("[", "").replace("]", ""));
+        }
     }    
 
     @FXML
