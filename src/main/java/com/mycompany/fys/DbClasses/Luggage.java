@@ -34,18 +34,7 @@ public class Luggage {
         this.setId(Integer.parseInt(luggage.get(0).toString()));
         this.setDestination(luggage.get(1).toString());
         this.setLabelNumber(luggage.get(2).toString());
-        this.setWFCode(luggage.get(3).toString());
-        this.setTypeOfLuggage(luggage.get(4).toString());
-        this.setBrand(luggage.get(5).toString());
-        this.setColour(luggage.get(6).toString());
-        this.setRemarks(luggage.get(7).toString());
-        this.setPassengerId(Integer.parseInt(luggage.get(8).toString()));
-        this.setAirportId(Integer.parseInt(luggage.get(9).toString()));
-        this.setStatusId(Integer.parseInt(luggage.get(10).toString()));
-        this.setUpdatedAt((Date) luggage.get(11));
-        this.setCreatedAt((Date) luggage.get(12));
-        this.setDeletedAt((Date) luggage.get(13));
-        this.setIsDeleted(Boolean.parseBoolean(luggage.get(14).toString()));
+        this.setWFCode(wFCode);
     }
 
     public int getId() {
