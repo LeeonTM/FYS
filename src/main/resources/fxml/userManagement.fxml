@@ -43,7 +43,7 @@
                         <Insets top="-75.0" />
                      </GridPane.margin>
                   </JFXButton>
-                  <JFXButton buttonType="RAISED" prefHeight="55.0" prefWidth="212.0" ripplerFill="#971818" style="-fx-background-color: #d81e05;" text="Verwijder gebruiker" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                  <JFXButton buttonType="RAISED" onAction="#delItemFromTable" prefHeight="55.0" prefWidth="212.0" ripplerFill="#971818" style="-fx-background-color: #d81e05;" text="Verwijder gebruiker" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                      <font>
                         <Font name="Arial Bold" size="18.0" />
                      </font>

@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -19,10 +20,13 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.StageStyle;
 
 /**
  * FXML Controller class
@@ -104,4 +108,30 @@ public class UserManagementController extends BaseController {
         basePane.getChildren().setAll(pane.getChildren());
     }
     
-}
+        @FXML
+    private void delItemFromTable(ActionEvent event) {
+        
+        Object selectedItem = userManagementTableView.getSelectionModel().getSelectedItem();
+        
+        if (selectedItem == null) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Informatie");
+            alert.setHeaderText(null);
+            alert.initStyle(StageStyle.UNDECORATED);
+            alert.setContentText("Kies eerst een rij voordat je op de knop drukt!");
+            alert.showAndWait();
+        }
+        else {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Bevestig actie");
+            alert.setHeaderText("Verwijderen van een rij uit de tabel");
+            alert.initStyle(StageStyle.UNDECORATED);
+            alert.setContentText("Weet je zeker dat je deze rij met gebruikersnaam " + selectedItem + " wilt verwijderen?");
+
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.get() == ButtonType.OK){
+                System.out.println("uitgevoerd");
+            }
+        }
+    }
+}   
