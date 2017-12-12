@@ -3,6 +3,7 @@
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXComboBox?>
 <?import com.jfoenix.controls.JFXDatePicker?>
+<?import com.jfoenix.controls.JFXRadioButton?>
 <?import com.jfoenix.controls.JFXTextArea?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import com.jfoenix.controls.JFXTimePicker?>
@@ -38,24 +39,26 @@
                               <Font name="Arial Bold" size="18.0" />
                            </font>
                         </Label>
-                        <JFXDatePicker layoutX="24.0" layoutY="83.0" prefHeight="27.0" prefWidth="340.0" promptText="Kies een datum..." />
-                        <Label layoutX="122.0" layoutY="55.0" text="Datum van vermissing">
+                        <JFXDatePicker fx:id="date" layoutX="21.0" layoutY="161.0" prefHeight="27.0" prefWidth="340.0" promptText="Kies een datum..." />
+                        <Label layoutX="161.0" layoutY="134.0" text="Datum">
                            <font>
                               <Font name="Arial Bold" size="14.0" />
                            </font>
                         </Label>
-                        <Label layoutX="129.0" layoutY="147.0" text="Tijd van vermissing">
+                        <Label layoutX="171.0" layoutY="198.0" text="Tijd">
                            <font>
                               <Font name="Arial Bold" size="14.0" />
                            </font>
                         </Label>
-                        <JFXTimePicker layoutX="26.0" layoutY="183.0" prefHeight="27.0" prefWidth="340.0" promptText="Vul de tijd in..." />
-                        <Label layoutX="86.0" layoutY="241.0" text="Luchthaven vermissing gemeld">
+                        <JFXTimePicker fx:id="time" layoutX="22.0" layoutY="235.0" prefHeight="27.0" prefWidth="340.0" promptText="Vul de tijd in..." />
+                        <Label layoutX="114.0" layoutY="277.0" text="Luchthaven melding">
                            <font>
                               <Font name="Arial Bold" size="14.0" />
                            </font>
                         </Label>
-                        <JFXComboBox layoutX="30.0" layoutY="282.0" prefHeight="27.0" prefWidth="324.0" promptText="Kies de luchthaven..." />
+                        <JFXComboBox fx:id="name" layoutX="21.0" layoutY="305.0" prefHeight="27.0" prefWidth="324.0" promptText="Kies de luchthaven..." />
+                        <JFXRadioButton fx:id="radioVermist" layoutX="38.0" layoutY="70.0" onAction="#radioButton2" prefHeight="21.0" prefWidth="98.0" selected="true" text="Vermist" />
+                        <JFXRadioButton fx:id="radioGevonden" layoutX="218.0" layoutY="72.0" onAction="#radioButton1" text="Gevonden" />
                      </children>
                   </Pane>
                   <Pane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="457.0" prefWidth="380.0" style="-fx-background-color: #ffffff; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 10, 0.5, 0.0, 0.0);" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
@@ -68,7 +71,7 @@
                               <Font name="Arial Bold" size="18.0" />
                            </font>
                         </Label>
-                        <JFXTextField layoutX="16.0" layoutY="68.0" prefHeight="27.0" prefWidth="348.0" />
+                        <JFXTextField fx:id="firstname" layoutX="16.0" layoutY="68.0" prefHeight="27.0" prefWidth="348.0" />
                         <Label layoutX="158.0" layoutY="51.0" text="Voornaam">
                            <font>
                               <Font name="Arial Bold" size="14.0" />
@@ -79,20 +82,20 @@
                               <Font name="Arial Bold" size="14.0" />
                            </font>
                         </Label>
-                        <JFXTextField layoutX="16.0" layoutY="122.0" prefHeight="27.0" prefWidth="348.0" />
+                        <JFXTextField fx:id="lastname" layoutX="16.0" layoutY="122.0" prefHeight="27.0" prefWidth="348.0" />
                         <Label layoutX="153.0" layoutY="157.0" text="Emailadres">
                            <font>
                               <Font name="Arial Bold" size="14.0" />
                            </font>
                         </Label>
-                        <JFXTextField layoutX="17.0" layoutY="175.0" prefHeight="27.0" prefWidth="348.0" />
+                        <JFXTextField fx:id="email" layoutX="17.0" layoutY="175.0" prefHeight="27.0" prefWidth="348.0" />
                         <Label layoutX="148.0" layoutY="212.0" text="Verblijfadres">
                            <font>
                               <Font name="Arial Bold" size="14.0" />
                            </font>
                         </Label>
-                        <JFXTextField layoutX="16.0" layoutY="230.0" prefHeight="27.0" prefWidth="348.0" />
-                        <JFXComboBox layoutX="16.0" layoutY="283.0" prefHeight="27.0" prefWidth="347.0" />
+                        <JFXTextField fx:id="street" layoutX="16.0" layoutY="230.0" prefHeight="27.0" prefWidth="348.0" />
+                        <JFXComboBox fx:id="country" layoutX="16.0" layoutY="283.0" prefHeight="27.0" prefWidth="347.0" />
                         <Label layoutX="173.0" layoutY="266.0" text="Land">
                            <font>
                               <Font name="Arial Bold" size="14.0" />
@@ -108,14 +111,20 @@
                               <Font name="Arial Bold" size="14.0" />
                            </font>
                         </Label>
-                        <JFXTextField layoutX="19.0" layoutY="338.0" />
-                        <JFXTextField layoutX="211.0" layoutY="338.0" />
+                        <JFXTextField fx:id="place" layoutX="19.0" layoutY="338.0" />
+                        <JFXTextField fx:id="postalCode" layoutX="211.0" layoutY="338.0" />
                         <Label layoutX="38.0" layoutY="377.0" text="Telefoonnummer">
                            <font>
                               <Font name="Arial Bold" size="14.0" />
                            </font>
                         </Label>
-                        <JFXTextField layoutX="21.0" layoutY="398.0" />
+                        <JFXTextField fx:id="phone" layoutX="21.0" layoutY="398.0" />
+                        <Label layoutX="243.0" layoutY="377.0" text="Huisnummer">
+                           <font>
+                              <Font name="Arial Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <JFXTextField fx:id="number" layoutX="218.0" layoutY="398.0" />
                      </children>
                   </Pane>
                   <Pane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="457.0" prefWidth="356.0" style="-fx-background-color: #ffffff; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 10, 0.5, 0.0, 0.0);" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
@@ -160,14 +169,14 @@
                               <Font name="Arial Bold" size="14.0" />
                            </font>
                         </Label>
-                        <JFXTextField layoutX="14.0" layoutY="52.0" prefHeight="27.0" prefWidth="330.0" />
-                        <JFXTextField layoutX="15.0" layoutY="103.0" prefHeight="27.0" prefWidth="330.0" />
-                        <JFXTextField layoutX="15.0" layoutY="154.0" prefHeight="27.0" prefWidth="330.0" />
-                        <JFXTextField layoutX="15.0" layoutY="204.0" prefHeight="27.0" prefWidth="330.0" />
-                        <JFXTextField layoutX="13.0" layoutY="254.0" prefHeight="27.0" prefWidth="330.0" />
-                        <JFXTextField layoutX="11.0" layoutY="304.0" prefHeight="27.0" prefWidth="330.0" />
-                        <JFXTextArea layoutX="13.0" layoutY="355.0" prefHeight="50.0" prefWidth="330.0" />
-                        <JFXButton buttonType="RAISED" layoutX="33.0" layoutY="422.0" prefHeight="21.0" prefWidth="294.0" ripplerFill="BLACK" style="-fx-background-color: #f1f1f1;" text="Voeg toe!">
+                        <JFXTextField fx:id="labelNumber" layoutX="14.0" layoutY="52.0" prefHeight="27.0" prefWidth="330.0" />
+                        <JFXTextField fx:id="flightNumber" layoutX="15.0" layoutY="103.0" prefHeight="27.0" prefWidth="330.0" />
+                        <JFXTextField fx:id="destination" layoutX="15.0" layoutY="154.0" prefHeight="27.0" prefWidth="330.0" />
+                        <JFXTextField fx:id="typeOfLuggage" layoutX="15.0" layoutY="204.0" prefHeight="27.0" prefWidth="330.0" />
+                        <JFXTextField fx:id="brand" layoutX="13.0" layoutY="254.0" prefHeight="27.0" prefWidth="330.0" />
+                        <JFXTextField fx:id="colour" layoutX="11.0" layoutY="304.0" prefHeight="27.0" prefWidth="330.0" />
+                        <JFXTextArea fx:id="remarks" layoutX="13.0" layoutY="355.0" prefHeight="50.0" prefWidth="330.0" />
+                        <JFXButton buttonType="RAISED" layoutX="33.0" layoutY="422.0" onAction="#addLuggageToDB" prefHeight="21.0" prefWidth="294.0" ripplerFill="BLACK" style="-fx-background-color: #f1f1f1;" text="Voeg toe!">
                            <font>
                               <Font name="Arial Bold" size="14.0" />
                            </font>
