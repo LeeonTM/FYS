@@ -401,10 +401,6 @@ public class Repository {
         // Insert dummy roles
         repo.executeInsert("role", new String[]{"Name"}, new String[]{"Medewerker"});
         repo.executeInsert("role", new String[]{"Name"}, new String[]{"Administratie"});
-
-        // Insert dummy airports
-        repo.executeInsert("airport", new String[]{"IATACode", "Name", "Country"}, new String[]{"SCHIP", "Schiphol", "Amsterdam"});
-        repo.executeInsert("airport", new String[]{"IATACode", "Name", "Country"}, new String[]{"BARCE", "Barcelona Airport", "Barcelona"});
     }
 
     public static void createDummy() {
