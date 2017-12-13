@@ -92,4 +92,9 @@ public class OverviewController extends BaseController {
     private void handleAddLuggage(ActionEvent event) throws IOException {
         super.swapScene(event, "addMissingLuggage.fxml");
     }
+    
+    @FXML
+    private void handleManagerOverview(ActionEvent event) throws IOException {
+        super.swapScene(event, "managerStats.fxml");
+    }
 }
