@@ -5,7 +5,6 @@
  */
 package com.mycompany.fys;
 
-import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
@@ -18,10 +17,8 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -96,37 +93,21 @@ public class EditUserManagementController extends BaseController {
 
     @FXML
     private void handleLogout(ActionEvent event) throws IOException {
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        AnchorPane basePane = (AnchorPane) stage.getScene().getRoot();
-        AnchorPane pane = FXMLLoader.load(getClass().getResource("/fxml/Login.fxml"));
-        
-        basePane.getChildren().setAll(pane.getChildren());
+        super.swapScene(event, "Login.fxml");
     }
 
     @FXML
     private void handleSettings(ActionEvent event) throws IOException {
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        AnchorPane basePane = (AnchorPane) stage.getScene().getRoot();
-        AnchorPane pane = FXMLLoader.load(getClass().getResource("/fxml/Instellingen.fxml"));
-        
-        basePane.getChildren().setAll(pane.getChildren());
+        super.swapScene(event, "Instellingen.fxml");
     }
     @FXML
     private void handleUserManage(ActionEvent event) throws IOException {
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        AnchorPane basePane = (AnchorPane) stage.getScene().getRoot();
-        AnchorPane pane = FXMLLoader.load(getClass().getResource("/fxml/userManagement.fxml"));
-        
-        basePane.getChildren().setAll(pane.getChildren());
+        super.swapScene(event, "userManagement.fxml");
     }
 
     @FXML
     private void handleManagerOverview(ActionEvent event) throws IOException {
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        AnchorPane basePane = (AnchorPane) stage.getScene().getRoot();
-        AnchorPane pane = FXMLLoader.load(getClass().getResource("/fxml/managerStats.fxml"));
-        
-        basePane.getChildren().setAll(pane.getChildren());
+        super.swapScene(event, "managerStats.fxml");
     }
     
     @FXML
@@ -158,11 +139,7 @@ public class EditUserManagementController extends BaseController {
             alert.setContentText("Gebruiker met accountnaam " + usernameField.getText() + " is aangepast!");
             alert.showAndWait();
             
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            AnchorPane basePane = (AnchorPane) stage.getScene().getRoot();
-            AnchorPane pane = FXMLLoader.load(getClass().getResource("/fxml/userManagement.fxml"));
-
-            basePane.getChildren().setAll(pane.getChildren());
+            super.swapScene(event, "userManagement.fxml");
         }
     }  
 }
