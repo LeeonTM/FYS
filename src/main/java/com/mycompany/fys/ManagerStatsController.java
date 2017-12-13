@@ -87,7 +87,7 @@ public class ManagerStatsController extends BaseController {
 
     @FXML
     private void handleUserManage(ActionEvent event) throws IOException {
-        super.swapScene(event, "userManagment.fxml");
+        super.swapScene(event, "userManagement.fxml");
     }
 
     @FXML
