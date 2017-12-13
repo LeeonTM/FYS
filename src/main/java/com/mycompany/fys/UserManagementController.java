@@ -24,7 +24,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.stage.StageStyle;
 
 /**
@@ -134,7 +133,6 @@ public class UserManagementController extends BaseController {
 
             Optional<ButtonType> result = alert.showAndWait();
             if (result.get() == ButtonType.OK){
-                //System.out.println(selectedItem.getUsername());
                 repo.executeUpdateQuery("UPDATE user SET isDeleted = 1 WHERE Username ='" + selectedItem.getUsername() + "'");
             }
         }

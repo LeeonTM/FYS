@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
-<?import com.jfoenix.controls.JFXTreeTableView?>
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.TreeTableColumn?>
-<?import javafx.scene.control.TreeTableView?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -25,19 +24,18 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <JFXTreeTableView editable="true">
-                     <columns>
-                        <TreeTableColumn prefWidth="225.0" text="Naam van eigenaar (indien mogelijk)" />
-                        <TreeTableColumn prefWidth="186.0" text="Aanmeld datum" />
-                        <TreeTableColumn prefWidth="169.0" text="Vluchtnummer" />
-                        <TreeTableColumn prefWidth="328.0" text="Bagage kenmerken" />
-                        <TreeTableColumn minWidth="0.0" prefWidth="127.0" text="Selecteren" />
-                        <TreeTableColumn minWidth="0.0" prefWidth="152.0" text="Match" />
-                     </columns>
+                  <TableView prefHeight="200.0" prefWidth="200.0">
+                    <columns>
+                      <TableColumn editable="false" prefWidth="278.0" text="Naam van eigenaar (indien mogelijk)" />
+                      <TableColumn prefWidth="191.0" text="Aanmelddatum" />
+                        <TableColumn editable="false" prefWidth="146.0" text="Vluchtnummer" />
+                        <TableColumn editable="false" prefWidth="426.0" text="Bagage kenmerken" />
+                        <TableColumn editable="false" prefWidth="144.0" text="Match" />
+                    </columns>
                      <columnResizePolicy>
-                        <TreeTableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                      </columnResizePolicy>
-                  </JFXTreeTableView>
+                  </TableView>
                </children>
             </GridPane>
          </children>

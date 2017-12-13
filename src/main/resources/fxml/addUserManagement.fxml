@@ -90,7 +90,7 @@
                <children>
                   <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                      <GridPane.margin>
-                        <Insets left="20.0" />
+                        <Insets left="5.0" />
                      </GridPane.margin>
                      <image>
                         <Image url="@../Icons/danger.png" />
@@ -101,7 +101,7 @@
                         <Image url="@../Icons/briefcase.png" />
                      </image>
                      <GridPane.margin>
-                        <Insets left="20.0" />
+                        <Insets left="5.0" />
                      </GridPane.margin>
                   </ImageView>
                   <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2">
@@ -129,6 +129,9 @@
                      <font>
                         <Font name="Arial Bold" size="20.0" />
                      </font>
+                     <GridPane.margin>
+                        <Insets />
+                     </GridPane.margin>
                   </JFXButton>
                   <JFXButton buttonType="RAISED" onAction="#handleSettings" prefHeight="185.0" prefWidth="502.0" ripplerFill="WHITE" text="Instellingen" textFill="WHITE" GridPane.columnIndex="2">
                      <font>

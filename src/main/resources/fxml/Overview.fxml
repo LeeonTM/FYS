@@ -55,7 +55,7 @@
                <children>
                   <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                      <GridPane.margin>
-                        <Insets left="20.0" />
+                        <Insets left="5.0" />
                      </GridPane.margin>
                      <image>
                         <Image url="@../Icons/danger.png" />
@@ -66,7 +66,7 @@
                         <Image url="@../Icons/briefcase.png" />
                      </image>
                      <GridPane.margin>
-                        <Insets left="20.0" />
+                        <Insets left="5.0" />
                      </GridPane.margin>
                   </ImageView>
                   <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2">

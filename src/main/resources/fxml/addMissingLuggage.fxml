@@ -24,9 +24,9 @@
          <children>
             <GridPane layoutX="14.0" layoutY="14.0" style="-fx-background-color: #f1f1f1;" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="14.0">
               <columnConstraints>
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="417.75897216796875" minWidth="10.0" prefWidth="373.7342834472656" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="403.7960205078125" minWidth="10.0" prefWidth="392.2657165527344" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="180.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="396.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="396.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="396.0" />
               </columnConstraints>
               <rowConstraints>
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
