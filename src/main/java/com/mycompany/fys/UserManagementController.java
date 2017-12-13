@@ -10,7 +10,6 @@ import javafx.scene.control.TableView;
 import java.io.IOException;
 import java.net.URL;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
@@ -18,7 +17,6 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
@@ -26,6 +24,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.stage.StageStyle;
 
 /**
@@ -40,6 +39,9 @@ public class UserManagementController extends BaseController {
     
     @FXML
     private TableView userManagementTableView;
+    
+    @FXML
+    private TableColumn Username;
     /**
      * Initializes the controller class.
     */
@@ -47,7 +49,7 @@ public class UserManagementController extends BaseController {
     @Override
     public void initialize(URL url, ResourceBundle rb) { 
         ObservableList<User> list = FXCollections.observableArrayList();
-        LinkedList result = super.repo.executeSelect("user");
+        LinkedList result = repo.executeCustomSelect("SELECT * FROM user WHERE isDeleted = 0");
         for(Object a : result){
             User user = new User();
             user.fromLinkedList((LinkedList)a);
@@ -108,10 +110,32 @@ public class UserManagementController extends BaseController {
         basePane.getChildren().setAll(pane.getChildren());
     }
     
-        @FXML
+    @FXML
+    private void handleEditUser(ActionEvent event) throws IOException {
+        User selectedItem = (User) userManagementTableView.getSelectionModel().getSelectedItem();
+        
+        if (selectedItem == null) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Informatie");
+            alert.setHeaderText(null);
+            alert.initStyle(StageStyle.UNDECORATED);
+            alert.setContentText("Kies eerst een rij voordat je op de knop drukt!");
+            alert.showAndWait();
+        }
+        else {
+        BaseController.changingUser = selectedItem.getUsername();
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        AnchorPane basePane = (AnchorPane) stage.getScene().getRoot();
+        AnchorPane pane = FXMLLoader.load(getClass().getResource("/fxml/editUserManagement.fxml"));
+        
+        basePane.getChildren().setAll(pane.getChildren());
+        }
+    }
+    
+    @FXML
     private void delItemFromTable(ActionEvent event) {
         
-        Object selectedItem = userManagementTableView.getSelectionModel().getSelectedItem();
+        User selectedItem = (User) userManagementTableView.getSelectionModel().getSelectedItem();
         
         if (selectedItem == null) {
             Alert alert = new Alert(Alert.AlertType.WARNING);
@@ -126,11 +150,12 @@ public class UserManagementController extends BaseController {
             alert.setTitle("Bevestig actie");
             alert.setHeaderText("Verwijderen van een rij uit de tabel");
             alert.initStyle(StageStyle.UNDECORATED);
-            alert.setContentText("Weet je zeker dat je deze rij met gebruikersnaam " + selectedItem + " wilt verwijderen?");
+            alert.setContentText("Weet je zeker dat je deze rij met gebruikersnaam " + selectedItem.getUsername() + " wilt verwijderen?");
 
             Optional<ButtonType> result = alert.showAndWait();
             if (result.get() == ButtonType.OK){
-                System.out.println("uitgevoerd");
+                //System.out.println(selectedItem.getUsername());
+                repo.executeUpdateQuery("UPDATE user SET isDeleted = 1 WHERE Username ='" + selectedItem.getUsername() + "'");
             }
         }
     }
