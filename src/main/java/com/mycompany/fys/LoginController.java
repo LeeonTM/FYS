@@ -56,11 +56,7 @@ public class LoginController extends BaseController {
             user.fromLinkedList((LinkedList)result.get(0));
             BaseController.loggedInUser = user;
             
-                Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                AnchorPane baseePane = (AnchorPane) stage.getScene().getRoot();
-                AnchorPane pane = FXMLLoader.load(getClass().getResource("/fxml/Bagagematchen.fxml"));
-
-                baseePane.getChildren().setAll(pane.getChildren());
+            super.swapScene(event, "Bagagematchen.fxml");
         }
         else{
             passWord.setText("");

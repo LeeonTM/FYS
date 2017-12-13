@@ -20,7 +20,7 @@ public class Address {
     public String postalCode;
     public String country;
 
-    public void LinkedList(LinkedList address){
+    public void fromLinkedList(LinkedList address){
         this.setId(Integer.parseInt(address.get(0).toString()));
         this.setStreet(address.get(1).toString());
         this.setNumber(Integer.parseInt(address.get(2).toString()));
