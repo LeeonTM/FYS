@@ -24,6 +24,8 @@ public class BaseController implements Initializable {
 
     public Repository repo;
     public static User loggedInUser;
+    public static String changingUser;
+    
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {

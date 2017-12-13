@@ -170,9 +170,7 @@ public class AddMissingLuggageController extends BaseController {
     }
     @FXML
     private void addLuggageToDB(ActionEvent event) throws IOException {
-        
-        System.out.println(number.getText().trim());
-        System.out.println(date.getValue());
+
         String radioStatus;
         
         // Controleer welke button aangevinkt is.
@@ -192,48 +190,33 @@ public class AddMissingLuggageController extends BaseController {
             showAlertbox();
         } 
         else {
-            LinkedList status = repo.executeSelect("status", new String[]{"Name"}, new String[]{radioStatus});
-            Status stats = new Status();
-            stats.fromLinkedList((LinkedList) status.get(0));
-            System.out.println(Integer.toString(stats.getId()));
+            // create address first
+            repo.executeInsert("Address", new String[] {"Street", "Number", "Place", "PostalCode", "Country"}, new String[] {street.getText(), number.getText(), place.getText(), postalCode.getText(), country.getValue().toString()});
             
-            //word gebruikt om id te stoppen in de query van luggage helemaal onderaan
-            LinkedList resultAirport = repo.executeSelect("airport", new String[]{"Name"}, new String[]{(String) name.getValue()});
-            Airport airport = new Airport();
-            airport.fromLinkedList((LinkedList) resultAirport.get(0));
-            System.out.println(Integer.toString(airport.getId()));
-            
-            //address 
-            System.out.println(repo.executeInsert("address", new String[]{"Street","Number", "Place", "PostalCode", "Country"}, new String[]{street.getText(), number.getText(), place.getText(), postalCode.getText(), (String) country.getValue()}));
-            
-            LinkedList resultAddress = repo.executeSelect("address", new String[]{"PostalCode"}, new String[]{(String) postalCode.getText()});
+            // Link the result with the passenger
+            LinkedList resultAddress = repo.executeCustomSelect("SELECT * FROM Address WHERE Street = '" + street.getText() + "'");
             Address address = new Address();
             address.fromLinkedList((LinkedList) resultAddress.get(0));
             
-            //passenger
-            repo.executeInsert("passenger", new String[]{"Firstname", "Lastname", "Email", "Phone", "AddressId"}, new String[]{firstname.getText(), lastname.getText(), email.getText(), phone.getText().trim(), Integer.toString(address.getId())});
+            // insert the passenger
+            repo.executeInsert("Passenger", new String[] {"Firstname", "Lastname", "Email", "Phone", "AddressId"}, new String[] {firstname.getText(), lastname.getText(), email.getText(), phone.getText(), Integer.toString(address.getId())});
             
-            LinkedList resultPassenger = repo.executeSelect("passenger", new String[]{"Firstname"}, new String[]{firstname.getText()}); 
-            Passenger passenger = new Passenger();
-            passenger.fromLinkedList((LinkedList) resultPassenger.get(0)); //deze regel is kapot en wilt t niet do en why? dat is de regel die t niet doet
-            System.out.println(Integer.toString(passenger.getId()));
-
-            //luggage aanmaken
-           repo.executeInsert("luggage", new String[]{"Destination", "LabelNumber", "FlightNumber", "TypeOfLuggage", "Brand", "Colour", "Remarks", "PassengerId", "AirportId", "StatusId"},
-                 new String[]{destination.getText(), labelNumber.getText(), flightNumber.getText(), typeOfLuggage.getText(), brand.getText(), colour.getText(), remarks.getText(), Integer.toString(passenger.getId()), Integer.toString(airport.getId()), Integer.toString(stats.getId())});
-
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Bevestiging");
-            alert.setHeaderText(null);
-            alert.initStyle(StageStyle.UNDECORATED);
-            alert.setContentText("De " + radioStatus + " baggage is toegevoegd!");
-            alert.showAndWait();
-
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            AnchorPane basePane = (AnchorPane) stage.getScene().getRoot();
-            AnchorPane pane = FXMLLoader.load(getClass().getResource("/fxml/Overview.fxml"));
-
-            basePane.getChildren().setAll(pane.getChildren());
+            // Link the results with the luggage for ID's
+            
+            LinkedList resultAirport = repo.executeSelect("airport", new String[]{"Name"}, new String[]{(String)name.getValue()});
+            Airport airport = new Airport();
+            airport.fromLinkedList((LinkedList)resultAirport.get(0));
+            
+            LinkedList resultStatus = repo.executeCustomSelect("SELECT * FROM Status WHERE Name = '" + radioStatus + "'");
+            Status status = new Status();
+            status.fromLinkedList((LinkedList)resultStatus.get(0));
+            
+            LinkedList resultPassenger = repo.executeCustomSelect("SELECT * FROM Passenger WHERE Email = '" + email.getText() + "'");
+            Passenger passengerData = new Passenger();
+            passengerData.fromLinkedList((LinkedList) resultPassenger.get(0));
+            
+            // insert the luggage information
+            repo.executeInsert("Luggage", new String[] {"Destination", "LabelNumber", "FlightNumber", "TypeOfLuggage", "Brand", "Colour", "Remarks", "PassengerId", "AirportId", "StatusId"}, new String[] {destination.getText(), labelNumber.getText(), flightNumber.getText(), typeOfLuggage.getText(), brand.getText(), colour.getText(), remarks.getText(), Integer.toString(passengerData.getId()), Integer.toString(airport.getId()), Integer.toString(status.getId())});
         }
     }
 }
