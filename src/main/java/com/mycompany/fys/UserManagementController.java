@@ -47,22 +47,7 @@ public class UserManagementController extends BaseController {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) { 
-        ObservableList<User> list = FXCollections.observableArrayList();
-        LinkedList result = repo.executeCustomSelect("SELECT * FROM user WHERE isDeleted = 0");
-        for(Object a : result){
-            User user = new User();
-            user.fromLinkedList((LinkedList)a);
-            list.add(user);
-        }
-        
-        for (int cnr = 0; cnr < userManagementTableView.getColumns().size(); cnr++) {
-            TableColumn tc = (TableColumn)userManagementTableView.getColumns().get(cnr);
-            String propertyName = tc.getId();
-            if (propertyName != null && !propertyName.isEmpty()) {
-                tc.setCellValueFactory(new PropertyValueFactory<>(propertyName));
-            }
-        }
-        userManagementTableView.setItems(list);
+        refreshUserData();
     }
 
     @FXML
@@ -88,6 +73,26 @@ public class UserManagementController extends BaseController {
     private void handleAddUser(ActionEvent event) throws IOException {
         super.swapScene(event, "addUserManagement.fxml");
     }
+    
+    private void refreshUserData () {
+        ObservableList<User> list = FXCollections.observableArrayList();
+        LinkedList result = repo.executeCustomSelect("SELECT * FROM user WHERE isDeleted = 0");
+        for(Object a : result){
+            User user = new User();
+            user.fromLinkedList((LinkedList)a);
+            list.add(user);
+        }
+        
+        for (int cnr = 0; cnr < userManagementTableView.getColumns().size(); cnr++) {
+            TableColumn tc = (TableColumn)userManagementTableView.getColumns().get(cnr);
+            String propertyName = tc.getId();
+            if (propertyName != null && !propertyName.isEmpty()) {
+                tc.setCellValueFactory(new PropertyValueFactory<>(propertyName));
+            }
+        }
+        userManagementTableView.setItems(list);
+    }
+    
     
     @FXML
     private void handleEditUser(ActionEvent event) throws IOException {
@@ -134,6 +139,7 @@ public class UserManagementController extends BaseController {
             Optional<ButtonType> result = alert.showAndWait();
             if (result.get() == ButtonType.OK){
                 repo.executeUpdateQuery("UPDATE user SET isDeleted = 1 WHERE Username ='" + selectedItem.getUsername() + "'");
+                refreshUserData();
             }
         }
     }
