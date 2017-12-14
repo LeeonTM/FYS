@@ -18,7 +18,7 @@ public class Status {
     
     public void fromLinkedList(LinkedList status){
         this.setId(Integer.parseInt(status.get(0).toString()));
-        this.setName((String) status.get(1));
+        this.setName((String) status.get(1) == null ? "" : status.get(1).toString());
     }
     
     public int getId() {

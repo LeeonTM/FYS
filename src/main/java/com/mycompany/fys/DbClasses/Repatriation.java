@@ -30,9 +30,9 @@ public class Repatriation {
 
     public void fromLinkedList(LinkedList repatriation){
         this.setId(Integer.parseInt(repatriation.get(0).toString()));
-        this.setFromAirport(repatriation.get(1).toString());
-        this.setToAddress(repatriation.get(2).toString());
-        this.setTransporter(repatriation.get(3).toString());
+        this.setFromAirport(repatriation.get(1).toString() == null ? "" : repatriation.get(1).toString());
+        this.setToAddress(repatriation.get(2).toString() == null ? "" : repatriation.get(2).toString());
+        this.setTransporter(repatriation.get(3).toString() == null ? "" : repatriation.get(3).toString());
         this.setTransporterType(repatriation.get(4).toString());
         this.setDate((Date) repatriation.get(5));
         this.setStatusId(Integer.parseInt(repatriation.get(6).toString()));

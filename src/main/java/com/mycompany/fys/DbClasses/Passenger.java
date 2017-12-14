@@ -28,10 +28,10 @@ public class Passenger {
 
     public void fromLinkedList(LinkedList passenger){
         this.setId(Integer.parseInt(passenger.get(0).toString()));
-        this.setFirstname(passenger.get(1).toString());
-        this.setInsertion(passenger.get(2).toString());
-        this.setLastname(passenger.get(3).toString());
-        this.setEmail(passenger.get(4).toString());
+        this.setFirstname(passenger.get(1).toString() == null ? "" : passenger.get(1).toString());
+        this.setInsertion(passenger.get(2).toString() == null ? "" : passenger.get(2).toString());
+        this.setLastname(passenger.get(3).toString() == null ? "" : passenger.get(3).toString());
+        this.setEmail(passenger.get(4).toString() == null ? "" : passenger.get(4).toString());
         this.setPhone(Long.parseLong(passenger.get(5).toString()));
         this.setAddressId(Integer.parseInt(passenger.get(6).toString()));
         this.setUpdatedAt((Date)passenger.get(7));

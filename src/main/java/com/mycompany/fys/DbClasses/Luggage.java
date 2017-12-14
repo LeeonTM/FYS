@@ -33,14 +33,14 @@ public class Luggage {
 
     public void fromLinkedList(LinkedList luggage) {
         this.setId(Integer.parseInt(luggage.get(0).toString()));
-        this.setDestination(luggage.get(1).toString());
-        this.setLabelNumber(luggage.get(2).toString());
-        this.setFlightNumber(luggage.get(3).toString());
-        this.setWFCode(luggage.get(4).toString());
-        this.setTypeOfLuggage(luggage.get(5).toString());
-        this.setBrand(luggage.get(6).toString());
-        this.setColour(luggage.get(7).toString());
-        this.setRemarks(luggage.get(8).toString());
+        this.setDestination(luggage.get(1).toString() == null ? "" : luggage.get(1).toString());
+        this.setLabelNumber(luggage.get(2).toString() == null ? "" : luggage.get(2).toString());
+        this.setFlightNumber(luggage.get(3).toString() == null ? "" : luggage.get(3).toString());
+        this.setWFCode(luggage.get(4).toString() == null ? "" : luggage.get(4).toString());
+        this.setTypeOfLuggage(luggage.get(5).toString() == null ? "" : luggage.get(5).toString());
+        this.setBrand(luggage.get(6).toString() == null ? "" : luggage.get(6).toString());
+        this.setColour(luggage.get(7).toString() == null ? "" : luggage.get(7).toString());
+        this.setRemarks(luggage.get(8).toString() == null ? "" : luggage.get(8).toString());
         this.setPassengerId(Integer.parseInt(luggage.get(9).toString()));
         this.setAirportId(Integer.parseInt(luggage.get(10).toString()));
         this.setStatusId(Integer.parseInt(luggage.get(11).toString()));

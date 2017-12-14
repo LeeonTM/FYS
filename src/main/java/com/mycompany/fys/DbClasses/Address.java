@@ -22,11 +22,11 @@ public class Address {
 
     public void fromLinkedList(LinkedList address){
         this.setId(Integer.parseInt(address.get(0).toString()));
-        this.setStreet(address.get(1).toString());
+        this.setStreet(address.get(1).toString() == null ? "" : address.get(1).toString());
         this.setNumber(Integer.parseInt(address.get(2).toString()));
-        this.setPlace(address.get(3).toString());
-        this.setPostalCode(address.get(4).toString());
-        this.setCountry(address.get(5).toString());
+        this.setPlace(address.get(3).toString() == null ? "" : address.get(3).toString());
+        this.setPostalCode(address.get(4).toString() == null ? "" : address.get(4).toString());
+        this.setCountry(address.get(5).toString() == null ? "" : address.get(5).toString());
     }
     
     public int getId() {
