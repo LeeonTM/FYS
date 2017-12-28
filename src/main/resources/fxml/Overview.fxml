@@ -172,7 +172,7 @@
                         </ImageView>
                      </graphic>
                   </JFXButton>
-                  <JFXButton prefHeight="48.0" prefWidth="233.0" style="-fx-background-color: d81e05;" text="Verwijderen" textFill="#f8f4f4" GridPane.columnIndex="1" GridPane.halignment="CENTER">
+                  <JFXButton onAction="#delItemFromTable" prefHeight="48.0" prefWidth="233.0" style="-fx-background-color: d81e05;" text="Verwijderen" textFill="#f8f4f4" GridPane.columnIndex="1" GridPane.halignment="CENTER">
                      <font>
                         <Font name="Arial Bold" size="20.0" />
                      </font>
@@ -192,6 +192,11 @@
                   <Insets />
                </GridPane.margin>
             </JFXButton>
+                  <JFXButton onAction="#handleEditRecord" prefHeight="48.0" prefWidth="233.0" style="-fx-background-color: d81e05;" text="Wijzig" textFill="#f8f4f4" GridPane.columnIndex="2">
+                     <font>
+                        <Font name="Arial Bold" size="20.0" />
+                     </font>
+                  </JFXButton>
                </children>
             </GridPane>
          </children>

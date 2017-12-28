@@ -40,7 +40,7 @@ import javafx.stage.StageStyle;
  *
  * @author yannick
  */
-public class AddMissingLuggageController extends BaseController {
+public class EditMissingLuggageController extends BaseController {
 
     @FXML
     private AnchorPane basePane;
@@ -118,6 +118,48 @@ public class AddMissingLuggageController extends BaseController {
             LinkedList list = repo.executeCustomSelect("SELECT distinct Country FROM address where Id = " + i);
             country.getItems().add(list.toString().replace("[", "").replace("]", ""));
         }
+        
+        LinkedList luggage0 = repo.executeSelect("luggage", new String[]{"Id"}, new String[]{BaseController.luggageId});
+        Luggage luggage = new Luggage();
+        luggage.fromLinkedList((LinkedList) luggage0.get(0));
+        destination.setText(luggage.getDestination());
+        labelNumber.setText(luggage.getLabelNumber());
+        flightNumber.setText(luggage.getFlightNumber());
+        typeOfLuggage.setText(luggage.getTypeOfLuggage());
+        brand.setText(luggage.getBrand());
+        colour.setText(luggage.getColour());
+        remarks.setText(luggage.getRemarks());
+
+        if (luggage.getStatusId() == 1) {
+            radioVermist.setSelected(true);
+            radioGevonden.setSelected(false);
+        } else if (luggage.getStatusId() == 2) {
+            radioGevonden.setSelected(true);
+            radioVermist.setSelected(false);
+        }
+
+        LinkedList airport0 = repo.executeSelect("airport", new String[]{"Id"}, new String[]{Integer.toString(luggage.getAirportId())});
+        Airport airport = new Airport();
+        airport.fromLinkedList((LinkedList) airport0.get(0));
+        name.setValue(airport.getName());
+
+        LinkedList passenger0 = repo.executeSelect("passenger", new String[]{"Id"}, new String[]{Integer.toString(luggage.getPassengerId())});
+        Passenger passenger = new Passenger();
+        passenger.fromLinkedList((LinkedList) passenger0.get(0));//deze
+        firstname.setText(passenger.getFirstname());
+        lastname.setText(passenger.getLastname());
+        email.setText(passenger.getEmail());
+        phone.setText(Long.toString(passenger.getPhone()));
+
+        LinkedList address0 = repo.executeSelect("address", new String[]{"Id"}, new String[]{Integer.toString(passenger.getAddressId())});
+        Address address = new Address();
+        address.fromLinkedList((LinkedList) address0.get(0));
+        street.setText(address.getStreet());
+        number.setText(Integer.toString(address.getNumber()));
+        place.setText(address.getPlace());
+        postalCode.setText(address.getPostalCode());
+        country.setValue(address.getCountry());
+
     }
 
     @FXML
@@ -145,7 +187,7 @@ public class AddMissingLuggageController extends BaseController {
         super.swapScene(event, "managerStats.fxml");
     }
 
-@FXML
+    @FXML
     private void radioButton1(ActionEvent event) {
         if (radioGevonden.isSelected()) {
             radioVermist.setSelected(false);
@@ -172,19 +214,16 @@ public class AddMissingLuggageController extends BaseController {
     private String radioStatus;
 
     private void showInfoBox() {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Bevestiging");
-        alert.setHeaderText(null);
-        alert.initStyle(StageStyle.UNDECORATED);
-        alert.setContentText("De " + radioStatus + " baggage is toegevoegd!");
-        alert.showAndWait();
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Bevestiging");
+            alert.setHeaderText(null);
+            alert.initStyle(StageStyle.UNDECORATED);
+            alert.setContentText("Baggage met labelnummer " + labelNumber.getText() + " is aangepast!");
+            alert.showAndWait();
     }
 
     @FXML
     private void handleButton(ActionEvent event) throws IOException {
-
-        System.out.println(number.getText().trim());
-        System.out.println(date.getValue());
 
         // Controleer welke button aangevinkt is.
         if (radioGevonden.isSelected()) {
@@ -201,41 +240,39 @@ public class AddMissingLuggageController extends BaseController {
 
             showAlertbox();
         } else {
-            addLuggageToDB();
+            editLuggageInDB();
             showInfoBox();
             handleOverview(event);
         }
     }
 
-    private void addLuggageToDB() {
+    private void editLuggageInDB() {
+        LinkedList luggage0 = repo.executeSelect("luggage", new String[]{"Id"}, new String[]{BaseController.luggageId});
+        Luggage luggage = new Luggage();
+        luggage.fromLinkedList((LinkedList) luggage0.get(0));
+
+        LinkedList passenger0 = repo.executeSelect("passenger", new String[]{"Id"}, new String[]{Integer.toString(luggage.getPassengerId())});
+        Passenger passenger = new Passenger();
+        passenger.fromLinkedList((LinkedList) passenger0.get(0));
+
+        LinkedList airport0 = repo.executeSelect("airport", new String[]{"Name"}, new String[]{(String) name.getValue()});
+        Airport airport = new Airport();
+        airport.fromLinkedList((LinkedList) airport0.get(0));
+        
         LinkedList status = repo.executeSelect("status", new String[]{"Name"}, new String[]{radioStatus});
         Status stats = new Status();
         stats.fromLinkedList((LinkedList) status.get(0));
 
-        //word gebruikt om id te stoppen in de query van luggage helemaal onderaan
-        LinkedList resultAirport = repo.executeSelect("airport", new String[]{"Name"}, new String[]{(String) name.getValue()});
-        Airport airport = new Airport();
-        airport.fromLinkedList((LinkedList) resultAirport.get(0));
+        repo.executeUpdate("Luggage", Integer.toString(luggage.getId()), "Id", new String[]{"Destination", "LabelNumber",
+            "FlightNumber", "WFCode", "TypeOfLuggage", "Brand", "Colour", "Remarks", "AirportId", "StatusId"}, new String[]{destination.getText(),
+            labelNumber.getText(), flightNumber.getText(), "435TEST", typeOfLuggage.getText(), brand.getText(), colour.getText(), remarks.getText(),
+            Integer.toString(airport.getId()), Integer.toString(stats.getId())});
 
-        //address 
-        repo.executeInsert("address", new String[]{"Street", "Number", "Place", "PostalCode", "Country"},
+        repo.executeUpdate("passenger", Integer.toString(luggage.getPassengerId()), "Id", new String[]{"Firstname", "Lastname", "Email", "Phone"},
+                new String[]{firstname.getText(), lastname.getText(), email.getText(), phone.getText()});
+        repo.executeUpdate("Address", Integer.toString(passenger.getAddressId()), "Id", new String[]{"Street", "Number", "Place", "PostalCode", "Country"},
                 new String[]{street.getText(), number.getText(), place.getText(), postalCode.getText(), (String) country.getValue()});
-        
-        LinkedList test0 = repo.executeCustomSelect("select max(Id) from address");
-        int idAddress = Integer.parseInt(test0.toString().replace("[", "").replace("]", ""));       
-
-        //passenger
-        repo.executeInsert("passenger", new String[]{"Firstname", "Lastname", "Email", "Phone", "AddressId"},
-                new String[]{firstname.getText(), lastname.getText(), email.getText(), phone.getText(), Integer.toString(idAddress)});
-
-        LinkedList test1 = repo.executeCustomSelect("select max(Id) from passenger");
-        int idPassenger = Integer.parseInt(test1.toString().replace("[", "").replace("]", ""));
-
-        //luggage aanmaken
-        repo.executeInsert("luggage", new String[]{"Destination", "LabelNumber", "FlightNumber", "WFCode", "TypeOfLuggage", "Brand", "Colour",
-            "Remarks", "PassengerId", "AirportId", "StatusId"},
-                new String[]{destination.getText(), labelNumber.getText(), flightNumber.getText(), "435TEST",
-                    typeOfLuggage.getText(), brand.getText(), colour.getText(), remarks.getText(), Integer.toString(idPassenger),
-                    Integer.toString(airport.getId()), Integer.toString(stats.getId())});
+       
     }
+
 }

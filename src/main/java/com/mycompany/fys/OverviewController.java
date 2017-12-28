@@ -7,11 +7,16 @@ package com.mycompany.fys;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTreeTableView;
+import com.mycompany.fys.DbClasses.Address;
 import com.mycompany.fys.DbClasses.Luggage;
+import com.mycompany.fys.DbClasses.Role;
 import com.mycompany.fys.DbClasses.User;
+import com.sun.javafx.scene.control.SelectedCellsMap;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -22,11 +27,15 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 /**
  *
@@ -34,26 +43,36 @@ import javafx.stage.Stage;
  */
 public class OverviewController extends BaseController {
 
-    @FXML
-    private AnchorPane overviewPane;
+    static Luggage selectedItem;
 
     @FXML
     private TableView overviewtable;
-    
-        @FXML
+    @FXML
     private JFXButton managerButton;
+    @FXML
+    private AnchorPane basePane;
+    @FXML
+    private TableColumn passengerId;
+    @FXML
+    private TableColumn createdAt;
+    @FXML
+    private TableColumn flightNumber;
+    @FXML
+    private TableColumn remarks;
+    @FXML
+    private TableColumn statusId;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-                if (BaseController.loggedInUser.getRoleId() == 2) {
+        if (BaseController.loggedInUser.getRoleId() == 2) {
             managerButton.setVisible(true);
-        }    
+        }
         ObservableList<Luggage> list = FXCollections.observableArrayList();
-        LinkedList result = super.repo.executeSelect("luggage");
+        LinkedList result = super.repo.executeCustomSelect("select * from luggage where isDeleted = 0");
         for (Object a : result) {
             Luggage luggage = new Luggage();
             luggage.fromLinkedList((LinkedList) a);
-            
+
             list.add(luggage);
         }
 
@@ -66,6 +85,26 @@ public class OverviewController extends BaseController {
         }
         overviewtable.setItems(list);
 
+    }
+
+    private void refreshtable() {
+        ObservableList<Luggage> list = FXCollections.observableArrayList();
+        LinkedList result = super.repo.executeCustomSelect("select * from luggage where isDeleted = 0");
+        for (Object a : result) {
+            Luggage luggage = new Luggage();
+            luggage.fromLinkedList((LinkedList) a);
+
+            list.add(luggage);
+        }
+
+        for (int cnr = 0; cnr < overviewtable.getColumns().size(); cnr++) {
+            TableColumn tc = (TableColumn) overviewtable.getColumns().get(cnr);
+            String propertyName = tc.getId();
+            if (propertyName != null && !propertyName.isEmpty()) {
+                tc.setCellValueFactory(new PropertyValueFactory<>(propertyName));
+            }
+        }
+        overviewtable.setItems(list);
     }
 
     @FXML
@@ -93,8 +132,58 @@ public class OverviewController extends BaseController {
         super.swapScene(event, "addMissingLuggage.fxml");
     }
     
+        @FXML
+    private void handleEditLuggage(ActionEvent event) throws IOException {
+        super.swapScene(event, "editLuggage.fxml");
+    }
+
     @FXML
     private void handleManagerOverview(ActionEvent event) throws IOException {
         super.swapScene(event, "managerStats.fxml");
+    }
+
+    @FXML
+    private void handleEditRecord(ActionEvent event) throws IOException {
+
+        Luggage selectedItem = (Luggage) overviewtable.getSelectionModel().getSelectedItem();
+
+        if (selectedItem == null) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Informatie");
+            alert.setHeaderText(null);
+            alert.initStyle(StageStyle.UNDECORATED);
+            alert.setContentText("Kies eerst een rij voordat je op de knop drukt!");
+            alert.showAndWait();
+        } else {
+            BaseController.luggageId = Integer.toString(selectedItem.getId());
+            handleEditLuggage(event);
+        }
+    }
+
+    @FXML
+    private void delItemFromTable(ActionEvent event) {
+
+        Luggage selectedItem = (Luggage) overviewtable.getSelectionModel().getSelectedItem();
+
+        if (selectedItem == null) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Informatie");
+            alert.setHeaderText(null);
+            alert.initStyle(StageStyle.UNDECORATED);
+            alert.setContentText("Kies eerst een rij voordat je op de knop drukt!");
+            alert.showAndWait();
+        } else {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Bevestig actie");
+            alert.setHeaderText("Verwijderen van een rij uit de tabel");
+            alert.initStyle(StageStyle.UNDECORATED);
+            alert.setContentText("Weet je zeker dat je deze rij met de luggageid " + selectedItem.getId() + " wilt verwijderen?");
+
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.get() == ButtonType.OK) {
+                repo.executeUpdateQuery("UPDATE luggage SET isDeleted = 1 WHERE Id ='" + selectedItem.getId() + "'");
+                refreshtable();
+            }
+        }
     }
 }
