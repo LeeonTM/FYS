@@ -18,7 +18,7 @@ public class Role {
 
     public void fromLinkedList(LinkedList role){
         this.setId(Integer.parseInt(role.get(0).toString()));
-        this.setName(role.get(1).toString() == null ? "" : role.get(1).toString());
+        this.setName(role.get(1) == null ? "" : role.get(1).toString());
     }
     
     public int getId() {

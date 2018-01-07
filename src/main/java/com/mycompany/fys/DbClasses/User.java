@@ -28,9 +28,9 @@ public class User {
 
     public void fromLinkedList(LinkedList user){
         this.setId(Integer.parseInt(user.get(0).toString()));
-        this.setUsername(user.get(1).toString() == null ? "" : user.get(1).toString());
-        this.setPassword(user.get(2).toString() == null ? "" : user.get(2).toString());
-        this.setEmail(user.get(3).toString() == null ? "" : user.get(3).toString());
+        this.setUsername(user.get(1) == null ? "" : user.get(1).toString());
+        this.setPassword(user.get(2) == null ? "" : user.get(2).toString());
+        this.setEmail(user.get(3) == null ? "" : user.get(3).toString());
         this.setLastLoginDate((Date) user.get(4));
         this.setRoleId(Integer.parseInt(user.get(5).toString()));
         this.setAirportId(Integer.parseInt(user.get(6).toString()));

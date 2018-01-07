@@ -26,9 +26,9 @@ public class DamageClaim {
 
     public void fromLinkedList(LinkedList damageClaim){
         this.setId(Integer.parseInt(damageClaim.get(0).toString()));
-        this.setDescription(damageClaim.get(1).toString() == null ? "" : damageClaim.get(1).toString());
+        this.setDescription(damageClaim.get(1) == null ? "" : damageClaim.get(1).toString());
         this.setEstimatePrice(Double.parseDouble(damageClaim.get(2).toString()));
-        this.setInsuranceCompany(damageClaim.get(3).toString() == null ? "" : damageClaim.get(3).toString());
+        this.setInsuranceCompany(damageClaim.get(3) == null ? "" : damageClaim.get(3).toString());
         this.setLuggageId(Integer.parseInt(damageClaim.get(4).toString()));
         this.setCreatedAt((Date) damageClaim.get(5));
         this.setUpdatedAt((Date) damageClaim.get(6));

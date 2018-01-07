@@ -20,9 +20,9 @@ public class Airport {
 
     public void fromLinkedList(LinkedList airport){
         this.setId(Integer.parseInt(airport.get(0).toString()));
-        this.setIATACode(airport.get(1).toString() == null ? "" : airport.get(1).toString());
-        this.setName(airport.get(2).toString() == null ? "" : airport.get(2).toString());
-        this.setCountry(airport.get(3).toString() == null ? "" : airport.get(3).toString());
+        this.setIATACode(airport.get(1) == null ? "" : airport.get(1).toString());
+        this.setName(airport.get(2) == null ? "" : airport.get(2).toString());
+        this.setCountry(airport.get(3) == null ? "" : airport.get(3).toString());
     }
     
     public int getId() {
