@@ -369,8 +369,8 @@ public class Repository {
         repo.executeInsert("role", new String[]{"Name"}, new String[]{"Administratie"});
 
         // Insert dummy airports
-        repo.executeInsert("airport", new String[]{"IATACode", "Name", "Country"}, new String[]{"SCHIP", "Schiphol", "Amsterdam"});
-        repo.executeInsert("airport", new String[]{"IATACode", "Name", "Country"}, new String[]{"BARCE", "Barcelona Airport", "Barcelona"});
+        repo.executeInsert("airport", new String[]{"IATACode", "Name", "Country"}, new String[]{"SCHIP", "Schiphol", "Nederland"});
+        repo.executeInsert("airport", new String[]{"IATACode", "Name", "Country"}, new String[]{"BARCE", "Barcelona Airport", "Spanje"});
 
         // Insert Dummy Adrresses
         repo.executeInsert("address", new String[]{"Street", "Number", "Place", "PostalCode", "Country"}, new String[]{"Kerkstraat", "11", "Amsterdam", "1234AH", "Nederland"});
@@ -397,10 +397,6 @@ public class Repository {
                 new String[]{"Spanje", "AB2645", "4563", "7534DF", "Tas", "merk", "kleur", "Een scheur bij hendel", "2", "2", "1"});
         repo.executeInsert("luggage", new String[]{"Destination", "LabelNumber", "FlightNumber", "WFCode", "TypeOfLuggage","Brand", "Colour", "Remarks","PassengerId", "AirportId", "StatusId"},
                 new String[]{"Amsterdam", "AB2645", "4563", "7534DF", "Koffer","merk", "kleur", "Een paar duekjes", "1","1", "2"});
-        
-        // Insert dummy roles
-        repo.executeInsert("role", new String[]{"Name"}, new String[]{"Medewerker"});
-        repo.executeInsert("role", new String[]{"Name"}, new String[]{"Administratie"});
     }
 
     public static void createDummy() {
