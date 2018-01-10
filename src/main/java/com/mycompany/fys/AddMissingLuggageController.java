@@ -31,6 +31,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -91,6 +92,52 @@ public class AddMissingLuggageController extends BaseController {
     private JFXTextField colour;
     @FXML
     private JFXTextArea remarks;
+    @FXML
+    private Label lblGeneral;
+    @FXML
+    private Label lblOwnerInfo;
+    @FXML
+    private Label lblLuggageInfo;
+    @FXML
+    private Label lblDate;
+    @FXML
+    private Label lblTime;
+    @FXML
+    private Label lblAirport;
+    @FXML
+    private Label lblFirstname;
+    @FXML
+    private Label lblLastname;
+    @FXML
+    private Label lblEmail;
+    @FXML
+    private Label lblAddress;
+    @FXML
+    private Label lblCountry;
+    @FXML
+    private Label lblPlace;
+    @FXML
+    private Label lblZipCode;
+    @FXML 
+    private Label lblMobileNumber;
+    @FXML
+    private Label lblHomeNumber;
+    @FXML
+    private Label lblLabelNumber;
+    @FXML
+    private Label lblFlightNumber;
+    @FXML
+    private Label lblDestination;
+    @FXML
+    private Label lblType;
+    @FXML
+    private Label lblBrand;
+    @FXML
+    private Label lblColor;
+    @FXML
+    private Label lblRemarks;
+    @FXML
+    private JFXButton btnAdd;
 
     /**
      * Initializes the controller class.
@@ -117,6 +164,13 @@ public class AddMissingLuggageController extends BaseController {
         for (int i = 1; i <= limit2; i++) {
             LinkedList list = repo.executeCustomSelect("SELECT distinct Country FROM address where Id = " + i);
             country.getItems().add(list.toString().replace("[", "").replace("]", ""));
+        }
+        
+        if(super.applicatieTaal == null || super.applicatieTaal == "Nederlands"){
+            changeNederlands();
+        }
+        else{
+            changeEnglish();
         }
     }
 
@@ -237,5 +291,35 @@ public class AddMissingLuggageController extends BaseController {
                 new String[]{destination.getText(), labelNumber.getText(), flightNumber.getText(), "435TEST",
                     typeOfLuggage.getText(), brand.getText(), colour.getText(), remarks.getText(), Integer.toString(idPassenger),
                     Integer.toString(airport.getId()), Integer.toString(stats.getId())});
+    }
+    
+    public void changeEnglish(){
+//    lblGeneral.setText("");
+//    lblOwnerInfo;
+//    lblLuggageInfo;
+//    lblDate;
+//    lblTime;
+//    lblAirport;
+//    lblFirstname;
+//    lblLastname;
+//    lblEmail;
+//    lblAddress;
+//    lblCountry;
+//    lblPlace;
+//    lblZipCode;
+//    lblMobileNumber;
+//    lblHomeNumber;
+//    lblLabelNumber;
+//    lblFlightNumber;
+//    lblDestination;
+//    lblType;
+//    lblBrand;
+//    lblColor;
+//    lblRemarks;
+//    btnAdd;
+    }
+    
+    public void changeNederlands(){
+        
     }
 }
