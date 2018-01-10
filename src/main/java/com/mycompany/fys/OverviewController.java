@@ -135,8 +135,8 @@ public class OverviewController extends BaseController {
     }
 
     @FXML
-    private void handleBagageMatch(ActionEvent event) throws IOException {
-        super.swapScene(event, "Bagagematchen.fxml");
+    private void handleSchadeClaim(ActionEvent event) throws IOException {
+        super.swapScene(event, "damageOverview.fxml");
     }
 
     @FXML

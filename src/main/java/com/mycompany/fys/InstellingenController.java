@@ -103,8 +103,8 @@ public class InstellingenController extends BaseController {
     }
     
     @FXML
-    private void handleBagageMatchen(ActionEvent event) throws IOException {
-        super.swapScene(event, "Bagagematchen.fxml");
+    private void handleSchadeClaim(ActionEvent event) throws IOException {
+        super.swapScene(event, "damageOverview.fxml");
     }
     
     @FXML

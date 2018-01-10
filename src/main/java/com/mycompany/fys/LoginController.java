@@ -71,7 +71,7 @@ public class LoginController extends BaseController {
             user.fromLinkedList((LinkedList)result.get(0));
             BaseController.loggedInUser = user;
             
-            super.swapScene(event, "Bagagematchen.fxml");
+            super.swapScene(event, "Overview.fxml");
         }
         else{
             passWord.setText("");
