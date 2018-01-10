@@ -40,19 +40,23 @@ public class damageClaimController extends BaseController {
     }
 
     @FXML
-    private void handleOverview(ActionEvent event) {
+    private void handleOverview(ActionEvent event) throws IOException {
+        super.swapScene(event, "Overview.fxml");
     }
 
     @FXML
-    private void handleSettings(ActionEvent event) {
+    private void handleSettings(ActionEvent event) throws IOException {
+        super.swapScene(event, "Instellingen.fxml");
     }
 
     @FXML
-    private void handleLogout(ActionEvent event) {
+    private void handleLogout(ActionEvent event) throws IOException {
+        super.swapScene(event, "Login.fxml");
     }
 
     @FXML
-    private void handleManagerOverview(ActionEvent event) {
+    private void handleManagerOverview(ActionEvent event) throws IOException {
+        super.swapScene(event, "managerStats.fxml");
     }
     
 }
