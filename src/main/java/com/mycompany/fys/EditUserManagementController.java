@@ -5,22 +5,21 @@
  */
 package com.mycompany.fys;
 
+import java.io.IOException;
+import java.net.URL;
+import java.util.LinkedList;
+import java.util.ResourceBundle;
+
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 import com.mycompany.fys.DbClasses.Airport;
 import com.mycompany.fys.DbClasses.Role;
-import java.io.IOException;
-import java.net.URL;
-import java.util.LinkedList;
-import java.util.ResourceBundle;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.layout.AnchorPane;
-import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 /**

@@ -1,10 +1,6 @@
 package com.mycompany.fys;
 
-import com.mycompany.fys.DbClasses.*;
-import java.util.LinkedList;
-import java.util.List;
 import javafx.application.Application;
-import static javafx.application.Application.launch;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;

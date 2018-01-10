@@ -5,27 +5,26 @@
  */
 package com.mycompany.fys;
 
-import com.jfoenix.controls.JFXButton;
-import com.mycompany.fys.DbClasses.User;
-import javafx.scene.control.TableView;
 import java.io.IOException;
 import java.net.URL;
 import java.util.LinkedList;
 import java.util.Optional;
 import java.util.ResourceBundle;
+
+import com.jfoenix.controls.JFXButton;
+import com.mycompany.fys.DbClasses.User;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
-import javafx.scene.layout.AnchorPane;
-import javafx.stage.Stage;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.StageStyle;
 
 /**

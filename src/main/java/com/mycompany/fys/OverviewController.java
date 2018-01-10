@@ -5,36 +5,25 @@
  */
 package com.mycompany.fys;
 
-import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXTreeTableView;
-import com.mycompany.fys.DbClasses.Address;
-import com.mycompany.fys.DbClasses.Luggage;
-import com.mycompany.fys.DbClasses.Role;
-import com.mycompany.fys.DbClasses.User;
-import com.sun.javafx.scene.control.SelectedCellsMap;
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Optional;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
+import com.jfoenix.controls.JFXButton;
+import com.mycompany.fys.DbClasses.Luggage;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 /**

@@ -5,6 +5,11 @@
  */
 package com.mycompany.fys;
 
+import java.io.IOException;
+import java.net.URL;
+import java.util.LinkedList;
+import java.util.ResourceBundle;
+
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXDatePicker;
@@ -12,28 +17,14 @@ import com.jfoenix.controls.JFXRadioButton;
 import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.controls.JFXTimePicker;
-import com.mycompany.fys.DbClasses.Address;
 import com.mycompany.fys.DbClasses.Airport;
-import com.mycompany.fys.DbClasses.Luggage;
-import com.mycompany.fys.DbClasses.Passenger;
-import com.mycompany.fys.DbClasses.Role;
 import com.mycompany.fys.DbClasses.Status;
-import java.io.IOException;
-import java.net.URL;
-import java.util.LinkedList;
-import java.util.ResourceBundle;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
-import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 /**
