@@ -84,18 +84,18 @@
                                           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                        </rowConstraints>
                                        <children>
-                                          <Label text="Wachtwoord" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                          <Label fx:id="lblPassword" text="Wachtwoord" GridPane.columnIndex="1" GridPane.rowIndex="3">
                                              <font>
                                                 <Font name="System Bold" size="18.0" />
                                              </font>
                                           </Label>
-                                          <Label text="Gebruikersnaam" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                          <Label fx:id="lblUsername" text="Gebruikersnaam" GridPane.columnIndex="1" GridPane.rowIndex="1">
                                              <font>
                                                 <Font name="System Bold" size="18.0" />
                                              </font>
                                           </Label>
                                           <JFXTextField fx:id="userName" prefHeight="30.0" prefWidth="375.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="TOP" />
-                                          <JFXButton buttonType="RAISED" onAction="#handleLogin" prefHeight="91.0" prefWidth="324.0" ripplerFill="WHITE" style="-fx-background-color: #d81e05;" text="Inloggen" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                                          <JFXButton fx:id="btnLogin" buttonType="RAISED" onAction="#handleLogin" prefHeight="91.0" prefWidth="324.0" ripplerFill="WHITE" style="-fx-background-color: #d81e05;" text="Inloggen" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="5">
                                              <font>
                                                 <Font size="18.0" />
                                              </font>

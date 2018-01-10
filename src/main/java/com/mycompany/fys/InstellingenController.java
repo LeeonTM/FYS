@@ -48,19 +48,43 @@ public class InstellingenController extends BaseController {
     @FXML
     private JFXPasswordField repeatPassField;
     
+    @FXML
+    private Label lblChangeTaal;
+    
+    @FXML
+    private JFXButton btnChangeTaal;
+    
+    @FXML
+    private Label lblChangePass;
+    
+    @FXML
+    private JFXButton btnChangePass;
+    
+    @FXML
+    private Label lblExcel;
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         if (BaseController.loggedInUser.getRoleId() == 2) {
             managerButton.setVisible(true);
         }    
         
-        jfxCombo.getItems().add(new Label("Nederlands"));
-        jfxCombo.getItems().add(new Label("English"));
-        
         // set old password
         LinkedList<LinkedList> password = repo.executeCustomSelect("SELECT Password FROM User WHERE Username = '" + BaseController.loggedInUser.getUsername() + "'");
         oldPassField.setText(password.toString().replace("[", "").replace("]", ""));
         oldPassField.setEditable(false);
+        
+        if(super.applicatieTaal == null || super.applicatieTaal == "Nederlands"){
+            jfxCombo.getItems().add("Nederlands");
+            jfxCombo.getItems().add("English");
+            changeNederlands();
+        }
+        else{
+            jfxCombo.getItems().add("English");
+            jfxCombo.getItems().add("Nederlands");
+            changeEnglish();
+        }
+        jfxCombo.getSelectionModel().select(0);
     }
 
     @FXML
@@ -89,6 +113,12 @@ public class InstellingenController extends BaseController {
     }
     
     @FXML
+    private void handleChangeTaal(ActionEvent event) throws IOException{
+        super.applicatieTaal = jfxCombo.getValue().toString();
+        super.swapScene(event, "Instellingen.fxml");
+    }
+    
+    @FXML
     private void handlePassChange(ActionEvent event) throws IOException {
         if (passField.getText().trim().isEmpty() || repeatPassField.getText().trim().isEmpty()) {
             
@@ -111,5 +141,28 @@ public class InstellingenController extends BaseController {
             
             super.swapScene(event, "Instellingen.fxml");
         }
+    }
+    
+    
+    private void changeEnglish(){
+        lblChangeTaal.setText("Change language");
+        btnChangeTaal.setText("Change language");
+        btnChangeTaal.setLayoutX(btnChangeTaal.getLayoutX() - 30);
+        
+        lblChangePass.setText("Change password");
+        btnChangePass.setText("Change password");
+        btnChangePass.setLayoutX(btnChangePass.getLayoutX() + 20);
+        
+        lblExcel.setText("Import/export Excel file");
+    }
+    
+    private void changeNederlands(){
+        lblChangeTaal.setText("Taal instellen");
+        btnChangeTaal.setText("Taal wijzigen");
+        
+        lblChangePass.setText("Wachtwoord wijzigen");
+        btnChangePass.setText("Wachtwoord wijzigen");
+        
+        lblExcel.setText("Excel bestand importeren/exporteren");
     }
 }

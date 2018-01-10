@@ -5,6 +5,7 @@
  */
 package com.mycompany.fys;
 
+import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.controls.JFXPasswordField;
 import com.mycompany.fys.DbClasses.*;
@@ -40,10 +41,24 @@ public class LoginController extends BaseController {
     
     @FXML
     private Label loginError;
+    
+    @FXML
+    private Label lblUsername;
+    
+    @FXML
+    private Label lblPassword;
+    
+    @FXML 
+    private JFXButton btnLogin;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        if(super.applicatieTaal == null || super.applicatieTaal == "Nederlands"){
+            changeNederlands();
+        }
+        else{
+            changeEnglish();
+        }
     }
 
     @FXML
@@ -62,5 +77,17 @@ public class LoginController extends BaseController {
             passWord.setText("");
             loginError.setText("Gebruikersnaam en/of wachtwoord is incorrect.");
         }
+    }
+    
+    private void changeEnglish(){
+        lblUsername.setText("Username");
+        lblPassword.setText("Password");
+        btnLogin.setText("Login");
+    }
+    
+    private void changeNederlands(){
+        lblUsername.setText("Gebruikersnaam");
+        lblPassword.setText("Wachtwoord");
+        btnLogin.setText("Inloggen");
     }
 }

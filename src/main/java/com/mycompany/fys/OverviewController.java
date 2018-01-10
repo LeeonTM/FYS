@@ -61,6 +61,12 @@ public class OverviewController extends BaseController {
     private TableColumn remarks;
     @FXML
     private TableColumn statusId;
+    @FXML
+    private JFXButton btnAdd;
+    @FXML
+    private JFXButton btnDelete;
+    @FXML
+    private JFXButton btnEdit;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -84,7 +90,13 @@ public class OverviewController extends BaseController {
             }
         }
         overviewtable.setItems(list);
-
+        
+        if(super.applicatieTaal == null || super.applicatieTaal == "Nederlands"){
+            changeNederlands();
+        }
+        else{
+            changeEnglish();
+        }
     }
 
     private void refreshtable() {
@@ -132,7 +144,7 @@ public class OverviewController extends BaseController {
         super.swapScene(event, "addMissingLuggage.fxml");
     }
     
-        @FXML
+    @FXML
     private void handleEditLuggage(ActionEvent event) throws IOException {
         super.swapScene(event, "editLuggage.fxml");
     }
@@ -185,5 +197,27 @@ public class OverviewController extends BaseController {
                 refreshtable();
             }
         }
+    }
+    
+    public void changeNederlands(){
+        btnEdit.setText("Wijzig");
+        btnDelete.setText("Verwijderen");
+        btnAdd.setText("Nieuwe bagage");
+        
+        passengerId.setText("Naam van eigenaar");
+        createdAt.setText("Aanmelddatum");
+        flightNumber.setText("Vluchtnummer");
+        remarks.setText("Bagage kenmerken");
+    }
+    
+    public void changeEnglish(){
+        btnEdit.setText("Edit");
+        btnDelete.setText("Delete");
+        btnAdd.setText("New luggage");
+        
+        passengerId.setText("Owner name");
+        createdAt.setText("Create date");
+        flightNumber.setText("Flightnumber");
+        remarks.setText("Luggage remarks");
     }
 }

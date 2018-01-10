@@ -26,7 +26,7 @@ public class BaseController implements Initializable {
     public static User loggedInUser;
     public static String changingUser;
     public static String luggageId;
-    
+    public static String applicatieTaal;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {

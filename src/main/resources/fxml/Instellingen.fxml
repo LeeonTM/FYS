@@ -32,21 +32,21 @@
                <children>
                   <Pane maxHeight="-Infinity" prefHeight="128.0" prefWidth="564.0" style="-fx-background-color: #ffffff; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 10, 0.5, 0.0, 0.0);" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                      <children>
-                        <Label layoutX="242.0" layoutY="14.0" text="Taal instellen">
+                        <Label fx:id="lblChangeTaal" layoutX="242.0" layoutY="14.0" text="Taal instellen">
                            <font>
                               <Font name="Arial Bold" size="18.0" />
                            </font></Label>
                         <JFXComboBox fx:id="jfxCombo" layoutX="10.0" layoutY="37.0" prefHeight="27.0" prefWidth="536.0" promptText="Nederlands" />
-                        <JFXButton buttonType="RAISED" layoutX="448.0" layoutY="87.0" ripplerFill="#0d0d0d" style="-fx-background-color: #f1f1f1;" text="Taal wijzigen" />
+                        <JFXButton fx:id="btnChangeTaal" buttonType="RAISED" layoutX="448.0" layoutY="87.0" onAction="#handleChangeTaal" ripplerFill="#0d0d0d" style="-fx-background-color: #f1f1f1;" text="Taal wijzigen" />
                      </children>
                   </Pane>
                   <Pane maxHeight="-Infinity" prefHeight="198.0" prefWidth="564.0" style="-fx-background-color: #ffffff; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 10, 0.5, 0.0, 0.0);" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                      <children>
-                        <Label alignment="CENTER" contentDisplay="CENTER" layoutX="217.0" layoutY="14.0" text="Wachtwoord wijzigen">
+                        <Label fx:id="lblChangePass" alignment="CENTER" contentDisplay="CENTER" layoutX="217.0" layoutY="14.0" text="Wachtwoord wijzigen">
                            <font>
                               <Font name="Arial Bold" size="18.0" />
                            </font></Label>
-                        <JFXButton buttonType="RAISED" layoutX="401.0" layoutY="145.0" onAction="#handlePassChange" ripplerFill="#0d0d0d" style="-fx-background-color: #f1f1f1;" text="Wachtwoord wijzigen" />
+                        <JFXButton fx:id="btnChangePass" buttonType="RAISED" layoutX="401.0" layoutY="145.0" onAction="#handlePassChange" ripplerFill="#0d0d0d" style="-fx-background-color: #f1f1f1;" text="Wachtwoord wijzigen" />
                         <JFXPasswordField fx:id="oldPassField" alignment="CENTER" layoutX="16.0" layoutY="35.0" prefHeight="27.0" prefWidth="536.0" />
                         <JFXPasswordField fx:id="passField" alignment="CENTER" layoutX="16.0" layoutY="69.0" prefHeight="27.0" prefWidth="536.0" />
                         <JFXPasswordField fx:id="repeatPassField" alignment="CENTER" layoutX="17.0" layoutY="104.0" prefHeight="27.0" prefWidth="536.0" />
@@ -54,7 +54,7 @@
                   </Pane>
                   <Pane maxHeight="-Infinity" prefHeight="103.0" prefWidth="564.0" style="-fx-background-color: #ffffff; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 10, 0.5, 0.0, 0.0);" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                      <children>
-                        <Label layoutX="167.0" layoutY="14.0" text="Excel bestand importeren/exporteren">
+                        <Label fx:id="lblExcel" layoutX="167.0" layoutY="14.0" text="Excel bestand importeren/exporteren">
                            <font>
                               <Font name="Arial Bold" size="18.0" />
                            </font></Label>
