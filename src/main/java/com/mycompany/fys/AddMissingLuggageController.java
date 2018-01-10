@@ -141,7 +141,6 @@ public class AddMissingLuggageController extends BaseController {
 
     /**
      * Initializes the controller class.
-     * Test
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
