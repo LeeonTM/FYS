@@ -2,7 +2,7 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXComboBox?>
-<?import com.jfoenix.controls.JFXTextField?>
+<?import com.jfoenix.controls.JFXPasswordField?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
@@ -46,10 +46,10 @@
                            <font>
                               <Font name="Arial Bold" size="18.0" />
                            </font></Label>
-                        <JFXTextField layoutX="16.0" layoutY="31.0" prefHeight="27.0" prefWidth="536.0" text="Oud wachtwoord..." />
-                        <JFXTextField layoutX="16.0" layoutY="71.0" prefHeight="27.0" prefWidth="536.0" text="Nieuw wachtwoord..." />
-                        <JFXTextField layoutX="16.0" layoutY="109.0" prefHeight="27.0" prefWidth="536.0" text="Herhaal nieuw wachtwoord..." />
-                        <JFXButton buttonType="RAISED" layoutX="401.0" layoutY="145.0" ripplerFill="#0d0d0d" style="-fx-background-color: #f1f1f1;" text="Wachtwoord wijzigen" />
+                        <JFXButton buttonType="RAISED" layoutX="401.0" layoutY="145.0" onAction="#handlePassChange" ripplerFill="#0d0d0d" style="-fx-background-color: #f1f1f1;" text="Wachtwoord wijzigen" />
+                        <JFXPasswordField fx:id="oldPassField" alignment="CENTER" layoutX="16.0" layoutY="35.0" prefHeight="27.0" prefWidth="536.0" />
+                        <JFXPasswordField fx:id="passField" alignment="CENTER" layoutX="16.0" layoutY="69.0" prefHeight="27.0" prefWidth="536.0" />
+                        <JFXPasswordField fx:id="repeatPassField" alignment="CENTER" layoutX="17.0" layoutY="104.0" prefHeight="27.0" prefWidth="536.0" />
                      </children>
                   </Pane>
                   <Pane maxHeight="-Infinity" prefHeight="103.0" prefWidth="564.0" style="-fx-background-color: #ffffff; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 10, 0.5, 0.0, 0.0);" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">

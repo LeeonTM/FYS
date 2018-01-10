@@ -11,11 +11,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.layout.AnchorPane;
-import javafx.stage.Stage;
 
 /**
  * FXML Controller class
@@ -38,7 +34,7 @@ public class BagageMatchenController extends BaseController {
         if (BaseController.loggedInUser.getRoleId() == 2) {
             managerButton.setVisible(true);
         }
-    }    
+    }
 
     @FXML
     private void handleLogout(ActionEvent event) throws IOException {

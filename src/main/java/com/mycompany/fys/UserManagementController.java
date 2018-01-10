@@ -38,9 +38,6 @@ public class UserManagementController extends BaseController {
     
     @FXML
     private TableView userManagementTableView;
-    
-    @FXML
-    private TableColumn Username;
     /**
      * Initializes the controller class.
     */
@@ -108,11 +105,7 @@ public class UserManagementController extends BaseController {
         }
         else {
         BaseController.changingUser = selectedItem.getUsername();
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        AnchorPane basePane = (AnchorPane) stage.getScene().getRoot();
-        AnchorPane pane = FXMLLoader.load(getClass().getResource("/fxml/editUserManagement.fxml"));
-        
-        basePane.getChildren().setAll(pane.getChildren());
+        super.swapScene(event, "editUserManagement.fxml");
         }
     }
     

@@ -18,12 +18,15 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import com.jfoenix.controls.JFXComboBox;
+import com.jfoenix.controls.JFXPasswordField;
 import com.mycompany.fys.DbClasses.*;
 import java.util.LinkedList;
+import javafx.scene.control.Alert;
+import javafx.stage.StageStyle;
 
 /**
  *
- * @author Fien Hoornstra
+ * @author Yannick de Graaff
  */
 public class InstellingenController extends BaseController {
 
@@ -35,7 +38,16 @@ public class InstellingenController extends BaseController {
     
     @FXML
     private JFXButton managerButton;
+    
+    @FXML
+    private JFXPasswordField oldPassField;
 
+    @FXML
+    private JFXPasswordField passField;
+    
+    @FXML
+    private JFXPasswordField repeatPassField;
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         if (BaseController.loggedInUser.getRoleId() == 2) {
@@ -44,6 +56,11 @@ public class InstellingenController extends BaseController {
         
         jfxCombo.getItems().add(new Label("Nederlands"));
         jfxCombo.getItems().add(new Label("English"));
+        
+        // set old password
+        LinkedList<LinkedList> password = repo.executeCustomSelect("SELECT Password FROM User WHERE Username = '" + BaseController.loggedInUser.getUsername() + "'");
+        oldPassField.setText(password.toString().replace("[", "").replace("]", ""));
+        oldPassField.setEditable(false);
     }
 
     @FXML
@@ -69,5 +86,30 @@ public class InstellingenController extends BaseController {
     @FXML
     private void handleManagerOverview(ActionEvent event) throws IOException {
         super.swapScene(event, "managerStats.fxml");
+    }
+    
+    @FXML
+    private void handlePassChange(ActionEvent event) throws IOException {
+        if (passField.getText().trim().isEmpty() || repeatPassField.getText().trim().isEmpty()) {
+            
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Informatie");
+            alert.setHeaderText(null);
+            alert.initStyle(StageStyle.UNDECORATED);
+            alert.setContentText("Vul alle velden in!");
+            alert.showAndWait();
+        }
+        else {
+            repo.executeUpdate("User", BaseController.loggedInUser.getUsername(), "Username", new String[] {"Password"}, new String[] {passField.getText()});
+            
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Bevestiging");
+            alert.setHeaderText(null);
+            alert.initStyle(StageStyle.UNDECORATED);
+            alert.setContentText("Wachtwoord is met succes veranderd!");
+            alert.showAndWait();
+            
+            super.swapScene(event, "Instellingen.fxml");
+        }
     }
 }
