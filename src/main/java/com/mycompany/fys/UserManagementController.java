@@ -5,6 +5,7 @@
  */
 package com.mycompany.fys;
 
+import com.jfoenix.controls.JFXButton;
 import com.mycompany.fys.DbClasses.User;
 import javafx.scene.control.TableView;
 import java.io.IOException;
@@ -20,6 +21,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.scene.control.TableColumn;
@@ -35,6 +37,22 @@ public class UserManagementController extends BaseController {
 
     @FXML
     private AnchorPane basePane;
+    @FXML
+    private TableColumn Username;
+    @FXML
+    private TableColumn Email;
+    @FXML
+    private TableColumn AirportId;
+    @FXML
+    private TableColumn RoleId;
+    @FXML
+    private JFXButton btnEdit;
+    @FXML
+    private JFXButton btnAdd;
+    @FXML
+    private JFXButton btnDelete;
+    @FXML
+    private Label lblUsermanagement;
     
     @FXML
     private TableView userManagementTableView;
@@ -45,6 +63,13 @@ public class UserManagementController extends BaseController {
     @Override
     public void initialize(URL url, ResourceBundle rb) { 
         refreshUserData();
+        
+        if(super.applicatieTaal == null || super.applicatieTaal == "Nederlands"){
+            changeNederlands();
+        }
+        else{
+            changeEnglish();
+        }
     }
 
     @FXML
@@ -135,5 +160,29 @@ public class UserManagementController extends BaseController {
                 refreshUserData();
             }
         }
+    }
+    
+    private void changeEnglish(){
+        lblUsermanagement.setText("User management");
+        btnAdd.setText("New user");
+        btnEdit.setText("Edit user");
+        btnDelete.setText("Delete user");
+        
+        Username.setText("Username");
+        Email.setText("Email");
+        AirportId.setText("Airport");
+        RoleId.setText("Role");
+    }
+    
+    private void changeNederlands(){
+        lblUsermanagement.setText("Gebruikerbeheer");
+        btnAdd.setText("Voeg gebruiker toe");
+        btnEdit.setText("Verander gebruiker");
+        btnDelete.setText("Verwijder gebruiker");
+        
+        Username.setText("Gebruikersnaam");
+        Email.setText("Emailadres");
+        AirportId.setText("Vliegveld");
+        RoleId.setText("Gebruikersrechten");
     }
 }   

@@ -160,7 +160,7 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <JFXButton onAction="#handleAddLuggage" prefHeight="48.0" prefWidth="233.0" style="-fx-background-color: d81e05;" text="Nieuwe bagage" textFill="#f8f4f4" GridPane.halignment="CENTER">
+                  <JFXButton fx:id="btnAdd" onAction="#handleAddLuggage" prefHeight="48.0" prefWidth="233.0" style="-fx-background-color: d81e05;" text="Nieuwe bagage" textFill="#f8f4f4" GridPane.halignment="CENTER">
                      <font>
                         <Font name="Arial Bold" size="20.0" />
                      </font>
@@ -172,7 +172,7 @@
                         </ImageView>
                      </graphic>
                   </JFXButton>
-                  <JFXButton onAction="#delItemFromTable" prefHeight="48.0" prefWidth="233.0" style="-fx-background-color: d81e05;" text="Verwijderen" textFill="#f8f4f4" GridPane.columnIndex="1" GridPane.halignment="CENTER">
+                  <JFXButton fx:id="btnDelete" onAction="#delItemFromTable" prefHeight="48.0" prefWidth="233.0" style="-fx-background-color: d81e05;" text="Verwijderen" textFill="#f8f4f4" GridPane.columnIndex="1" GridPane.halignment="CENTER">
                      <font>
                         <Font name="Arial Bold" size="20.0" />
                      </font>
@@ -192,7 +192,7 @@
                   <Insets />
                </GridPane.margin>
             </JFXButton>
-                  <JFXButton onAction="#handleEditRecord" prefHeight="48.0" prefWidth="233.0" style="-fx-background-color: d81e05;" text="Wijzig" textFill="#f8f4f4" GridPane.columnIndex="2">
+                  <JFXButton fx:id="btnEdit" onAction="#handleEditRecord" prefHeight="48.0" prefWidth="233.0" style="-fx-background-color: d81e05;" text="Wijzig" textFill="#f8f4f4" GridPane.columnIndex="2">
                      <font>
                         <Font name="Arial Bold" size="20.0" />
                      </font>
