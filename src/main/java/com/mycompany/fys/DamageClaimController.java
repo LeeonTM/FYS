@@ -19,7 +19,7 @@ import javafx.scene.layout.AnchorPane;
  *
  * @author yannick
  */
-public class damageClaimController extends BaseController {
+public class DamageClaimController extends BaseController {
 
     @FXML
     private AnchorPane basePane;
@@ -31,7 +31,9 @@ public class damageClaimController extends BaseController {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        if (BaseController.loggedInUser.getRoleId() == 2) {
+            managerButton.setVisible(true);
+        }  
     }    
 
     @FXML
@@ -57,6 +59,11 @@ public class damageClaimController extends BaseController {
     @FXML
     private void handleManagerOverview(ActionEvent event) throws IOException {
         super.swapScene(event, "managerStats.fxml");
+    }
+    
+    @FXML
+    private void handleAddDamageClaim(ActionEvent event) throws IOException {
+        super.swapScene(event, "addDamageClaim.fxml");
     }
     
 }
