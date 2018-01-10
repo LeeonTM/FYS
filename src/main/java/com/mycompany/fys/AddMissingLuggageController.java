@@ -118,7 +118,7 @@ public class AddMissingLuggageController extends BaseController {
     private Label lblPlace;
     @FXML
     private Label lblZipCode;
-    @FXML 
+    @FXML
     private Label lblMobileNumber;
     @FXML
     private Label lblHomeNumber;
@@ -165,11 +165,10 @@ public class AddMissingLuggageController extends BaseController {
             LinkedList list = repo.executeCustomSelect("SELECT distinct Country FROM address where Id = " + i);
             country.getItems().add(list.toString().replace("[", "").replace("]", ""));
         }
-        
-        if(super.applicatieTaal == null || super.applicatieTaal == "Nederlands"){
+
+        if (super.applicatieTaal == null || super.applicatieTaal == "Nederlands") {
             changeNederlands();
-        }
-        else{
+        } else {
             changeEnglish();
         }
     }
@@ -199,7 +198,7 @@ public class AddMissingLuggageController extends BaseController {
         super.swapScene(event, "managerStats.fxml");
     }
 
-@FXML
+    @FXML
     private void radioButton1(ActionEvent event) {
         if (radioGevonden.isSelected()) {
             radioVermist.setSelected(false);
@@ -274,9 +273,9 @@ public class AddMissingLuggageController extends BaseController {
         //address 
         repo.executeInsert("address", new String[]{"Street", "Number", "Place", "PostalCode", "Country"},
                 new String[]{street.getText(), number.getText(), place.getText(), postalCode.getText(), (String) country.getValue()});
-        
+
         LinkedList test0 = repo.executeCustomSelect("select max(Id) from address");
-        int idAddress = Integer.parseInt(test0.toString().replace("[", "").replace("]", ""));       
+        int idAddress = Integer.parseInt(test0.toString().replace("[", "").replace("]", ""));
 
         //passenger
         repo.executeInsert("passenger", new String[]{"Firstname", "Lastname", "Email", "Phone", "AddressId"},
@@ -292,34 +291,60 @@ public class AddMissingLuggageController extends BaseController {
                     typeOfLuggage.getText(), brand.getText(), colour.getText(), remarks.getText(), Integer.toString(idPassenger),
                     Integer.toString(airport.getId()), Integer.toString(stats.getId())});
     }
-    
-    public void changeEnglish(){
-//    lblGeneral.setText("");
-//    lblOwnerInfo;
-//    lblLuggageInfo;
-//    lblDate;
-//    lblTime;
-//    lblAirport;
-//    lblFirstname;
-//    lblLastname;
-//    lblEmail;
-//    lblAddress;
-//    lblCountry;
-//    lblPlace;
-//    lblZipCode;
-//    lblMobileNumber;
-//    lblHomeNumber;
-//    lblLabelNumber;
-//    lblFlightNumber;
-//    lblDestination;
-//    lblType;
-//    lblBrand;
-//    lblColor;
-//    lblRemarks;
-//    btnAdd;
+
+    public void changeEnglish() {
+        lblGeneral.setText("General information");
+        lblOwnerInfo.setText("Owner information");
+        lblLuggageInfo.setText("Luggage information");
+        lblDate.setText("Date");
+        lblTime.setText("Time");
+        lblAirport.setText("Airport");
+        lblFirstname.setText("Firstname");
+        lblLastname.setText("Lastname");
+        lblEmail.setText("Email");
+        lblAddress.setText("Address");
+        lblCountry.setText("Country");
+        lblPlace.setText("City");
+        lblZipCode.setText("Zipcode");
+        lblMobileNumber.setText("Phonenumber");
+        lblHomeNumber.setText("Home number");
+        lblLabelNumber.setText("Labelnumber");
+        lblFlightNumber.setText("Flightnumber");
+        lblDestination.setText("Destination");
+        lblType.setText("Type");
+        lblBrand.setText("Brand");
+        lblColor.setText("Color");
+        lblRemarks.setText("Luggage remarks");
+        btnAdd.setText("Add!");
+        radioGevonden.setText("Found");
+        radioVermist.setText("Lost");
     }
-    
-    public void changeNederlands(){
-        
+
+    public void changeNederlands() {
+        lblGeneral.setText("Algemene informatie");
+        lblOwnerInfo.setText("Reiziger informatie");
+        lblLuggageInfo.setText("Koffer informatie");
+        lblDate.setText("Datum");
+        lblTime.setText("Tijd");
+        lblAirport.setText("Luchthaven melding");
+        lblFirstname.setText("Voornaam");
+        lblLastname.setText("Achternaam");
+        lblEmail.setText("Emailadres");
+        lblAddress.setText("Verblijfsadres");
+        lblCountry.setText("Land");
+        lblPlace.setText("Woonplaats");
+        lblZipCode.setText("Postcode");
+        lblMobileNumber.setText("Telefoonnummer");
+        lblHomeNumber.setText("Huisnummer");
+        lblLabelNumber.setText("Labelnummer");
+        lblFlightNumber.setText("Vluchtnummer");
+        lblDestination.setText("Bestemming");
+        lblType.setText("Type");
+        lblBrand.setText("Merk");
+        lblColor.setText("Kleur");
+        lblRemarks.setText("Bijzondere kenmerken");
+        btnAdd.setText("Voeg toe!");
+        radioGevonden.setText("Gevonden");
+        radioVermist.setText("Vermist");
     }
 }
