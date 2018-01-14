@@ -159,7 +159,7 @@
                               <Font name="Arial Bold" size="14.0" />
                            </font>
                         </Label>
-                        <Label fx:id="lblRemakrs" layoutX="101.0" layoutY="338.0" text="Bijzondere kenmerken">
+                        <Label fx:id="lblRemarks" layoutX="101.0" layoutY="338.0" text="Bijzondere kenmerken">
                            <font>
                               <Font name="Arial Bold" size="14.0" />
                            </font>

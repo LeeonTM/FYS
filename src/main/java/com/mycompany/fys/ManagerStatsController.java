@@ -5,21 +5,33 @@
  */
 package com.mycompany.fys;
 
-import java.io.IOException;
-import java.net.URL;
-import java.util.LinkedList;
-import java.util.ResourceBundle;
-
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXDatePicker;
-
+import java.io.IOException;
+import java.net.URL;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.chart.Axis;
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.LineChart;
+import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.PieChart;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 
 /**
  * FXML Controller class
@@ -49,11 +61,16 @@ public class ManagerStatsController extends BaseController {
     @FXML
     private Label noSearchResults;
 
-    @FXML
     private int gevonden;
 
-    @FXML
     private int vermist;
+
+    private ArrayList<Integer> vermistPerDag = new ArrayList();
+    private ArrayList<Integer> gevondenPerDag = new ArrayList();
+    private ArrayList<String> data = new ArrayList();
+
+    @FXML
+    private LineChart line;
 
     /**
      * Initializes the controller class.
@@ -93,26 +110,25 @@ public class ManagerStatsController extends BaseController {
 
     @FXML
     private void handleButtonAction(ActionEvent event) {
+        line.setVisible(false);
 
         System.out.println(luchthaven.getValue());
         System.out.println(date1.getValue());
         System.out.println(date2.getValue());
 
         if (date2.getValue() == null || date1.getValue() == null || luchthaven.getValue() == null) {
-            //TO DO: Make this not hard coded
             warning.setVisible(true);
 
         } else {
 
             warning.setVisible(false);
-            gegevensVerwerken();
+            gegevensVerwerkenPiechart();
             setPieChart();
         }
 
     }
 
-    @FXML
-    private void gegevensVerwerken() {
+    private void gegevensVerwerkenPiechart() {
         int vermistId = 1;
         int gevondenId = 2;
 
@@ -144,7 +160,7 @@ public class ManagerStatsController extends BaseController {
         pie.setTitle("Vermiste en gevonden bagage van " + date1.getValue() + " tot en met " + date2.getValue());
 
         if (vermist <= 0 && gevonden <= 0) {
-            System.out.println("het is leeg");
+            System.out.println("Database is leeg");
             noSearchResults.setVisible(true);
             pie.setVisible(false);
         } else {
@@ -153,6 +169,94 @@ public class ManagerStatsController extends BaseController {
             pie.setVisible(true);
         }
 
+    }
+
+    private void gegevensVerwerkenLineChart() {
+        int vermistId = 1;
+        int gevondenId = 2;
+
+        String stap = "select Id from Airport where Name = '" + luchthaven.getValue() + "'";
+        LinkedList stap2 = repo.executeCustomSelect(stap);
+        int vliegveldId = Integer.parseInt(stap2.toString().replace("[", "").replace("]", ""));
+
+        LocalDate beginDatum = date1.getValue();
+        LocalDate eindDatum = date2.getValue();
+
+        do {
+
+            String query1 = "select count(Id) from luggage where CreatedAt ='"
+                    + beginDatum + "' and AirportId = " + vliegveldId + " and StatusId = '" + vermistId + "'";
+            String query2 = "select count(Id) from luggage where CreatedAt ='"
+                    + beginDatum + "'  and AirportId = " + vliegveldId + " and StatusId = '" + gevondenId + "'";
+
+            LinkedList getal1 = repo.executeCustomSelect(query1);
+            LinkedList getal2 = repo.executeCustomSelect(query2);
+
+            vermist = Integer.parseInt(getal1.toString().replace("[", "").replace("]", ""));
+            gevonden = Integer.parseInt(getal2.toString().replace("[", "").replace("]", ""));
+
+            vermistPerDag.add(vermist);
+            gevondenPerDag.add(gevonden);
+
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/LLLL/yyyy");
+            String LocalDateToString = beginDatum.format(formatter);
+            data.add(LocalDateToString);
+            beginDatum = beginDatum.plusDays(1);
+
+        } while (!beginDatum.equals(eindDatum.plusDays(1)));
+
+        for (int i = 0; i < data.size(); i++) {
+            System.out.println(data.get(i));
+        }
+
+    }
+
+    private void setLineChart() {
+        XYChart.Series series0 = new XYChart.Series();
+        XYChart.Series series1 = new XYChart.Series();
+
+        final CategoryAxis xAxis = new CategoryAxis();
+        final NumberAxis yAxis = new NumberAxis(0, 100, 1);
+                final LineChart<String, Number> lineChart
+                = new LineChart<String, Number>(xAxis, yAxis);
+                
+        xAxis.setLabel("Dag");
+        yAxis.setLabel("Aantal koffers");
+        series0.setName("Gevonden");
+        series1.setName("Vermist");
+        line.setTitle("Vermiste en gevonden bagage van " + date1.getValue() + " tot en met " + date2.getValue());
+
+        line.getData().clear();
+
+        for (int i = 0; i < data.size(); i++) {
+            series0.getData().add(new XYChart.Data(data.get(i), gevondenPerDag.get(i)));
+            series1.getData().add(new XYChart.Data(data.get(i), vermistPerDag.get(i)));
+        }
+
+        line.getData().addAll(series0, series1);
+        line.setVisible(true);
+        data.clear();
+        vermistPerDag.clear();
+        gevondenPerDag.clear();
+
+    }
+
+    @FXML
+    private void handleButtonAction2(ActionEvent event) {
+
+        pie.setVisible(false);
+        System.out.println(luchthaven.getValue());
+        System.out.println(date1.getValue());
+        System.out.println(date2.getValue());
+
+        if (date2.getValue() == null || date1.getValue() == null || luchthaven.getValue() == null) {
+            warning.setVisible(true);
+
+        } else {
+            warning.setVisible(false);
+            gegevensVerwerkenLineChart();
+            setLineChart();
+        }
     }
 
 }

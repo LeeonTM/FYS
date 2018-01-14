@@ -4,6 +4,9 @@
 <?import com.jfoenix.controls.JFXComboBox?>
 <?import com.jfoenix.controls.JFXDatePicker?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.chart.PieChart?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
@@ -70,9 +73,9 @@
                         <Insets top="150.0" />
                      </GridPane.margin>
                   </JFXComboBox>
-                  <JFXButton buttonType="RAISED" onAction="#handleButtonAction" prefHeight="27.0" prefWidth="339.0" ripplerFill="#971818" style="-fx-background-color: #d81e05;" text="Maak piechart aan!" textFill="WHITE" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                  <JFXButton buttonType="RAISED" onAction="#handleButtonAction" prefHeight="41.0" prefWidth="151.0" ripplerFill="#971818" style="-fx-background-color: #d81e05;" text="Maak piechart aan!" textFill="WHITE" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                      <GridPane.margin>
-                        <Insets top="300.0" />
+                        <Insets right="179.0" top="300.0" />
                      </GridPane.margin>
                      <font>
                         <Font name="Arial Bold" size="14.0" />
@@ -80,6 +83,14 @@
                   </JFXButton>
                   <Line startY="-477.0" GridPane.columnIndex="1" />
                   <PieChart fx:id="pie" GridPane.columnIndex="1" />
+                  <LineChart fx:id="line" visible="false" GridPane.columnIndex="1">
+                    <xAxis>
+                      <CategoryAxis side="BOTTOM" />
+                    </xAxis>
+                    <yAxis>
+                      <NumberAxis side="LEFT" />
+                    </yAxis>
+                  </LineChart>
                   <JFXDatePicker fx:id="date2" prefHeight="27.0" prefWidth="322.0" promptText="Selecteer de einddatum" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                      <GridPane.margin>
                         <Insets top="-50.0" />
@@ -101,6 +112,14 @@
                         <Font size="15.0" />
                      </font>
                   </Label>
+                  <JFXButton buttonType="RAISED" onAction="#handleButtonAction2" prefHeight="41.0" prefWidth="151.0" ripplerFill="#971818" style="-fx-background-color: #d81e05;" text="Maak linechart aan!" textFill="WHITE" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                     <font>
+                        <Font name="Arial Bold" size="14.0" />
+                     </font>
+                     <GridPane.margin>
+                        <Insets left="166.0" top="300.0" />
+                     </GridPane.margin>
+                  </JFXButton>
                </children>
             </GridPane>
          </children>
