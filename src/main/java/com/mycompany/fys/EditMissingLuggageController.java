@@ -22,6 +22,8 @@ import com.mycompany.fys.DbClasses.Airport;
 import com.mycompany.fys.DbClasses.Luggage;
 import com.mycompany.fys.DbClasses.Passenger;
 import com.mycompany.fys.DbClasses.Status;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -163,6 +165,8 @@ public class EditMissingLuggageController extends BaseController {
         LinkedList luggage0 = repo.executeSelect("luggage", new String[]{"Id"}, new String[]{BaseController.luggageId});
         Luggage luggage = new Luggage();
         luggage.fromLinkedList((LinkedList) luggage0.get(0));
+        date.setValue(luggage.getCreatedAt().atZone(ZoneId.systemDefault()).toLocalDate());
+        time.setValue(luggage.getCreatedAt().atZone(ZoneId.systemDefault()).toLocalTime());
         destination.setText(luggage.getDestination());
         labelNumber.setText(luggage.getLabelNumber());
         flightNumber.setText(luggage.getFlightNumber());
@@ -308,11 +312,15 @@ public class EditMissingLuggageController extends BaseController {
         LinkedList status = repo.executeSelect("status", new String[]{"Name"}, new String[]{radioStatus});
         Status stats = new Status();
         stats.fromLinkedList((LinkedList) status.get(0));
+        
+        DateTimeFormatter formatter0 = DateTimeFormatter.ofPattern("yyyy-LLLL-dd");
+        DateTimeFormatter formatter1 = DateTimeFormatter.ofPattern("HH:mm:ss.s");
+        String datum = date.getValue().format(formatter0) + " " + time.getValue().format(formatter1);
 
         repo.executeUpdate("Luggage", Integer.toString(luggage.getId()), "Id", new String[]{"Destination", "LabelNumber",
-            "FlightNumber", "WFCode", "TypeOfLuggage", "Brand", "Colour", "Remarks", "AirportId", "StatusId"}, new String[]{destination.getText(),
+            "FlightNumber", "WFCode", "TypeOfLuggage", "Brand", "Colour", "Remarks", "AirportId", "StatusId", "UpdatedAt"}, new String[]{destination.getText(),
             labelNumber.getText(), flightNumber.getText(), "435TEST", typeOfLuggage.getText(), brand.getText(), colour.getText(), remarks.getText(),
-            Integer.toString(airport.getId()), Integer.toString(stats.getId())});
+            Integer.toString(airport.getId()), Integer.toString(stats.getId()), datum});
 
         repo.executeUpdate("passenger", Integer.toString(luggage.getPassengerId()), "Id", new String[]{"Firstname", "Lastname", "Email", "Phone"},
                 new String[]{firstname.getText(), lastname.getText(), email.getText(), phone.getText()});

@@ -12,18 +12,28 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXSnackbar.SnackbarEvent;
 import com.mycompany.fys.DbClasses.Luggage;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.util.ArrayList;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Priority;
 import javafx.stage.StageStyle;
 
 /**
@@ -56,18 +66,23 @@ public class OverviewController extends BaseController {
     private JFXButton btnDelete;
     @FXML
     private JFXButton btnEdit;
+    @FXML
+    private JFXButton btnMatch;
+    private String matchIdRecord;
+    private ArrayList gevondenMatches = new ArrayList();
+    private ArrayList matchId = new ArrayList();
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         if (BaseController.loggedInUser.getRoleId() == 2) {
             managerButton.setVisible(true);
-        }     
+        }
         ObservableList<Luggage> list = FXCollections.observableArrayList();
         LinkedList result = super.repo.executeCustomSelect("select * from luggage where isDeleted = 0");
         for (Object a : result) {
             Luggage luggage = new Luggage();
             luggage.fromLinkedList((LinkedList) a);
-            
+
             list.add(luggage);
         }
 
@@ -79,11 +94,10 @@ public class OverviewController extends BaseController {
             }
         }
         overviewtable.setItems(list);
-        
-        if(super.applicatieTaal == null || super.applicatieTaal == "Nederlands"){
+
+        if (super.applicatieTaal == null || super.applicatieTaal == "Nederlands") {
             changeNederlands();
-        }
-        else{
+        } else {
             changeEnglish();
         }
     }
@@ -132,7 +146,7 @@ public class OverviewController extends BaseController {
     private void handleAddLuggage(ActionEvent event) throws IOException {
         super.swapScene(event, "addMissingLuggage.fxml");
     }
-    
+
     @FXML
     private void handleEditLuggage(ActionEvent event) throws IOException {
         super.swapScene(event, "editLuggage.fxml");
@@ -187,26 +201,143 @@ public class OverviewController extends BaseController {
             }
         }
     }
-    
-    public void changeNederlands(){
+
+    @FXML
+    private void handleMatchRecord(ActionEvent event) throws IOException {
+
+        Luggage selectedItem = (Luggage) overviewtable.getSelectionModel().getSelectedItem();
+
+        if (selectedItem == null) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Informatie");
+            alert.setHeaderText(null);
+            alert.initStyle(StageStyle.UNDECORATED);
+            alert.setContentText("Kies eerst een rij voordat je op de knop drukt!");
+            alert.showAndWait();
+        } else {
+            matchIdRecord = Integer.toString(selectedItem.getId());
+            matchFunctie();
+        }
+    }
+
+    private void matchFunctie() {
+
+        ArrayList matchList = new ArrayList();
+        ArrayList idList = new ArrayList();
+
+        Luggage luggage = new Luggage();
+        LinkedList result = super.repo.executeCustomSelect("select * from luggage where Id = " + matchIdRecord);
+        for (Object a : result) {
+            luggage.fromLinkedList((LinkedList) a);
+        }
+        LinkedList list = repo.executeCustomSelect("select INSTR(Remarks, '" + luggage.getRemarks() + "') from luggage where Id <> " + matchIdRecord);
+        LinkedList list2 = repo.executeCustomSelect("select Id from luggage where Id <> " + matchIdRecord);
+
+        for (int i = 0; i < list.size(); i++) {
+            matchList.add(list.get(i).toString().replace("[", "").replace("]", ""));
+            idList.add(list2.get(i).toString().replace("[", "").replace("]", ""));
+            if ((int) matchList.get(i) >= 1) {
+
+                gevondenMatches.add(matchList.get(i));
+                matchId.add(idList.get(i));
+            }
+            System.out.println(matchList.get(i));
+            System.out.println(idList.get(i));
+        }
+    }
+
+    private void showAlertbox() {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("Informatie");
+        alert.setHeaderText(null);
+        alert.initStyle(StageStyle.UNDECORATED);
+        alert.setContentText("Vul alle velden in!");
+        alert.showAndWait();
+    }
+
+    private String radioStatus;
+
+    private void showtextBox() {
+        Alert alert = new Alert(AlertType.WARNING);
+        alert.setTitle("Matchen");
+        alert.setHeaderText("Matcheslijst");
+        alert.setContentText("Could not find file blabla.txt!");
+
+        Exception ex = new FileNotFoundException("Could not find file blabla.txt");
+
+// Create expandable Exception.
+        StringWriter sw = new StringWriter();
+        PrintWriter pw = new PrintWriter(sw);
+        ex.printStackTrace(pw);
+        String exceptionText = sw.toString();
+
+        Label label = new Label("Dit zijn de koffers waarmee de koffer die u heeft geselecteerd een match heeft: ");
+
+        TextArea textArea = new TextArea(exceptionText);
+        textArea.setEditable(false);
+        textArea.setWrapText(true);
+
+        textArea.setMaxWidth(Double.MAX_VALUE);
+        textArea.setMaxHeight(Double.MAX_VALUE);
+        GridPane.setVgrow(textArea, Priority.ALWAYS);
+        GridPane.setHgrow(textArea, Priority.ALWAYS);
+
+        GridPane expContent = new GridPane();
+        expContent.setMaxWidth(Double.MAX_VALUE);
+        expContent.add(label, 0, 0);
+        expContent.add(textArea, 0, 1);
+
+// Set expandable Exception into the dialog pane.
+        alert.getDialogPane().setExpandableContent(expContent);
+
+        alert.showAndWait();
+
+    }
+
+    public void changeNederlands() {
         btnEdit.setText("Wijzig");
         btnDelete.setText("Verwijderen");
         btnAdd.setText("Nieuwe bagage");
-        
+
         passengerId.setText("Naam van eigenaar");
         createdAt.setText("Aanmelddatum");
         flightNumber.setText("Vluchtnummer");
         remarks.setText("Bagage kenmerken");
     }
-    
-    public void changeEnglish(){
+
+    public void changeEnglish() {
         btnEdit.setText("Edit");
         btnDelete.setText("Delete");
         btnAdd.setText("New luggage");
-        
+
         passengerId.setText("Owner name");
         createdAt.setText("Create date");
         flightNumber.setText("Flightnumber");
         remarks.setText("Luggage remarks");
+    }
+    
+    @FXML
+    private void askForRepartition(ActionEvent event) throws IOException {
+       
+        Luggage selectedItem = (Luggage) overviewtable.getSelectionModel().getSelectedItem();
+        BaseController.repartitionId = selectedItem.getId();
+        
+        LinkedList<LinkedList> getRepatriation = repo.executeCustomSelect("SELECT LuggageId FROM Repatriation WHERE LuggageId = '" + BaseController.repartitionId + "'");
+        
+          if (getRepatriation.isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Geen repatriatie gevonden!");
+            alert.setHeaderText("Repatriatie niet gevonden");
+            alert.initStyle(StageStyle.UNDECORATED);
+            alert.setContentText("Er is geen repatriatie gevonden voor koffer " + selectedItem.getId() + ". Wilt u er een aanmaken?");
+
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.get() == ButtonType.OK){
+                super.swapScene(event, "repartitionInfo.fxml");
+            }
+          }
+          else {
+              super.swapScene(event, "repartitionInfo.fxml");
+          }
     }
 }
