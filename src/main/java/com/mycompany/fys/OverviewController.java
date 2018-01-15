@@ -14,6 +14,7 @@ import java.util.ResourceBundle;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXSnackbar.SnackbarEvent;
 import com.mycompany.fys.DbClasses.Luggage;
+import com.sun.xml.internal.fastinfoset.algorithm.BuiltInEncodingAlgorithm;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -69,8 +70,6 @@ public class OverviewController extends BaseController {
     @FXML
     private JFXButton btnMatch;
     private String matchIdRecord;
-    private ArrayList gevondenMatches = new ArrayList();
-    private ArrayList matchId = new ArrayList();
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -203,8 +202,9 @@ public class OverviewController extends BaseController {
     }
 
     @FXML
-    private void handleMatchRecord(ActionEvent event) throws IOException {
+    public void handleMatchRecord(ActionEvent event) throws IOException {
 
+        ArrayList matchId = new ArrayList();
         Luggage selectedItem = (Luggage) overviewtable.getSelectionModel().getSelectedItem();
 
         if (selectedItem == null) {
@@ -216,34 +216,51 @@ public class OverviewController extends BaseController {
             alert.showAndWait();
         } else {
             matchIdRecord = Integer.toString(selectedItem.getId());
-            matchFunctie();
+            matchFunctie(matchId);
+            System.out.println("test 10");
+            if (matchId.isEmpty()) {
+                System.out.println("test 11");
+                showAlertbox();
+            } else {
+                System.out.println("test 12");
+                showtextBox(matchId);
+            }
         }
     }
 
-    private void matchFunctie() {
-
-        ArrayList matchList = new ArrayList();
-        ArrayList idList = new ArrayList();
+    private void matchFunctie(ArrayList matchId) {
 
         Luggage luggage = new Luggage();
-        LinkedList result = super.repo.executeCustomSelect("select * from luggage where Id = " + matchIdRecord);
+        LinkedList result = super.repo.executeCustomSelect("select * from Luggage where Id = " + matchIdRecord);
         for (Object a : result) {
             luggage.fromLinkedList((LinkedList) a);
         }
-        LinkedList list = repo.executeCustomSelect("select INSTR(Remarks, '" + luggage.getRemarks() + "') from luggage where Id <> " + matchIdRecord);
-        LinkedList list2 = repo.executeCustomSelect("select Id from luggage where Id <> " + matchIdRecord);
 
-        for (int i = 0; i < list.size(); i++) {
-            matchList.add(list.get(i).toString().replace("[", "").replace("]", ""));
-            idList.add(list2.get(i).toString().replace("[", "").replace("]", ""));
-            if ((int) matchList.get(i) >= 1) {
+        String[] woorden;
+        woorden = luggage.getRemarks().split(", ");
 
-                gevondenMatches.add(matchList.get(i));
-                matchId.add(idList.get(i));
+        for (int j = 0; j < woorden.length; j++) {
+
+            ArrayList matchList = new ArrayList();
+            ArrayList idList = new ArrayList();
+
+            System.out.println(woorden[j]);
+            LinkedList list = repo.executeCustomSelect("select INSTR(Remarks, '" + woorden[j] + "') from luggage where Id <> " + matchIdRecord);
+            LinkedList list2 = repo.executeCustomSelect("select Id from luggage where Id <> " + matchIdRecord);
+            System.out.println(list.size());
+
+            for (int q = 0; q < list.size(); q++) {
+                idList.add(list2.get(q).toString().replace("[", "").replace("]", ""));
+                matchList.add(list.get(q).toString().replace("[", "").replace("]", ""));
+                String num = (String) matchList.get(q);
+                int value = Integer.parseInt(num);
+                if (value >= 1 && !matchId.contains(idList.get(q))) {
+                    matchId.add(idList.get(q));
+                    break;
+                }
             }
-            System.out.println(matchList.get(i));
-            System.out.println(idList.get(i));
         }
+
     }
 
     private void showAlertbox() {
@@ -251,29 +268,32 @@ public class OverviewController extends BaseController {
         alert.setTitle("Informatie");
         alert.setHeaderText(null);
         alert.initStyle(StageStyle.UNDECORATED);
-        alert.setContentText("Vul alle velden in!");
+        alert.setContentText("Er zijn geen matches met de geselecteerde koffer!!");
         alert.showAndWait();
     }
 
-    private String radioStatus;
-
-    private void showtextBox() {
+    private void showtextBox(ArrayList matchId) {
         Alert alert = new Alert(AlertType.WARNING);
         alert.setTitle("Matchen");
         alert.setHeaderText("Matcheslijst");
-        alert.setContentText("Could not find file blabla.txt!");
+        alert.setContentText("Er zijn: " + matchId.size() + " match(es) gevonden!");
 
-        Exception ex = new FileNotFoundException("Could not find file blabla.txt");
+        String tekst = "";
 
-// Create expandable Exception.
-        StringWriter sw = new StringWriter();
-        PrintWriter pw = new PrintWriter(sw);
-        ex.printStackTrace(pw);
-        String exceptionText = sw.toString();
+        for (int i = 0; i < matchId.size(); i++) {
 
-        Label label = new Label("Dit zijn de koffers waarmee de koffer die u heeft geselecteerd een match heeft: ");
+            System.out.println(matchId.get(i));
 
-        TextArea textArea = new TextArea(exceptionText);
+            LinkedList list2 = repo.executeCustomSelect("SELECT * FROM Luggage WHERE Id = '" + matchId.get(i) + "'");
+            Luggage luggage = new Luggage();
+            luggage.fromLinkedList((LinkedList) list2.getFirst());
+            tekst += "De koffer met id: " + luggage.getId() + " en kenmerk(en): " + luggage.getRemarks() + "\r\n";
+
+        }
+
+        Label label = new Label("Dit zijn de koffers waarmee de geselecteerde koffer een match heeft: ");
+
+        TextArea textArea = new TextArea(tekst);
         textArea.setEditable(false);
         textArea.setWrapText(true);
 
@@ -315,14 +335,16 @@ public class OverviewController extends BaseController {
         flightNumber.setText("Flightnumber");
         remarks.setText("Luggage remarks");
     }
-    
+
     @FXML
     private void askForRepartition(ActionEvent event) throws IOException {
        
         Luggage selectedItem = (Luggage) overviewtable.getSelectionModel().getSelectedItem();
         BaseController.repartitionId = selectedItem.getId();
+        BaseController.passengerId = selectedItem.getPassengerId();
         
-        LinkedList<LinkedList> getRepatriation = repo.executeCustomSelect("SELECT LuggageId FROM Repatriation WHERE LuggageId = '" + BaseController.repartitionId + "'");
+        LinkedList<LinkedList> getRepatriation = repo.executeCustomSelect("SELECT LuggageId FROM Repatriation WHERE LuggageId = '" + BaseController.repartitionId + "' AND isDeleted = 0");
+        
         
           if (getRepatriation.isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -333,7 +355,7 @@ public class OverviewController extends BaseController {
 
             Optional<ButtonType> result = alert.showAndWait();
             if (result.get() == ButtonType.OK){
-                super.swapScene(event, "repartitionInfo.fxml");
+                super.swapScene(event, "repartitionAdd.fxml");
             }
           }
           else {
