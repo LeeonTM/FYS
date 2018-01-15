@@ -5,6 +5,8 @@
  */
 package com.mycompany.fys.DbClasses;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.LinkedList;
 
@@ -26,9 +28,9 @@ public class Luggage {
     public int passengerId;
     public int airportId;
     public int statusId;
-    public Date updatedAt;
-    public Date createdAt;
-    public Date deletedAt;
+    public LocalDateTime updatedAt;
+    public LocalDateTime createdAt;
+    public LocalDateTime deletedAt;
     public boolean isDeleted;
 
     public void fromLinkedList(LinkedList luggage) {
@@ -44,9 +46,12 @@ public class Luggage {
         this.setPassengerId(Integer.parseInt(luggage.get(9).toString()));
         this.setAirportId(Integer.parseInt(luggage.get(10).toString()));
         this.setStatusId(Integer.parseInt(luggage.get(11).toString()));
-        this.setUpdatedAt((Date) luggage.get(12));
-        this.setCreatedAt((Date) luggage.get(13));
-        this.setDeletedAt((Date) luggage.get(14));
+
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.s");
+
+        this.setUpdatedAt(luggage.get(12) != null ? LocalDateTime.parse(luggage.get(12).toString(), dtf) : null);
+        this.setCreatedAt(luggage.get(13) != null ? LocalDateTime.parse(luggage.get(13).toString(), dtf) : null);
+        this.setDeletedAt(luggage.get(14) != null ? LocalDateTime.parse(luggage.get(14).toString(), dtf) : null);
         this.setIsDeleted(Boolean.parseBoolean(luggage.get(15).toString()));
     }
 
@@ -146,27 +151,27 @@ public class Luggage {
         this.statusId = StatusId;
     }
 
-    public Date getUpdatedAt() {
+    public LocalDateTime getUpdatedAt() {
         return updatedAt;
     }
 
-    public void setUpdatedAt(Date UpdatedAt) {
+    public void setUpdatedAt(LocalDateTime UpdatedAt) {
         this.updatedAt = UpdatedAt;
     }
 
-    public Date getCreatedAt() {
+    public LocalDateTime getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(Date CreatedAt) {
+    public void setCreatedAt(LocalDateTime CreatedAt) {
         this.createdAt = CreatedAt;
     }
 
-    public Date getDeletedAt() {
+    public LocalDateTime getDeletedAt() {
         return deletedAt;
     }
 
-    public void setDeletedAt(Date DeletedAt) {
+    public void setDeletedAt(LocalDateTime DeletedAt) {
         this.deletedAt = DeletedAt;
     }
 
