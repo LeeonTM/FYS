@@ -19,6 +19,11 @@ import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.controls.JFXTimePicker;
 import com.mycompany.fys.DbClasses.Airport;
 import com.mycompany.fys.DbClasses.Status;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -274,13 +279,17 @@ public class AddMissingLuggageController extends BaseController {
 
         LinkedList test1 = repo.executeCustomSelect("select max(Id) from passenger");
         int idPassenger = Integer.parseInt(test1.toString().replace("[", "").replace("]", ""));
+        
+        DateTimeFormatter formatter0 = DateTimeFormatter.ofPattern("yyyy-LLLL-dd");
+        DateTimeFormatter formatter1 = DateTimeFormatter.ofPattern("HH:mm:ss.s");
+        String datum = date.getValue().format(formatter0) + " " + time.getValue().format(formatter1);
 
         //luggage aanmaken
         repo.executeInsert("luggage", new String[]{"Destination", "LabelNumber", "FlightNumber", "WFCode", "TypeOfLuggage", "Brand", "Colour",
-            "Remarks", "PassengerId", "AirportId", "StatusId"},
+            "Remarks", "PassengerId", "AirportId", "StatusId", "UpdatedAt", "CreatedAt"},
                 new String[]{destination.getText(), labelNumber.getText(), flightNumber.getText(), "435TEST",
                     typeOfLuggage.getText(), brand.getText(), colour.getText(), remarks.getText(), Integer.toString(idPassenger),
-                    Integer.toString(airport.getId()), Integer.toString(stats.getId())});
+                    Integer.toString(airport.getId()), Integer.toString(stats.getId()), datum, datum});
     }
 
     public void changeEnglish() {

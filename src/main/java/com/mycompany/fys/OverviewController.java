@@ -61,13 +61,13 @@ public class OverviewController extends BaseController {
     public void initialize(URL url, ResourceBundle rb) {
         if (BaseController.loggedInUser.getRoleId() == 2) {
             managerButton.setVisible(true);
-        }
+        }     
         ObservableList<Luggage> list = FXCollections.observableArrayList();
         LinkedList result = super.repo.executeCustomSelect("select * from luggage where isDeleted = 0");
         for (Object a : result) {
             Luggage luggage = new Luggage();
             luggage.fromLinkedList((LinkedList) a);
-
+            
             list.add(luggage);
         }
 
