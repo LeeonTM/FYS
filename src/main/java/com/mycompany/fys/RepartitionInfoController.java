@@ -67,7 +67,6 @@ public class RepartitionInfoController extends BaseController {
             managerButton.setVisible(true);
         }
         
-        LinkedList<LinkedList> repaID = repo.executeCustomSelect("SELECT Id FROM Repatriation WHERE isDeleted = 0 AND LuggageId = '" + BaseController.repartitionId + "'");
         // set all data
         LinkedList<LinkedList> label = repo.executeCustomSelect("SELECT LabelNumber FROM Luggage WHERE Id = '" + BaseController.repartitionId + "' ");
         labelField.setText(label.toString().replace("[", "").replace("]", ""));
