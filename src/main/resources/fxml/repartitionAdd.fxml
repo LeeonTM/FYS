@@ -128,7 +128,7 @@
                         <JFXTextField fx:id="dateField" layoutX="17.0" layoutY="283.0" prefHeight="27.0" prefWidth="348.0" />
                      </children>
                   </Pane>
-                  <JFXButton fx:id="btnDelete" buttonType="RAISED" prefHeight="55.0" prefWidth="212.0" ripplerFill="#971818" style="-fx-background-color: #d81e05;" text="Maak repatriëring" textFill="WHITE" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                  <JFXButton fx:id="btnDelete" buttonType="RAISED" onAction="#addRepaToDB" prefHeight="55.0" prefWidth="212.0" ripplerFill="#971818" style="-fx-background-color: #d81e05;" text="Maak repatriëring" textFill="WHITE" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                      <font>
                         <Font name="Arial Bold" size="18.0" />
                      </font>

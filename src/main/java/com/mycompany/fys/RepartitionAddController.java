@@ -11,6 +11,7 @@ import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
 import com.mycompany.fys.DbClasses.Repatriation;
 import com.mycompany.fys.DbClasses.Role;
+import com.mycompany.fys.DbClasses.Status;
 import java.io.IOException;
 import java.net.URL;
 import java.util.LinkedList;
@@ -137,14 +138,21 @@ public class RepartitionAddController extends BaseController {
             alert.showAndWait();
         } else {
             
-            LinkedList resultRepa = repo.executeSelect("Status", new String[]{"Name"}, new String[]{(String) statusField.getValue()});
-            Repatriation repatriation = new Repatriation();
-            repatriation.fromLinkedList((LinkedList) resultRepa.get(0));
-            
-            
+            LinkedList resultStatus = repo.executeSelect("Status", new String[]{"Name"}, new String[]{(String) statusField.getValue()});
+            Status status = new Status();
+            status.fromLinkedList((LinkedList) resultStatus.get(0));
             
             repo.executeInsert("Repatriation", new String[]{"FromAirport", "toAddress", "Transporter", "TransporterType", "StatusId", "PassengerId", "LuggageId"},
-                    new String[]{airportField.getText(), addressField.getText(), deliveryField.getText(), typeDeliveryField.getText(), Integer.toString(repatriation.getId()), Integer.toString(BaseController.passengerId), Integer.toString(BaseController.repartitionId)});
+                    new String[]{airportField.getText(), addressField.getText(), deliveryField.getText(), typeDeliveryField.getText(), Integer.toString(status.getId()), Integer.toString(BaseController.passengerId), Integer.toString(BaseController.repartitionId)});
+            
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Bevestiging");
+            alert.setHeaderText(null);
+            alert.initStyle(StageStyle.UNDECORATED);
+            alert.setContentText("Repatriering voor koffer met ID " + BaseController.repartitionId + " is aangemaakt!");
+            alert.showAndWait();
+
+            super.swapScene(event, "Overview.fxml");
 
         }
     }

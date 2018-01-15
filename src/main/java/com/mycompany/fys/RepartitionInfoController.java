@@ -11,10 +11,14 @@ import com.jfoenix.controls.JFXTextField;
 import java.io.IOException;
 import java.net.URL;
 import java.util.LinkedList;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.StageStyle;
 
 /**
  * FXML Controller class
@@ -63,8 +67,9 @@ public class RepartitionInfoController extends BaseController {
             managerButton.setVisible(true);
         }
         
+        LinkedList<LinkedList> repaID = repo.executeCustomSelect("SELECT Id FROM Repatriation WHERE isDeleted = 0 AND LuggageId = '" + BaseController.repartitionId + "'");
         // set all data
-        LinkedList<LinkedList> label = repo.executeCustomSelect("SELECT LabelNumber FROM Luggage WHERE Id = '" + BaseController.repartitionId + "'");
+        LinkedList<LinkedList> label = repo.executeCustomSelect("SELECT LabelNumber FROM Luggage WHERE Id = '" + BaseController.repartitionId + "' ");
         labelField.setText(label.toString().replace("[", "").replace("]", ""));
         
         LinkedList<LinkedList> flight = repo.executeCustomSelect("SELECT FlightNumber FROM Luggage WHERE Id = '" + BaseController.repartitionId + "'");
@@ -85,22 +90,23 @@ public class RepartitionInfoController extends BaseController {
         LinkedList<LinkedList> description = repo.executeCustomSelect("SELECT Remarks FROM Luggage WHERE Id = '" + BaseController.repartitionId + "'");
         descriptionField.setText(description.toString().replace("[", "").replace("]", ""));
         
-        LinkedList<LinkedList> delivery = repo.executeCustomSelect("SELECT Transporter FROM Repatriation WHERE Id = '" + BaseController.repartitionId + "'");
+        LinkedList<LinkedList> delivery = repo.executeCustomSelect("SELECT Transporter FROM Repatriation WHERE isDeleted = 0 AND LuggageId = '" + BaseController.repartitionId + "'");
         deliveryField.setText(delivery.toString().replace("[", "").replace("]", ""));
         
-        LinkedList<LinkedList> typeDelivery = repo.executeCustomSelect("SELECT TransporterType FROM Repatriation WHERE Id = '" + BaseController.repartitionId + "'");
+        LinkedList<LinkedList> typeDelivery = repo.executeCustomSelect("SELECT TransporterType FROM Repatriation WHERE isDeleted = 0 AND LuggageId = '" + BaseController.repartitionId + "'");
         typeDeliveryField.setText(typeDelivery.toString().replace("[", "").replace("]", ""));
         
-        LinkedList<LinkedList> airport = repo.executeCustomSelect("SELECT FromAirport FROM Repatriation WHERE Id = '" + BaseController.repartitionId + "'");
+        LinkedList<LinkedList> airport = repo.executeCustomSelect("SELECT FromAirport FROM Repatriation WHERE isDeleted = 0 AND LuggageId = '" + BaseController.repartitionId + "'");
         airportField.setText(airport.toString().replace("[", "").replace("]", ""));
         
-        LinkedList<LinkedList> address = repo.executeCustomSelect("SELECT ToAddress FROM Repatriation WHERE Id = '" + BaseController.repartitionId + "'");
+        LinkedList<LinkedList> address = repo.executeCustomSelect("SELECT ToAddress FROM Repatriation WHERE isDeleted = 0 AND LuggageId = '" + BaseController.repartitionId + "'");
         addressField.setText(address.toString().replace("[", "").replace("]", ""));
         
-        LinkedList<LinkedList> date = repo.executeCustomSelect("SELECT Date FROM Repatriation WHERE Id = '" + BaseController.repartitionId + "'");
+        LinkedList<LinkedList> date = repo.executeCustomSelect("SELECT Date FROM Repatriation WHERE isDeleted = 0 AND LuggageId = '" + BaseController.repartitionId + "'");
         dateField.setText(date.toString().replace("[", "").replace("]", ""));
         
-        LinkedList<LinkedList> status = repo.executeCustomSelect("SELECT StatusId FROM Repatriation WHERE Id = '" + BaseController.repartitionId + "'");
+        LinkedList<LinkedList> statusId = repo.executeCustomSelect("SELECT StatusId FROM Repatriation WHERE isDeleted = 0 AND LuggageId = '" + BaseController.repartitionId + "'");
+        LinkedList<LinkedList> status = repo.executeCustomSelect("SELECT Name FROM Status WHERE Id = '" + statusId.toString().replace("[", "").replace("]", "") + "'");
         statusField.setText(status.toString().replace("[", "").replace("]", ""));
     }    
 
@@ -129,4 +135,19 @@ public class RepartitionInfoController extends BaseController {
         super.swapScene(event, "managerStats.fxml");
     }
     
+    @FXML
+    private void deleteRepatriation(ActionEvent event) throws IOException {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Bevestig actie");
+        alert.setHeaderText("Verwijderen van een repatriering");
+        alert.initStyle(StageStyle.UNDECORATED);
+        LinkedList<LinkedList> repaID = repo.executeCustomSelect("SELECT Id FROM Repatriation WHERE isDeleted = 0 AND LuggageId = '" + BaseController.repartitionId + "'");
+        alert.setContentText("Weet je zeker dat je deze repatriering met nummer " + repaID.toString().replace("[", "").replace("]", "") + " wilt verwijderen?");
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == ButtonType.OK){
+            repo.executeUpdateQuery("UPDATE Repatriation SET isDeleted = 1 WHERE Id ='" + repaID.toString().replace("[", "").replace("]", "") + "'");
+            super.swapScene(event, "Overview.fxml");
+        }
+    }
 }
