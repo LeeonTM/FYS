@@ -6,13 +6,20 @@
 package com.mycompany.fys;
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXTextArea;
+import com.jfoenix.controls.JFXTextField;
+import com.mycompany.fys.DbClasses.Airport;
+import com.mycompany.fys.DbClasses.Role;
 import java.io.IOException;
 import java.net.URL;
+import java.util.LinkedList;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.StageStyle;
 
 /**
  * FXML Controller class
@@ -37,6 +44,15 @@ public class AddDamageClaimController extends BaseController {
     private Label lblBagageNum;
     @FXML
     private JFXButton addClaimButton;
+    @FXML
+    private JFXTextArea descriptionField;
+    @FXML
+    private JFXTextField insuranceField;
+    @FXML
+    private JFXTextField estimateField;
+    @FXML
+    private JFXTextField luggageField;
+    
 
     /**
      * Initializes the controller class.
@@ -79,6 +95,33 @@ public class AddDamageClaimController extends BaseController {
         super.swapScene(event, "managerStats.fxml");
     }
     
+    @FXML
+    private void addDamageToDB(ActionEvent event) throws IOException {
+        if (descriptionField.getText().trim().isEmpty() || insuranceField.getText().trim().isEmpty()
+                || estimateField.getText().trim().isEmpty() || luggageField.getText().trim().isEmpty()) {
+
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Informatie");
+            alert.setHeaderText(null);
+            alert.initStyle(StageStyle.UNDECORATED);
+            alert.setContentText("Vul alle velden in!");
+            alert.showAndWait();
+        } else {
+
+            repo.executeInsert("DamageClaim", new String[]{"Description", "InsuranceCompany", "EstimatePrice", "LuggageId"},
+                    new String[]{descriptionField.getText(), insuranceField.getText(), estimateField.getText(), luggageField.getText()});
+
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Bevestiging");
+            alert.setHeaderText(null);
+            alert.initStyle(StageStyle.UNDECORATED);
+            alert.setContentText("Schadeclaim met schadenummer " + repo.executeCustomSelect("SELECT Id FROM DamageClaim WHERE Description = '" + descriptionField.getText() + "'").toString().replace("[", "").replace("]", "") + " is aangemaakt!");
+            alert.showAndWait();
+
+            super.swapScene(event, "damageOverview.fxml");
+        }
+    }    
+        
     private void changeNederlands(){
         lblCreateClaim.setText("Schadeclaim aanmaken");
         lblDescription.setText("Schade omschrijving");
