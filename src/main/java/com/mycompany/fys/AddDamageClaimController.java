@@ -11,6 +11,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 
 /**
@@ -24,6 +25,18 @@ public class AddDamageClaimController extends BaseController {
     private AnchorPane basePane;
     @FXML
     private JFXButton managerButton;
+    @FXML
+    private Label lblCreateClaim;
+    @FXML
+    private Label lblDescription;
+    @FXML
+    private Label lblInsurence;
+    @FXML
+    private Label lblCost;
+    @FXML
+    private Label lblBagageNum;
+    @FXML
+    private JFXButton addClaimButton;
 
     /**
      * Initializes the controller class.
@@ -33,6 +46,12 @@ public class AddDamageClaimController extends BaseController {
         if (BaseController.loggedInUser.getRoleId() == 2) {
             managerButton.setVisible(true);
         }  
+        
+        if (super.applicatieTaal == null || super.applicatieTaal == "Nederlands") {
+            changeNederlands();
+        } else {
+            changeEnglish();
+        }
     }    
 
         @FXML
@@ -60,4 +79,21 @@ public class AddDamageClaimController extends BaseController {
         super.swapScene(event, "managerStats.fxml");
     }
     
+    private void changeNederlands(){
+        lblCreateClaim.setText("Schadeclaim aanmaken");
+        lblDescription.setText("Schade omschrijving");
+        lblInsurence.setText("Verzekeringmaatschappij");
+        lblCost.setText("Geschatte kosten schade");
+        lblBagageNum.setText("Bagagenummer dat bij de schadeclaim hoort");
+        addClaimButton.setText("Maak schadeclaim aan!");
+    }
+    
+    private void changeEnglish(){
+        lblCreateClaim.setText("Create damageclaim");
+        lblDescription.setText("Damage description");
+        lblInsurence.setText("Insurance company");
+        lblCost.setText("Repair costs");
+        lblBagageNum.setText("Luggagenumber with the damageclaim");
+        addClaimButton.setText("Create damageclaim!");
+    }
 }

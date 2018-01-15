@@ -5,6 +5,7 @@
  */
 package com.mycompany.fys;
 
+import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXDatePicker;
 import java.io.IOException;
@@ -71,6 +72,24 @@ public class ManagerStatsController extends BaseController {
 
     @FXML
     private LineChart line;
+    
+    @FXML
+    private Label lblStats;
+    
+    @FXML
+    private Label lblBeginDate;
+    
+    @FXML
+    private Label lblEndDate;
+    
+    @FXML
+    private Label lblAirport;
+    
+    @FXML
+    private JFXButton btnAddPie;
+    
+    @FXML
+    private JFXButton btnAddLine;
 
     /**
      * Initializes the controller class.
@@ -86,6 +105,11 @@ public class ManagerStatsController extends BaseController {
             luchthaven.getItems().add(list.toString().replace("[", "").replace("]", ""));
         }
 
+        if (super.applicatieTaal == null || super.applicatieTaal == "Nederlands") {
+            changeNederlands();
+        } else {
+            changeEnglish();
+        }
     }
 
     @FXML
@@ -259,4 +283,23 @@ public class ManagerStatsController extends BaseController {
         }
     }
 
+    private void changeNederlands(){
+        lblStats.setText("Statistieken overzicht");
+        lblBeginDate.setText("Begin datum");
+        lblEndDate.setText("End datum");
+        lblAirport.setText("Luchthaven");
+        
+        btnAddPie.setText("Maak piechart aan!");
+        btnAddLine.setText("Maak linechart aan!");
+    }
+    
+    private void changeEnglish(){
+        lblStats.setText("Statistics Overview");
+        lblBeginDate.setText("Begin date");
+        lblEndDate.setText("End date");
+        lblAirport.setText("Airport");
+        
+        btnAddPie.setText("Add piechart!");
+        btnAddLine.setText("Add linechart!");
+    }
 }

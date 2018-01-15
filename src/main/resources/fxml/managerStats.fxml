@@ -31,7 +31,7 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Label text="Statistieken overzicht" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                  <Label fx:id="lblStats" text="Statistieken overzicht" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                      <font>
                         <Font name="Arial Bold" size="24.0" />
                      </font>
@@ -39,7 +39,7 @@
                         <Insets top="-400.0" />
                      </GridPane.margin>
                   </Label>
-                  <Label text="Begin datum" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                  <Label fx:id="lblBeginDate" text="Begin datum" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                      <font>
                         <Font name="Arial Bold" size="14.0" />
                      </font>
@@ -52,7 +52,7 @@
                         <Insets top="-220.0" />
                      </GridPane.margin>
                   </JFXDatePicker>
-                  <Label text="Eind datum" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                  <Label fx:id="lblEndDate" text="Eind datum" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                      <font>
                         <Font name="Arial Bold" size="14.0" />
                      </font>
@@ -60,7 +60,7 @@
                         <Insets top="-120.0" />
                      </GridPane.margin>
                   </Label>
-                  <Label text="Luchthaven" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                  <Label fx:id="lblAirport" text="Luchthaven" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                      <GridPane.margin>
                         <Insets top="70.0" />
                      </GridPane.margin>
@@ -73,7 +73,7 @@
                         <Insets top="150.0" />
                      </GridPane.margin>
                   </JFXComboBox>
-                  <JFXButton buttonType="RAISED" onAction="#handleButtonAction" prefHeight="41.0" prefWidth="151.0" ripplerFill="#971818" style="-fx-background-color: #d81e05;" text="Maak piechart aan!" textFill="WHITE" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                  <JFXButton fx:id="btnAddPie" buttonType="RAISED" onAction="#handleButtonAction" prefHeight="41.0" prefWidth="151.0" ripplerFill="#971818" style="-fx-background-color: #d81e05;" text="Maak piechart aan!" textFill="WHITE" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                      <GridPane.margin>
                         <Insets right="179.0" top="300.0" />
                      </GridPane.margin>
@@ -112,7 +112,7 @@
                         <Font size="15.0" />
                      </font>
                   </Label>
-                  <JFXButton buttonType="RAISED" onAction="#handleButtonAction2" prefHeight="41.0" prefWidth="151.0" ripplerFill="#971818" style="-fx-background-color: #d81e05;" text="Maak linechart aan!" textFill="WHITE" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                  <JFXButton fx:id="btnAddLine" buttonType="RAISED" onAction="#handleButtonAction2" prefHeight="41.0" prefWidth="151.0" ripplerFill="#971818" style="-fx-background-color: #d81e05;" text="Maak linechart aan!" textFill="WHITE" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                      <font>
                         <Font name="Arial Bold" size="14.0" />
                      </font>
