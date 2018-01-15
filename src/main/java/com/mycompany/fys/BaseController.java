@@ -29,6 +29,7 @@ public class BaseController implements Initializable {
     public static String applicatieTaal;
     public static int changingDamage;
     public static int repartitionId;
+    public static int passengerId;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {

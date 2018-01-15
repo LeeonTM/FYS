@@ -6,22 +6,27 @@
 package com.mycompany.fys;
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
+import com.mycompany.fys.DbClasses.Repatriation;
+import com.mycompany.fys.DbClasses.Role;
 import java.io.IOException;
 import java.net.URL;
 import java.util.LinkedList;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.StageStyle;
 
 /**
  * FXML Controller class
  *
  * @author yannick
  */
-public class RepartitionInfoController extends BaseController {
+public class RepartitionAddController extends BaseController {
 
     @FXML
     private AnchorPane basePane;
@@ -52,8 +57,8 @@ public class RepartitionInfoController extends BaseController {
     @FXML
     private JFXTextField dateField;
     @FXML
-    private JFXTextField statusField;
-                          
+    private JFXComboBox statusField;
+
     /**
      * Initializes the controller class.
      */
@@ -85,23 +90,13 @@ public class RepartitionInfoController extends BaseController {
         LinkedList<LinkedList> description = repo.executeCustomSelect("SELECT Remarks FROM Luggage WHERE Id = '" + BaseController.repartitionId + "'");
         descriptionField.setText(description.toString().replace("[", "").replace("]", ""));
         
-        LinkedList<LinkedList> delivery = repo.executeCustomSelect("SELECT Transporter FROM Repatriation WHERE Id = '" + BaseController.repartitionId + "'");
-        deliveryField.setText(delivery.toString().replace("[", "").replace("]", ""));
-        
-        LinkedList<LinkedList> typeDelivery = repo.executeCustomSelect("SELECT TransporterType FROM Repatriation WHERE Id = '" + BaseController.repartitionId + "'");
-        typeDeliveryField.setText(typeDelivery.toString().replace("[", "").replace("]", ""));
-        
-        LinkedList<LinkedList> airport = repo.executeCustomSelect("SELECT FromAirport FROM Repatriation WHERE Id = '" + BaseController.repartitionId + "'");
-        airportField.setText(airport.toString().replace("[", "").replace("]", ""));
-        
-        LinkedList<LinkedList> address = repo.executeCustomSelect("SELECT ToAddress FROM Repatriation WHERE Id = '" + BaseController.repartitionId + "'");
-        addressField.setText(address.toString().replace("[", "").replace("]", ""));
-        
-        LinkedList<LinkedList> date = repo.executeCustomSelect("SELECT Date FROM Repatriation WHERE Id = '" + BaseController.repartitionId + "'");
-        dateField.setText(date.toString().replace("[", "").replace("]", ""));
-        
-        LinkedList<LinkedList> status = repo.executeCustomSelect("SELECT StatusId FROM Repatriation WHERE Id = '" + BaseController.repartitionId + "'");
-        statusField.setText(status.toString().replace("[", "").replace("]", ""));
+        LinkedList statusses = repo.executeCustomSelect("SELECT count(Id) FROM Status");
+        int limit1 = Integer.parseInt(statusses.toString().replace("[", "").replace("]", ""));
+
+        for (int i = 1; i <= limit1; i++) {
+            LinkedList list = repo.executeCustomSelect("SELECT Name FROM Status where Id = " + i);
+            statusField.getItems().add(list.toString().replace("[", "").replace("]", ""));
+        }
     }    
 
     @FXML
@@ -127,6 +122,31 @@ public class RepartitionInfoController extends BaseController {
     @FXML
     private void handleManagerOverview(ActionEvent event) throws IOException {
         super.swapScene(event, "managerStats.fxml");
+    }
+    
+    @FXML
+    private void addRepaToDB(ActionEvent event) throws IOException {
+        if (deliveryField.getText().trim().isEmpty() || typeDeliveryField.getText().trim().isEmpty() || airportField.getText().trim().isEmpty()
+                || addressField.getText().trim().isEmpty() || dateField.getText().trim().isEmpty()) {
+
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Informatie");
+            alert.setHeaderText(null);
+            alert.initStyle(StageStyle.UNDECORATED);
+            alert.setContentText("Vul alle velden in!");
+            alert.showAndWait();
+        } else {
+            
+            LinkedList resultRepa = repo.executeSelect("Status", new String[]{"Name"}, new String[]{(String) statusField.getValue()});
+            Repatriation repatriation = new Repatriation();
+            repatriation.fromLinkedList((LinkedList) resultRepa.get(0));
+            
+            
+            
+            repo.executeInsert("Repatriation", new String[]{"FromAirport", "toAddress", "Transporter", "TransporterType", "StatusId", "PassengerId", "LuggageId"},
+                    new String[]{airportField.getText(), addressField.getText(), deliveryField.getText(), typeDeliveryField.getText(), Integer.toString(repatriation.getId()), Integer.toString(BaseController.passengerId), Integer.toString(BaseController.repartitionId)});
+
+        }
     }
     
 }
