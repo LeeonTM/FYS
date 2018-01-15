@@ -26,6 +26,7 @@ import com.mycompany.fys.DbClasses.Status;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.StageStyle;
 
@@ -85,6 +86,52 @@ public class EditMissingLuggageController extends BaseController {
     private JFXTextField colour;
     @FXML
     private JFXTextArea remarks;
+    @FXML
+    private Label lblGeneral;
+    @FXML
+    private Label lblOwnerInfo;
+    @FXML
+    private Label lblLuggageInfo;
+    @FXML
+    private Label lblDate;
+    @FXML
+    private Label lblTime;
+    @FXML
+    private Label lblAirport;
+    @FXML
+    private Label lblFirstname;
+    @FXML
+    private Label lblLastname;
+    @FXML
+    private Label lblEmail;
+    @FXML
+    private Label lblAddress;
+    @FXML
+    private Label lblCountry;
+    @FXML
+    private Label lblPlace;
+    @FXML
+    private Label lblZipCode;
+    @FXML
+    private Label lblMobileNumber;
+    @FXML
+    private Label lblHomeNumber;
+    @FXML
+    private Label lblLabelNumber;
+    @FXML
+    private Label lblFlightNumber;
+    @FXML
+    private Label lblDestination;
+    @FXML
+    private Label lblType;
+    @FXML
+    private Label lblBrand;
+    @FXML
+    private Label lblColor;
+    @FXML
+    private Label lblRemarks;
+    @FXML
+    private JFXButton btnAdd;
 
     /**
      * Initializes the controller class.
@@ -112,7 +159,7 @@ public class EditMissingLuggageController extends BaseController {
             LinkedList list = repo.executeCustomSelect("SELECT distinct Country FROM address where Id = " + i);
             country.getItems().add(list.toString().replace("[", "").replace("]", ""));
         }
-        
+
         LinkedList luggage0 = repo.executeSelect("luggage", new String[]{"Id"}, new String[]{BaseController.luggageId});
         Luggage luggage = new Luggage();
         luggage.fromLinkedList((LinkedList) luggage0.get(0));
@@ -154,6 +201,11 @@ public class EditMissingLuggageController extends BaseController {
         postalCode.setText(address.getPostalCode());
         country.setValue(address.getCountry());
 
+        if (super.applicatieTaal == null || super.applicatieTaal == "Nederlands") {
+            changeNederlands();
+        } else {
+            changeEnglish();
+        }
     }
 
     @FXML
@@ -208,12 +260,12 @@ public class EditMissingLuggageController extends BaseController {
     private String radioStatus;
 
     private void showInfoBox() {
-                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Bevestiging");
-            alert.setHeaderText(null);
-            alert.initStyle(StageStyle.UNDECORATED);
-            alert.setContentText("Baggage met labelnummer " + labelNumber.getText() + " is aangepast!");
-            alert.showAndWait();
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Bevestiging");
+        alert.setHeaderText(null);
+        alert.initStyle(StageStyle.UNDECORATED);
+        alert.setContentText("Baggage met labelnummer " + labelNumber.getText() + " is aangepast!");
+        alert.showAndWait();
     }
 
     @FXML
@@ -252,7 +304,7 @@ public class EditMissingLuggageController extends BaseController {
         LinkedList airport0 = repo.executeSelect("airport", new String[]{"Name"}, new String[]{(String) name.getValue()});
         Airport airport = new Airport();
         airport.fromLinkedList((LinkedList) airport0.get(0));
-        
+
         LinkedList status = repo.executeSelect("status", new String[]{"Name"}, new String[]{radioStatus});
         Status stats = new Status();
         stats.fromLinkedList((LinkedList) status.get(0));
@@ -266,7 +318,62 @@ public class EditMissingLuggageController extends BaseController {
                 new String[]{firstname.getText(), lastname.getText(), email.getText(), phone.getText()});
         repo.executeUpdate("Address", Integer.toString(passenger.getAddressId()), "Id", new String[]{"Street", "Number", "Place", "PostalCode", "Country"},
                 new String[]{street.getText(), number.getText(), place.getText(), postalCode.getText(), (String) country.getValue()});
-       
+
     }
 
+    public void changeEnglish() {
+        lblGeneral.setText("General information");
+        lblOwnerInfo.setText("Owner information");
+        lblLuggageInfo.setText("Luggage information");
+        lblDate.setText("Date");
+        lblTime.setText("Time");
+        lblAirport.setText("Airport");
+        lblFirstname.setText("Firstname");
+        lblLastname.setText("Lastname");
+        lblEmail.setText("Email");
+        lblAddress.setText("Address");
+        lblCountry.setText("Country");
+        lblPlace.setText("City");
+        lblZipCode.setText("Zipcode");
+        lblMobileNumber.setText("Phonenumber");
+        lblHomeNumber.setText("Home number");
+        lblLabelNumber.setText("Labelnumber");
+        lblFlightNumber.setText("Flightnumber");
+        lblDestination.setText("Destination");
+        lblType.setText("Type");
+        lblBrand.setText("Brand");
+        lblColor.setText("Color");
+        lblRemarks.setText("Luggage remarks");
+        btnAdd.setText("Add!");
+        radioGevonden.setText("Found");
+        radioVermist.setText("Lost");
+    }
+
+    public void changeNederlands() {
+        lblGeneral.setText("Algemene informatie");
+        lblOwnerInfo.setText("Reiziger informatie");
+        lblLuggageInfo.setText("Koffer informatie");
+        lblDate.setText("Datum");
+        lblTime.setText("Tijd");
+        lblAirport.setText("Luchthaven melding");
+        lblFirstname.setText("Voornaam");
+        lblLastname.setText("Achternaam");
+        lblEmail.setText("Emailadres");
+        lblAddress.setText("Verblijfsadres");
+        lblCountry.setText("Land");
+        lblPlace.setText("Woonplaats");
+        lblZipCode.setText("Postcode");
+        lblMobileNumber.setText("Telefoonnummer");
+        lblHomeNumber.setText("Huisnummer");
+        lblLabelNumber.setText("Labelnummer");
+        lblFlightNumber.setText("Vluchtnummer");
+        lblDestination.setText("Bestemming");
+        lblType.setText("Type");
+        lblBrand.setText("Merk");
+        lblColor.setText("Kleur");
+        lblRemarks.setText("Bijzondere kenmerken");
+        btnAdd.setText("Voeg toe!");
+        radioGevonden.setText("Gevonden");
+        radioVermist.setText("Vermist");
+    }
 }

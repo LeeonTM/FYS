@@ -37,22 +37,22 @@
                               <Font name="Arial Bold" size="18.0" />
                            </font>
                         </Label>
-                        <Label layoutX="248.0" layoutY="53.0" prefHeight="17.0" prefWidth="108.0" text="Gebruikersnaam">
+                        <Label fx:id="lblUsername" layoutX="248.0" layoutY="53.0" prefHeight="17.0" prefWidth="108.0" text="Gebruikersnaam">
                            <font>
                               <Font name="Arial Bold" size="13.0" />
                            </font>
                         </Label>
-                        <Label layoutX="263.0" layoutY="127.0" text="Wachtwoord">
+                        <Label fx:id="lblPassword" layoutX="263.0" layoutY="127.0" text="Wachtwoord">
                            <font>
                               <Font name="Arial Bold" size="13.0" />
                            </font>
                         </Label>
-                        <Label layoutX="253.0" layoutY="287.0" text="Accountrechten">
+                        <Label fx:id="lblRole" layoutX="253.0" layoutY="287.0" text="Accountrechten">
                            <font>
                               <Font name="Arial Bold" size="13.0" />
                            </font>
                         </Label>
-                        <Label layoutX="237.0" layoutY="350.0" text="Werkzaam op airport">
+                        <Label fx:id="lblAirport" layoutX="237.0" layoutY="350.0" text="Werkzaam op airport">
                            <font>
                               <Font name="Arial Bold" size="13.0" />
                            </font></Label>
@@ -60,7 +60,7 @@
                         <JFXTextField fx:id="emailField" alignment="CENTER" layoutX="81.0" layoutY="246.0" onMouseClicked="#clearTextBox" prefHeight="27.0" prefWidth="445.0" text="Voer een emailadres in..." />
                         <JFXComboBox fx:id="roleField" layoutX="81.0" layoutY="309.0" prefHeight="27.0" prefWidth="445.0" />
                         <JFXButton fx:id="addUserButton" buttonType="RAISED" layoutX="85.0" layoutY="421.0" onAction="#addUserToDB" prefHeight="27.0" prefWidth="445.0" style="-fx-background-color: #f1f1f1;" text="Maak account aan!" />
-                        <Label layoutX="269.0" layoutY="229.0" text="Emailadres">
+                        <Label fx:id="lblEmail" layoutX="269.0" layoutY="229.0" text="Emailadres">
                            <font>
                               <Font name="Arial Bold" size="13.0" />
                            </font>
