@@ -61,7 +61,7 @@
                         <JFXRadioButton fx:id="radioGevonden" layoutX="218.0" layoutY="72.0" onAction="#radioButton1" text="Gevonden" />
                      </children>
                   </Pane>
-                  <Pane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="457.0" prefWidth="380.0" style="-fx-background-color: #ffffff; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 10, 0.5, 0.0, 0.0);" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                  <Pane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="457.0" prefWidth="383.0" style="-fx-background-color: #ffffff; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 10, 0.5, 0.0, 0.0);" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                      <GridPane.margin>
                         <Insets />
                      </GridPane.margin>
@@ -111,71 +111,71 @@
                               <Font name="Arial Bold" size="14.0" />
                            </font>
                         </Label>
-                        <JFXTextField fx:id="place" layoutX="19.0" layoutY="338.0" />
-                        <JFXTextField fx:id="postalCode" layoutX="211.0" layoutY="338.0" />
+                        <JFXTextField fx:id="place" layoutX="15.0" layoutY="338.0" />
+                        <JFXTextField fx:id="postalCode" layoutX="207.0" layoutY="338.0" />
                         <Label fx:id="lblMobileNumber" layoutX="38.0" layoutY="377.0" text="Telefoonnummer">
                            <font>
                               <Font name="Arial Bold" size="14.0" />
                            </font>
                         </Label>
-                        <JFXTextField fx:id="phone" layoutX="21.0" layoutY="398.0" />
+                        <JFXTextField fx:id="phone" layoutX="16.0" layoutY="398.0" />
                         <Label fx:id="lblHomeNumber" layoutX="243.0" layoutY="377.0" text="Huisnummer">
                            <font>
                               <Font name="Arial Bold" size="14.0" />
                            </font>
                         </Label>
-                        <JFXTextField fx:id="number" layoutX="218.0" layoutY="398.0" />
+                        <JFXTextField fx:id="number" layoutX="206.0" layoutY="398.0" />
                      </children>
                   </Pane>
-                  <Pane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="457.0" prefWidth="356.0" style="-fx-background-color: #ffffff; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 10, 0.5, 0.0, 0.0);" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                  <Pane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="457.0" prefWidth="383.0" style="-fx-background-color: #ffffff; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 10, 0.5, 0.0, 0.0);" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                      <children>
-                        <Label fx:id="lblLuggageInfo" layoutX="104.0" layoutY="8.0" text="Koffer informatie">
+                        <Label fx:id="lblLuggageInfo" layoutX="124.0" layoutY="8.0" text="Koffer informatie">
                            <font>
                               <Font name="Arial Bold" size="18.0" />
                            </font>
                         </Label>
-                        <Label fx:id="lblLabelNumber" layoutX="132.0" layoutY="34.0" text="Labelnummer">
+                        <Label fx:id="lblLabelNumber" layoutX="144.0" layoutY="34.0" text="Labelnummer">
                            <font>
                               <Font name="Arial Bold" size="14.0" />
                            </font>
                         </Label>
-                        <Label fx:id="lblFlightNumber" layoutX="131.0" layoutY="86.0" text="Vluchtnummer">
+                        <Label fx:id="lblFlightNumber" layoutX="143.0" layoutY="86.0" text="Vluchtnummer">
                            <font>
                               <Font name="Arial Bold" size="14.0" />
                            </font>
                         </Label>
-                        <Label fx:id="lblDestination" layoutX="134.0" layoutY="136.0" text="Bestemming">
+                        <Label fx:id="lblDestination" layoutX="149.0" layoutY="136.0" text="Bestemming">
                            <font>
                               <Font name="Arial Bold" size="14.0" />
                            </font>
                         </Label>
-                        <Label fx:id="lblType" layoutX="164.0" layoutY="185.0" text="Type">
+                        <Label fx:id="lblType" layoutX="170.0" layoutY="185.0" text="Type">
                            <font>
                               <Font name="Arial Bold" size="14.0" />
                            </font>
                         </Label>
-                        <Label fx:id="lblBrand" layoutX="164.0" layoutY="237.0" text="Merk">
+                        <Label fx:id="lblBrand" layoutX="170.0" layoutY="237.0" text="Merk">
                            <font>
                               <Font name="Arial Bold" size="14.0" />
                            </font>
                         </Label>
-                        <Label fx:id="lblRemarks" layoutX="101.0" layoutY="338.0" text="Bijzondere kenmerken">
+                        <Label fx:id="lblRemarks" layoutX="113.0" layoutY="338.0" text="Bijzondere kenmerken">
                            <font>
                               <Font name="Arial Bold" size="14.0" />
                            </font>
                         </Label>
-                        <Label fx:id="lblColor" layoutX="162.0" layoutY="287.0" text="Kleur">
+                        <Label fx:id="lblColor" layoutX="170.0" layoutY="287.0" text="Kleur">
                            <font>
                               <Font name="Arial Bold" size="14.0" />
                            </font>
                         </Label>
-                        <JFXTextField fx:id="labelNumber" layoutX="14.0" layoutY="52.0" prefHeight="27.0" prefWidth="330.0" />
-                        <JFXTextField fx:id="flightNumber" layoutX="15.0" layoutY="103.0" prefHeight="27.0" prefWidth="330.0" />
-                        <JFXTextField fx:id="destination" layoutX="15.0" layoutY="154.0" prefHeight="27.0" prefWidth="330.0" />
-                        <JFXTextField fx:id="typeOfLuggage" layoutX="15.0" layoutY="204.0" prefHeight="27.0" prefWidth="330.0" />
-                        <JFXTextField fx:id="brand" layoutX="13.0" layoutY="254.0" prefHeight="27.0" prefWidth="330.0" />
-                        <JFXTextField fx:id="colour" layoutX="11.0" layoutY="304.0" prefHeight="27.0" prefWidth="330.0" />
-                        <JFXTextArea fx:id="remarks" layoutX="13.0" layoutY="355.0" prefHeight="50.0" prefWidth="330.0" />
+                        <JFXTextField fx:id="labelNumber" layoutX="19.0" layoutY="52.0" prefHeight="31.0" prefWidth="348.0" />
+                        <JFXTextField fx:id="flightNumber" layoutX="18.0" layoutY="103.0" prefHeight="31.0" prefWidth="348.0" />
+                        <JFXTextField fx:id="destination" layoutX="18.0" layoutY="154.0" prefHeight="31.0" prefWidth="348.0" />
+                        <JFXTextField fx:id="typeOfLuggage" layoutX="18.0" layoutY="204.0" prefHeight="31.0" prefWidth="348.0" />
+                        <JFXTextField fx:id="brand" layoutX="16.0" layoutY="254.0" prefHeight="31.0" prefWidth="348.0" />
+                        <JFXTextField fx:id="colour" layoutX="14.0" layoutY="304.0" prefHeight="31.0" prefWidth="348.0" />
+                        <JFXTextArea fx:id="remarks" layoutX="16.0" layoutY="355.0" prefHeight="50.0" prefWidth="348.0" />
                         <JFXButton fx:id="btnAdd" buttonType="RAISED" layoutX="33.0" layoutY="422.0" onAction="#handleButton" prefHeight="21.0" prefWidth="294.0" ripplerFill="BLACK" style="-fx-background-color: #f1f1f1;" text="Voeg toe!">
                            <font>
                               <Font name="Arial Bold" size="14.0" />
