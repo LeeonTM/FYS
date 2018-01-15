@@ -43,7 +43,12 @@ public class RepartitionInfoController extends BaseController {
     private void handleOverview(ActionEvent event) throws IOException {
         super.swapScene(event, "Overview.fxml");
     }
-
+    
+    @FXML
+    private void handleSchadeClaim(ActionEvent event) throws IOException {
+        super.swapScene(event, "damageOverview.fxml");
+    }
+    
     @FXML
     private void handleSettings(ActionEvent event) throws IOException {
         super.swapScene(event, "Instellingen.fxml");
