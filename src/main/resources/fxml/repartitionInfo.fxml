@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXTextArea?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="SettingsAnchorPane" fx:id="basePane" prefHeight="800.0" style="-fx-background-color: white (ffffff);" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.fys.RepartitionInfoController">
+    <children>
+      <AnchorPane layoutX="26.0" layoutY="85.0" prefHeight="611.0" prefWidth="1216.0" style="-fx-background-color: d81e05;" AnchorPane.bottomAnchor="32.0" AnchorPane.leftAnchor="32.0" AnchorPane.rightAnchor="32.0" AnchorPane.topAnchor="260.0">
+         <children>
+            <GridPane layoutX="14.0" layoutY="14.0" style="-fx-background-color: #f1f1f1;" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="14.0">
+              <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="396.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="396.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="396.0" />
+              </columnConstraints>
+              <rowConstraints>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Pane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="457.0" prefWidth="383.0" style="-fx-background-color: #ffffff; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 10, 0.5, 0.0, 0.0);" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                     <children>
+                        <Label fx:id="lblGeneral" layoutX="118.0" layoutY="4.0" text="Koffer informatie">
+                           <font>
+                              <Font name="Arial Bold" size="18.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="149.0" layoutY="39.0" text="Labelnummer">
+                           <font>
+                              <Font name="Arial Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <JFXTextField layoutX="13.0" layoutY="56.0" prefHeight="27.0" prefWidth="358.0" />
+                        <Label layoutX="147.0" layoutY="92.0" text="Vluchtnummer">
+                           <font>
+                              <Font name="Arial Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <JFXTextField layoutX="13.0" layoutY="110.0" prefHeight="27.0" prefWidth="358.0" />
+                        <Label layoutX="154.0" layoutY="146.0" text="Bestemming">
+                           <font>
+                              <Font name="Arial Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <JFXTextField layoutX="12.0" layoutY="168.0" prefHeight="27.0" prefWidth="358.0" />
+                        <Label layoutX="177.0" layoutY="204.0" text="Type">
+                           <font>
+                              <Font name="Arial Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <JFXTextField layoutX="12.0" layoutY="225.0" prefHeight="27.0" prefWidth="358.0" />
+                        <Label layoutX="177.0" layoutY="260.0" text="Merk">
+                           <font>
+                              <Font name="Arial Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <JFXTextField layoutX="12.0" layoutY="277.0" prefHeight="27.0" prefWidth="358.0" />
+                        <Label layoutX="176.0" layoutY="311.0" text="Kleur">
+                           <font>
+                              <Font name="Arial Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <JFXTextField layoutX="13.0" layoutY="328.0" prefHeight="27.0" prefWidth="358.0" />
+                        <Label layoutX="124.0" layoutY="366.0" text="Bijzondere kenmerken">
+                           <font>
+                              <Font name="Arial Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <JFXTextArea layoutX="12.0" layoutY="381.0" prefHeight="64.0" prefWidth="358.0" />
+                     </children>
+                  </Pane>
+                  <Pane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="457.0" prefWidth="383.0" style="-fx-background-color: #ffffff; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 10, 0.5, 0.0, 0.0);" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                     <GridPane.margin>
+                        <Insets />
+                     </GridPane.margin>
+                     <children>
+                        <Label fx:id="lblOwnerInfo" layoutX="108.0" layoutY="4.0" text="Zendingsvoortgang">
+                           <font>
+                              <Font name="Arial Bold" size="18.0" />
+                           </font>
+                        </Label>
+                        <JFXTextField fx:id="firstname" layoutX="16.0" layoutY="68.0" prefHeight="27.0" prefWidth="348.0" />
+                        <Label fx:id="lblFirstname" layoutX="131.0" layoutY="52.0" text="Leverancier koffer">
+                           <font>
+                              <Font name="Arial Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="lblLastname" layoutX="143.0" layoutY="106.0" text="Type transport">
+                           <font>
+                              <Font name="Arial Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <JFXTextField fx:id="lastname" layoutX="16.0" layoutY="122.0" prefHeight="27.0" prefWidth="348.0" />
+                        <Label fx:id="lblEmail" layoutX="149.0" layoutY="159.0" text="Van vliegveld">
+                           <font>
+                              <Font name="Arial Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <JFXTextField fx:id="email" layoutX="17.0" layoutY="175.0" prefHeight="27.0" prefWidth="348.0" />
+                        <Label fx:id="lblAddress" layoutX="152.0" layoutY="212.0" text="Afleveradres">
+                           <font>
+                              <Font name="Arial Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <JFXTextField fx:id="street" layoutX="16.0" layoutY="230.0" prefHeight="27.0" prefWidth="348.0" />
+                        <JFXComboBox fx:id="country" layoutX="17.0" layoutY="340.0" prefHeight="27.0" prefWidth="347.0" />
+                        <Label fx:id="lblCountry" layoutX="146.0" layoutY="317.0" text="Koffer status">
+                           <font>
+                              <Font name="Arial Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="lblCountry1" layoutX="118.0" layoutY="266.0" text="Geschatte leverdatum">
+                           <font>
+                              <Font name="Arial Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <JFXTextField fx:id="firstname1" layoutX="17.0" layoutY="283.0" prefHeight="27.0" prefWidth="348.0" />
+                     </children>
+                  </Pane>
+                  <Pane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="233.0" prefWidth="383.0" style="-fx-background-color: #ffffff; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 10, 0.5, 0.0, 0.0);" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="TOP">
+                     <children>
+                        <Label fx:id="lblLuggageInfo" layoutX="147.0" layoutY="6.0" text="Changelog">
+                           <font>
+                              <Font name="Arial Bold" size="18.0" />
+                           </font>
+                        </Label>
+                     </children>
+                     <GridPane.margin>
+                        <Insets top="12.0" />
+                     </GridPane.margin>
+                  </Pane>
+                  <JFXButton fx:id="btnDelete" buttonType="RAISED" onAction="#delItemFromTable" prefHeight="55.0" prefWidth="212.0" ripplerFill="#971818" style="-fx-background-color: #d81e05;" text="Wijzig repatriëring" textFill="WHITE" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                     <font>
+                        <Font name="Arial Bold" size="18.0" />
+                     </font>
+                     <GridPane.margin>
+                        <Insets top="150.0" />
+                     </GridPane.margin>
+                  </JFXButton>
+                  <JFXButton fx:id="btnDelete1" buttonType="RAISED" onAction="#delItemFromTable" prefHeight="55.0" prefWidth="212.0" ripplerFill="#971818" style="-fx-background-color: #d81e05;" text="Verwijder repatriëring" textFill="WHITE" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                     <font>
+                        <Font name="Arial Bold" size="18.0" />
+                     </font>
+                     <GridPane.margin>
+                        <Insets top="300.0" />
+                     </GridPane.margin>
+                  </JFXButton>
+               </children>
+            </GridPane>
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="32.0" layoutY="140.0" prefHeight="97.0" prefWidth="1198.0" style="-fx-background-color: d81e05;" AnchorPane.leftAnchor="32.0" AnchorPane.rightAnchor="32.0">
+         <children>
+            <GridPane layoutX="23.0" layoutY="4.0" AnchorPane.bottomAnchor="4.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="4.0">
+              <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                     <GridPane.margin>
+                        <Insets left="20.0" />
+                     </GridPane.margin>
+                     <image>
+                        <Image url="@../Icons/danger.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1">
+                     <image>
+                        <Image url="@../Icons/briefcase.png" />
+                     </image>
+                     <GridPane.margin>
+                        <Insets left="20.0" />
+                     </GridPane.margin>
+                  </ImageView>
+                  <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2">
+                     <image>
+                        <Image url="@../Icons/settings.png" />
+                     </image>
+                     <GridPane.margin>
+                        <Insets left="20.0" />
+                     </GridPane.margin>
+                  </ImageView>
+                  <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3">
+                     <image>
+                        <Image url="@../Icons/logout.png" />
+                     </image>
+                     <GridPane.margin>
+                        <Insets left="20.0" />
+                     </GridPane.margin>
+                  </ImageView>
+                  <JFXButton buttonType="RAISED" onAction="#handleSchadeClaim" prefHeight="166.0" prefWidth="417.0" ripplerFill="WHITE" text="Schadeclaim" textFill="WHITE">
+                     <font>
+                        <Font name="Arial Bold" size="20.0" />
+                     </font>
+                  </JFXButton>
+                  <JFXButton buttonType="RAISED" onAction="#handleOverview" prefHeight="185.0" prefWidth="502.0" ripplerFill="WHITE" text="Bagage overzicht" textFill="WHITE" GridPane.columnIndex="1">
+                     <font>
+                        <Font name="Arial Bold" size="20.0" />
+                     </font>
+                  </JFXButton>
+                  <JFXButton buttonType="RAISED" onAction="#handleSettings" prefHeight="185.0" prefWidth="502.0" ripplerFill="WHITE" text="Instellingen" textFill="WHITE" GridPane.columnIndex="2">
+                     <font>
+                        <Font name="Arial Bold" size="20.0" />
+                     </font>
+                  </JFXButton>
+                  <JFXButton buttonType="RAISED" onAction="#handleLogout" prefHeight="185.0" prefWidth="502.0" ripplerFill="WHITE" text="Uitloggen" textFill="WHITE" GridPane.columnIndex="3">
+                     <font>
+                        <Font name="Arial Bold" size="20.0" />
+                     </font>
+                  </JFXButton>
+               </children>
+            </GridPane>
+         </children>
+      </AnchorPane>
+      <GridPane layoutX="32.0" layoutY="14.0" prefHeight="127.0" prefWidth="1216.0" AnchorPane.leftAnchor="32.0" AnchorPane.rightAnchor="32.0" AnchorPane.topAnchor="12.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <ImageView fitHeight="150.0" fitWidth="400.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+               <image>
+                  <Image url="@../Images/Corendon.png" />
+               </image>
+            </ImageView>
+            <JFXButton buttonType="RAISED" prefHeight="55.0" prefWidth="178.0" ripplerFill="#971818" style="-fx-background-color: #d81e05;" text="Help" textFill="WHITE" GridPane.columnIndex="2" GridPane.halignment="RIGHT">
+               <font>
+                  <Font name="Arial Bold" size="18.0" />
+               </font>
+            </JFXButton>
+            <ImageView fitHeight="55.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.halignment="RIGHT">
+               <image>
+                  <Image url="@../Icons/HelpIcon.png" />
+               </image>
+               <GridPane.margin>
+                  <Insets right="125.0" />
+               </GridPane.margin>
+            </ImageView>
+            <JFXButton fx:id="managerButton" buttonType="RAISED" onAction="#handleManagerOverview" prefHeight="49.0" prefWidth="160.0" ripplerFill="#971818" style="-fx-background-color: #d81e05;" text="Manager" textFill="WHITE" visible="false" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+               <font>
+                  <Font name="Arial Bold" size="18.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets />
+               </GridPane.margin>
+            </JFXButton>
+         </children>
+      </GridPane>
+    </children>
+</AnchorPane>

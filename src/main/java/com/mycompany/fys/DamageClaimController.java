@@ -11,7 +11,6 @@ import java.util.ResourceBundle;
 
 import com.jfoenix.controls.JFXButton;
 import com.mycompany.fys.DbClasses.DamageClaim;
-import com.mycompany.fys.DbClasses.User;
 import java.util.LinkedList;
 import java.util.Optional;
 import javafx.collections.FXCollections;
@@ -24,6 +23,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.StageStyle;
 
@@ -169,7 +169,6 @@ public class DamageClaimController extends BaseController {
             }
         }
     }
-    
 
     private void changeNederlands() {
         btnAdd.setText("Voeg schadeclaim toe");
