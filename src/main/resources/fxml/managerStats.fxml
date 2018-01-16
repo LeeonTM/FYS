@@ -208,7 +208,7 @@
                   <Image url="@../Images/Corendon.png" />
                </image>
             </ImageView>
-            <JFXButton buttonType="RAISED" prefHeight="55.0" prefWidth="178.0" ripplerFill="#971818" style="-fx-background-color: #d81e05;" text="Help" textFill="WHITE" GridPane.columnIndex="2" GridPane.halignment="RIGHT">
+            <JFXButton buttonType="RAISED" onAction="#handleHelp" prefHeight="55.0" prefWidth="178.0" ripplerFill="#971818" style="-fx-background-color: #d81e05;" text="Help" textFill="WHITE" GridPane.columnIndex="2" GridPane.halignment="RIGHT">
                <font>
                   <Font name="Arial Bold" size="18.0" />
                </font>
@@ -221,6 +221,11 @@
                   <Insets right="125.0" />
                </GridPane.margin>
             </ImageView>
+            <JFXButton fx:id="medewerkerButton" buttonType="RAISED" onAction="#handleOverview" prefHeight="49.0" prefWidth="160.0" ripplerFill="#971818" style="-fx-background-color: #d81e05;" text="Medewerkers" textFill="WHITE" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+               <font>
+                  <Font name="Arial Bold" size="18.0" />
+               </font>
+            </JFXButton>
          </children>
       </GridPane>
     </children>

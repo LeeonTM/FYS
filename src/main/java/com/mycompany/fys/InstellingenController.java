@@ -116,6 +116,26 @@ public class InstellingenController extends BaseController {
     }
     
     @FXML
+    private void importExcel(ActionEvent event) throws IOException{
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("Informatie");
+        alert.setHeaderText(null);
+        alert.initStyle(StageStyle.UNDECORATED);
+        alert.setContentText("Deze functie is nog in ontwikkeling!");
+        alert.showAndWait();
+    }
+    
+    @FXML
+    private void handleHelp(ActionEvent event) throws IOException {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("Informatie");
+        alert.setHeaderText(null);
+        alert.initStyle(StageStyle.UNDECORATED);
+        alert.setContentText("Deze functie is nog in ontwikkeling!");
+        alert.showAndWait();
+    }
+    
+    @FXML
     private void handlePassChange(ActionEvent event) throws IOException {
         if (passField.getText().trim().isEmpty() || repeatPassField.getText().trim().isEmpty()) {
             

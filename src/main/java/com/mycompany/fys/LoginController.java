@@ -17,8 +17,10 @@ import com.mycompany.fys.DbClasses.User;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.StageStyle;
 
 /**
  * FXML Controller class
@@ -86,5 +88,15 @@ public class LoginController extends BaseController {
         lblUsername.setText("Gebruikersnaam");
         lblPassword.setText("Wachtwoord");
         btnLogin.setText("Inloggen");
+    }
+    
+    @FXML
+    private void handleHelp(ActionEvent event) throws IOException {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("Informatie");
+        alert.setHeaderText(null);
+        alert.initStyle(StageStyle.UNDECORATED);
+        alert.setContentText("Deze functie is nog in ontwikkeling!");
+        alert.showAndWait();
     }
 }
