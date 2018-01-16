@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextArea?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.image.Image?>
@@ -10,15 +12,17 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane id="SettingsAnchorPane" fx:id="basePane" prefHeight="800.0" style="-fx-background-color: white (ffffff);" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.fys.OverviewController">
     <children>
       <AnchorPane layoutX="26.0" layoutY="315.0" prefHeight="453.0" prefWidth="1216.0" style="-fx-background-color: d81e05;" AnchorPane.bottomAnchor="32.0" AnchorPane.leftAnchor="32.0" AnchorPane.rightAnchor="32.0" AnchorPane.topAnchor="315.0">
          <children>
-            <GridPane layoutX="14.0" layoutY="14.0" style="-fx-background-color: white;" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="14.0">
+            <GridPane layoutX="14.0" layoutY="21.0" prefHeight="418.0" prefWidth="1188.0" style="-fx-background-color: white;" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="14.0">
               <columnConstraints>
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="180.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="1031.0" minWidth="10.0" prefWidth="1015.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="588.0" minWidth="10.0" prefWidth="173.0" />
               </columnConstraints>
               <rowConstraints>
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -36,6 +40,24 @@
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                      </columnResizePolicy>
                   </TableView>
+                  <Line endX="100.0" startX="-72.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="TOP">
+                     <GridPane.margin>
+                        <Insets top="26.0" />
+                     </GridPane.margin>
+                  </Line>
+                  <Label text="Zoek gegevens" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="TOP">
+                     <GridPane.margin>
+                        <Insets top="5.0" />
+                     </GridPane.margin>
+                     <font>
+                        <Font name="Arial Bold" size="14.0" />
+                     </font>
+                  </Label>
+                  <JFXTextArea fx:id="filterField" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="80.0" prefWidth="173.0" promptText="Vul hier uw zoekwaarde in..." GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="TOP">
+                     <GridPane.margin>
+                        <Insets top="50.0" />
+                     </GridPane.margin>
+                  </JFXTextArea>
                </children>
             </GridPane>
          </children>

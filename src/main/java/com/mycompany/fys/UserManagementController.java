@@ -12,10 +12,13 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXTextField;
 import com.mycompany.fys.DbClasses.User;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -52,9 +55,12 @@ public class UserManagementController extends BaseController {
     private JFXButton btnDelete;
     @FXML
     private Label lblUsermanagement;
-    
+    @FXML
+    private JFXTextField filterField;
     @FXML
     private TableView userManagementTableView;
+    
+    private ObservableList<User> list = FXCollections.observableArrayList();
     /**
      * Initializes the controller class.
     */
@@ -69,6 +75,39 @@ public class UserManagementController extends BaseController {
         else{
             changeEnglish();
         }
+        
+        FilteredList<User> filteredData = new FilteredList<>(list, p -> true);
+        
+            filterField.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredData.setPredicate(User -> {
+                // If filter text is empty, display all data.
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+
+                // Compare everything with filter text.
+                String lowerCaseFilter = newValue.toLowerCase();
+
+                if (User.getUsername().toLowerCase().contains(lowerCaseFilter)) {
+                    return true; // Filter matches usernames
+                } else if (Integer.toString(User.getId()).toLowerCase().contains(lowerCaseFilter)) {
+                    return true; // Filter matches User IDs
+                } else if (User.getEmail().toLowerCase().contains(lowerCaseFilter)) {
+                    return true; // Filter matches emails
+                } else if (Integer.toString(User.getRoleId()).toLowerCase().contains(lowerCaseFilter)) {
+                    return true; // Filter matches Rollen
+                } else if (Integer.toString(User.getAirportId()).toLowerCase().contains(lowerCaseFilter)) {
+                    return true; // Filter matches airport
+                }
+                return false;
+            });
+        });
+            
+        SortedList<User> sortedData = new SortedList<>(filteredData);
+        
+        sortedData.comparatorProperty().bind(userManagementTableView.comparatorProperty());
+        
+        userManagementTableView.setItems(sortedData);
     }
 
     @FXML
@@ -96,7 +135,6 @@ public class UserManagementController extends BaseController {
     }
     
     private void refreshUserData () {
-        ObservableList<User> list = FXCollections.observableArrayList();
         LinkedList result = repo.executeCustomSelect("SELECT * FROM user WHERE isDeleted = 0");
         for(Object a : result){
             User user = new User();

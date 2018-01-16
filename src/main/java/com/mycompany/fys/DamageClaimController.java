@@ -10,11 +10,14 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXTextField;
 import com.mycompany.fys.DbClasses.DamageClaim;
 import java.util.LinkedList;
 import java.util.Optional;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -23,7 +26,6 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.StageStyle;
 
@@ -56,7 +58,10 @@ public class DamageClaimController extends BaseController {
     private TableColumn EstimatePrice;
     @FXML
     private TableView damageClaimTable;
+    @FXML
+    private JFXTextField filterField;
 
+    private ObservableList<DamageClaim> list = FXCollections.observableArrayList();
     /**
      * Initializes the controller class.
      */
@@ -73,6 +78,37 @@ public class DamageClaimController extends BaseController {
         }
         
         refreshDamageData();
+        
+        FilteredList<DamageClaim> filteredData = new FilteredList<>(list, p -> true);
+        
+            filterField.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredData.setPredicate(DamageClaim -> {
+                // If filter text is empty, display all data.
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+
+                // Compare everything with filter text.
+                String lowerCaseFilter = newValue.toLowerCase();
+
+                if (DamageClaim.getDescription().toLowerCase().contains(lowerCaseFilter)) {
+                    return true; // Filter matches Schade Description
+                } else if (Integer.toString(DamageClaim.getId()).toLowerCase().contains(lowerCaseFilter)) {
+                    return true; // Filter matches Schade ID
+                } else if (Double.toString(DamageClaim.getEstimatePrice()).toLowerCase().contains(lowerCaseFilter)) {
+                    return true; // Filter matches Estimated price
+                } else if (DamageClaim.getInsuranceCompany().toLowerCase().contains(lowerCaseFilter)) {
+                    return true; // Filter matches verzekeringsmaatschappij
+                }
+                return false;
+            });
+        });
+            
+        SortedList<DamageClaim> sortedData = new SortedList<>(filteredData);
+        
+        sortedData.comparatorProperty().bind(damageClaimTable.comparatorProperty());
+        
+        damageClaimTable.setItems(sortedData);
     }
 
     @FXML
@@ -106,7 +142,7 @@ public class DamageClaimController extends BaseController {
     }
     
     private void refreshDamageData () {
-        ObservableList<DamageClaim> list = FXCollections.observableArrayList();
+        //ObservableList<DamageClaim> list = FXCollections.observableArrayList();
         LinkedList result = repo.executeCustomSelect("SELECT * FROM DamageClaim WHERE isDeleted = 0");
         for(Object a : result){
             DamageClaim damageclaim = new DamageClaim();

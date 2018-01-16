@@ -12,16 +12,14 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXSnackbar.SnackbarEvent;
+import com.jfoenix.controls.JFXTextArea;
 import com.mycompany.fys.DbClasses.Luggage;
-import com.sun.xml.internal.fastinfoset.algorithm.BuiltInEncodingAlgorithm;
-import java.io.FileNotFoundException;
-import java.io.PrintWriter;
-import java.io.StringWriter;
 import java.util.ArrayList;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -69,6 +67,9 @@ public class OverviewController extends BaseController {
     private JFXButton btnEdit;
     @FXML
     private JFXButton btnMatch;
+    @FXML
+    private JFXTextArea filterField;
+    
     private String matchIdRecord;
 
     @Override
@@ -112,6 +113,51 @@ public class OverviewController extends BaseController {
             selectedItem = luggage;
             verwerking();
         }
+        
+            FilteredList<Luggage> filteredData = new FilteredList<>(list, p -> true);
+        
+            filterField.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredData.setPredicate(Luggage -> {
+                // If filter text is empty, display all data.
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+                
+                // Compare everything with filter text.
+                String lowerCaseFilter = newValue.toLowerCase();
+
+                if (Luggage.getRemarks().toLowerCase().contains(lowerCaseFilter)) {
+                    return true; // Filter matches Description
+                } else if (Integer.toString(Luggage.getPassengerId()).toLowerCase().contains(lowerCaseFilter)) {
+                    return true; // Filter matches Passenger IDs
+                } else if (Luggage.getBrand().toLowerCase().contains(lowerCaseFilter)) {
+                    return true; // Filter matches Brands
+                } else if (Integer.toString(Luggage.getStatusId()).toLowerCase().contains(lowerCaseFilter)) {
+                    return true; // Filter matches Statusses
+                } else if (Integer.toString(Luggage.getId()).toLowerCase().contains(lowerCaseFilter)) {
+                    return true; // Filter matches Luggage ID's
+                } else if (Luggage.getColour().toLowerCase().contains(lowerCaseFilter)) {
+                    return true; // Filter matches Colours
+                } else if (Luggage.getDestination().toLowerCase().contains(lowerCaseFilter)) {
+                    return true; // Filter matches Destinations
+                } else if (Luggage.getFlightNumber().toLowerCase().contains(lowerCaseFilter)) {
+                    return true; // Filter matches Flight numbers
+                } else if (Luggage.getLabelNumber().toLowerCase().contains(lowerCaseFilter)) {
+                    return true; // Filter matches Label numbers
+                } else if (Luggage.getTypeOfLuggage().toLowerCase().contains(lowerCaseFilter)) {
+                    return true; // Filter matches Type of Luggages
+                } else if (Luggage.getWFCode().toLowerCase().contains(lowerCaseFilter)) {
+                    return true; // Filter matches Luggage ID's
+                }
+                return false;
+            });
+        });
+            
+        SortedList<Luggage> sortedData = new SortedList<>(filteredData);
+        
+        sortedData.comparatorProperty().bind(overviewtable.comparatorProperty());
+        
+        overviewtable.setItems(sortedData);
     }
 
     private void refreshtable() {
