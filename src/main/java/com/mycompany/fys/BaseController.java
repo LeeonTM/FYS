@@ -30,6 +30,7 @@ public class BaseController implements Initializable {
     public static int changingDamage;
     public static int repartitionId;
     public static int passengerId;
+    public static int fromAddMissingLuggage = 0;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {

@@ -99,6 +99,27 @@ public class OverviewController extends BaseController {
         } else {
             changeEnglish();
         }
+
+        if (fromAddMissingLuggage == 1) {
+            Luggage luggage = new Luggage();
+            LinkedList idVanGemaakteLuggage = super.repo.executeCustomSelect("select max(Id) FROM Luggage");
+            int id = Integer.parseInt(idVanGemaakteLuggage.toString().replace("[", "").replace("]", ""));
+            String id2 = Integer.toString(id);
+            System.out.println(id);
+            LinkedList luggageInfo = super.repo.executeCustomSelect("select * FROM Luggage where id = " + id2);
+            System.out.println("test1");
+            
+            
+            for (Object a : luggageInfo) {
+                luggage.fromLinkedList((LinkedList) a);
+                System.out.println("test2");
+            }
+            fromAddMissingLuggage = 0;
+            System.out.println("test3");
+            luggage = selectedItem;
+            System.out.println(selectedItem.getId());
+            verwerking();
+        }
     }
 
     private void refreshtable() {
@@ -162,12 +183,7 @@ public class OverviewController extends BaseController {
         Luggage selectedItem = (Luggage) overviewtable.getSelectionModel().getSelectedItem();
 
         if (selectedItem == null) {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Informatie");
-            alert.setHeaderText(null);
-            alert.initStyle(StageStyle.UNDECORATED);
-            alert.setContentText("Kies eerst een rij voordat je op de knop drukt!");
-            alert.showAndWait();
+            warning();
         } else {
             BaseController.luggageId = Integer.toString(selectedItem.getId());
             handleEditLuggage(event);
@@ -180,12 +196,7 @@ public class OverviewController extends BaseController {
         Luggage selectedItem = (Luggage) overviewtable.getSelectionModel().getSelectedItem();
 
         if (selectedItem == null) {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Informatie");
-            alert.setHeaderText(null);
-            alert.initStyle(StageStyle.UNDECORATED);
-            alert.setContentText("Kies eerst een rij voordat je op de knop drukt!");
-            alert.showAndWait();
+            warning();
         } else {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Bevestig actie");
@@ -201,37 +212,47 @@ public class OverviewController extends BaseController {
         }
     }
 
+    private void warning() {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("Informatie");
+        alert.setHeaderText(null);
+        alert.initStyle(StageStyle.UNDECORATED);
+        alert.setContentText("Kies eerst een rij voordat je op de knop drukt!");
+        alert.showAndWait();
+    }
+
     @FXML
-    public void handleMatchRecord(ActionEvent event) throws IOException {
-
-        ArrayList matchId = new ArrayList();
-        Luggage selectedItem = (Luggage) overviewtable.getSelectionModel().getSelectedItem();
-
+    private void handleMatchRecord(ActionEvent event) throws IOException {
+        selectedItem = (Luggage) overviewtable.getSelectionModel().getSelectedItem();
         if (selectedItem == null) {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Informatie");
-            alert.setHeaderText(null);
-            alert.initStyle(StageStyle.UNDECORATED);
-            alert.setContentText("Kies eerst een rij voordat je op de knop drukt!");
-            alert.showAndWait();
+            warning();
         } else {
-            matchIdRecord = Integer.toString(selectedItem.getId());
-            matchFunctie(matchId);
-            System.out.println("test 10");
-            if (matchId.isEmpty()) {
-                System.out.println("test 11");
-                showAlertbox();
-            } else {
-                System.out.println("test 12");
-                showtextBox(matchId);
-            }
+            verwerking();
         }
+    }
+
+    private void verwerking() {
+        ArrayList matchId = new ArrayList();
+        System.out.println("test5");
+        matchIdRecord = Integer.toString(selectedItem.getId());
+        System.out.println("test6");
+        matchFunctie(matchId);
+        System.out.println("test 10");
+        if (matchId.isEmpty()) {
+            System.out.println("test 11");
+            showAlertbox();
+        } else {
+            System.out.println("test 12");
+            showtextBox(matchId);
+        }
+
     }
 
     private void matchFunctie(ArrayList matchId) {
 
         Luggage luggage = new Luggage();
         LinkedList result = super.repo.executeCustomSelect("select * from Luggage where Id = " + matchIdRecord);
+        System.out.println(super.repo.executeCustomSelect("select * from Luggage where Id = " + matchIdRecord));
         for (Object a : result) {
             luggage.fromLinkedList((LinkedList) a);
         }
@@ -245,8 +266,8 @@ public class OverviewController extends BaseController {
             ArrayList idList = new ArrayList();
 
             System.out.println(woorden[j]);
-            LinkedList list = repo.executeCustomSelect("select INSTR(Remarks, '" + woorden[j] + "') from luggage where Id <> " + matchIdRecord);
-            LinkedList list2 = repo.executeCustomSelect("select Id from luggage where Id <> " + matchIdRecord);
+            LinkedList list = repo.executeCustomSelect("select INSTR(Remarks, '" + woorden[j] + "') from luggage where Id <> " + matchIdRecord + " and isDeleted = 0");
+            LinkedList list2 = repo.executeCustomSelect("select Id from luggage where Id <> " + matchIdRecord + " and isDeleted = 0");
             System.out.println(list.size());
 
             for (int q = 0; q < list.size(); q++) {
@@ -256,7 +277,6 @@ public class OverviewController extends BaseController {
                 int value = Integer.parseInt(num);
                 if (value >= 1 && !matchId.contains(idList.get(q))) {
                     matchId.add(idList.get(q));
-                    break;
                 }
             }
         }
@@ -338,15 +358,14 @@ public class OverviewController extends BaseController {
 
     @FXML
     private void askForRepartition(ActionEvent event) throws IOException {
-       
+
         Luggage selectedItem = (Luggage) overviewtable.getSelectionModel().getSelectedItem();
         BaseController.repartitionId = selectedItem.getId();
         BaseController.passengerId = selectedItem.getPassengerId();
-        
+
         LinkedList<LinkedList> getRepatriation = repo.executeCustomSelect("SELECT LuggageId FROM Repatriation WHERE LuggageId = '" + BaseController.repartitionId + "' AND isDeleted = 0");
-        
-        
-          if (getRepatriation.isEmpty()) {
+
+        if (getRepatriation.isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Geen repatriatie gevonden!");
             alert.setHeaderText("Repatriatie niet gevonden");
@@ -354,12 +373,11 @@ public class OverviewController extends BaseController {
             alert.setContentText("Er is geen repatriatie gevonden voor koffer " + selectedItem.getId() + ". Wilt u er een aanmaken?");
 
             Optional<ButtonType> result = alert.showAndWait();
-            if (result.get() == ButtonType.OK){
+            if (result.get() == ButtonType.OK) {
                 super.swapScene(event, "repartitionAdd.fxml");
             }
-          }
-          else {
-              super.swapScene(event, "repartitionInfo.fxml");
-          }
+        } else {
+            super.swapScene(event, "repartitionInfo.fxml");
+        }
     }
 }

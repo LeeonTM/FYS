@@ -252,6 +252,7 @@ public class AddMissingLuggageController extends BaseController {
         } else {
             addLuggageToDB();
             showInfoBox();
+            fromAddMissingLuggage = 1;
             handleOverview(event);
         }
     }
