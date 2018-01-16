@@ -67,7 +67,6 @@ public class RepartitionInfoController extends BaseController {
             managerButton.setVisible(true);
         }
         
-        LinkedList<LinkedList> repaID = repo.executeCustomSelect("SELECT Id FROM Repatriation WHERE isDeleted = 0 AND LuggageId = '" + BaseController.repartitionId + "'");
         // set all data
         LinkedList<LinkedList> label = repo.executeCustomSelect("SELECT LabelNumber FROM Luggage WHERE Id = '" + BaseController.repartitionId + "' ");
         labelField.setText(label.toString().replace("[", "").replace("]", ""));
@@ -149,5 +148,25 @@ public class RepartitionInfoController extends BaseController {
             repo.executeUpdateQuery("UPDATE Repatriation SET isDeleted = 1 WHERE Id ='" + repaID.toString().replace("[", "").replace("]", "") + "'");
             super.swapScene(event, "Overview.fxml");
         }
+    }
+    
+    @FXML
+    private void editRepatriation(ActionEvent event) throws IOException {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("Informatie");
+        alert.setHeaderText(null);
+        alert.initStyle(StageStyle.UNDECORATED);
+        alert.setContentText("Deze functie is nog in ontwikkeling!");
+        alert.showAndWait();
+    }
+    
+    @FXML
+    private void handleHelp(ActionEvent event) throws IOException {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("Informatie");
+        alert.setHeaderText(null);
+        alert.initStyle(StageStyle.UNDECORATED);
+        alert.setContentText("Deze functie is nog in ontwikkeling!");
+        alert.showAndWait();
     }
 }

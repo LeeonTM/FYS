@@ -30,9 +30,11 @@ import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.PieChart;
 import javafx.scene.chart.XYChart;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 /**
  * FXML Controller class
@@ -130,6 +132,11 @@ public class ManagerStatsController extends BaseController {
     @FXML
     private void handleManagerOverview(ActionEvent event) throws IOException {
         super.swapScene(event, "managerStats.fxml");
+    }
+    
+    @FXML
+    private void handleOverview(ActionEvent event) throws IOException {
+        super.swapScene(event, "Overview.fxml");
     }
 
     @FXML
@@ -301,5 +308,15 @@ public class ManagerStatsController extends BaseController {
         
         btnAddPie.setText("Add piechart!");
         btnAddLine.setText("Add linechart!");
+    }
+    
+    @FXML
+    private void handleHelp(ActionEvent event) throws IOException {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("Informatie");
+        alert.setHeaderText(null);
+        alert.initStyle(StageStyle.UNDECORATED);
+        alert.setContentText("Deze functie is nog in ontwikkeling!");
+        alert.showAndWait();
     }
 }

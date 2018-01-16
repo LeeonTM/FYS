@@ -31,7 +31,7 @@
                <children>
                   <Pane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="462.0" prefWidth="603.0" style="-fx-background-color: white; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 10, 0.5, 0.0, 0.0);" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                      <children>
-                        <Label layoutX="224.0" layoutY="14.0" text="Schadeclaim aanmaken">
+                        <Label layoutX="224.0" layoutY="14.0" text="Schadeclaim wijzigen">
                            <font>
                               <Font name="Arial Bold" size="18.0" />
                            </font>
@@ -157,7 +157,7 @@
                   <Font name="Arial Bold" size="18.0" />
                </font>
             </JFXButton>
-            <JFXButton buttonType="RAISED" prefHeight="55.0" prefWidth="178.0" ripplerFill="#971818" style="-fx-background-color: #d81e05;" text="Help" textFill="WHITE" GridPane.columnIndex="2" GridPane.halignment="RIGHT">
+            <JFXButton buttonType="RAISED" onAction="#handleHelp" prefHeight="55.0" prefWidth="178.0" ripplerFill="#971818" style="-fx-background-color: #d81e05;" text="Help" textFill="WHITE" GridPane.columnIndex="2" GridPane.halignment="RIGHT">
                <font>
                   <Font name="Arial Bold" size="18.0" />
                </font>

@@ -46,6 +46,9 @@ public class EditDamageClaimController extends BaseController {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        if (BaseController.loggedInUser.getRoleId() == 2) {
+            managerButton.setVisible(true);
+        }  
         // set Description text
         LinkedList<LinkedList> description = repo.executeCustomSelect("SELECT Description FROM DamageClaim WHERE Id = '" + BaseController.changingDamage + "'");
         descriptionField.setText(description.toString().replace("[", "").replace("]", ""));
@@ -114,5 +117,15 @@ public class EditDamageClaimController extends BaseController {
             super.swapScene(event, "damageOverview.fxml");
             
         }
+    }
+    
+    @FXML
+    private void handleHelp(ActionEvent event) throws IOException {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("Informatie");
+        alert.setHeaderText(null);
+        alert.initStyle(StageStyle.UNDECORATED);
+        alert.setContentText("Deze functie is nog in ontwikkeling!");
+        alert.showAndWait();
     }
 }

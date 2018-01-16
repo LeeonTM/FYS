@@ -182,4 +182,19 @@ public class AddUserManagementController extends BaseController {
         lblAirport.setText("Airport");
         addUserButton.setText("Add account!");
     }
+    
+    @FXML
+    private void handleHelp(ActionEvent event) throws IOException {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("Informatie");
+        alert.setHeaderText(null);
+        alert.initStyle(StageStyle.UNDECORATED);
+        alert.setContentText("Deze functie is nog in ontwikkeling!");
+        alert.showAndWait();
+    }
+    
+    @FXML
+    private void handleOverview(ActionEvent event) throws IOException {
+        super.swapScene(event, "Overview.fxml");
+    }
 }
