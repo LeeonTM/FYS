@@ -384,4 +384,14 @@ public class EditMissingLuggageController extends BaseController {
         radioGevonden.setText("Gevonden");
         radioVermist.setText("Vermist");
     }
+    
+    @FXML
+    private void handleHelp(ActionEvent event) throws IOException {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("Informatie");
+        alert.setHeaderText(null);
+        alert.initStyle(StageStyle.UNDECORATED);
+        alert.setContentText("Deze functie is nog in ontwikkeling!");
+        alert.showAndWait();
+    }
 }
