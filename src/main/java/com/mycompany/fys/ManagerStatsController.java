@@ -12,7 +12,10 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.time.Instant;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -35,6 +38,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.util.converter.LocalTimeStringConverter;
 
 /**
  * FXML Controller class
@@ -151,10 +155,15 @@ public class ManagerStatsController extends BaseController {
             warning.setVisible(true);
 
         } else {
-
+        
+            if(date1.getValue().isBefore(date2.getValue())) {
             warning.setVisible(false);
             gegevensVerwerkenPiechart();
             setPieChart();
+            } else {
+                warning.setVisible(true);
+            }
+
         }
 
     }
@@ -212,14 +221,14 @@ public class ManagerStatsController extends BaseController {
 
         LocalDate beginDatum = date1.getValue();
         LocalDate eindDatum = date2.getValue();
-
+       
         do {
-
-            String query1 = "select count(Id) from luggage where CreatedAt ='"
-                    + beginDatum + "' and AirportId = " + vliegveldId + " and StatusId = '" + vermistId + "'";
-            String query2 = "select count(Id) from luggage where CreatedAt ='"
-                    + beginDatum + "'  and AirportId = " + vliegveldId + " and StatusId = '" + gevondenId + "'";
-
+            
+            String query1 = "select count(Id) from luggage where CreatedAt >= '"
+                    + beginDatum + "' and CreatedAt <= '" + beginDatum.plusDays(1) + "' and AirportId = " + vliegveldId + " and StatusId = '" + vermistId + "'";
+            String query2 = "select count(Id) from luggage where CreatedAt >= '"
+                    + beginDatum + "' and CreatedAt <= '" + beginDatum.plusDays(1) + "' and AirportId = " + vliegveldId + " and StatusId = '" + gevondenId + "'";
+            
             LinkedList getal1 = repo.executeCustomSelect(query1);
             LinkedList getal2 = repo.executeCustomSelect(query2);
 
@@ -237,7 +246,8 @@ public class ManagerStatsController extends BaseController {
         } while (!beginDatum.equals(eindDatum.plusDays(1)));
 
         for (int i = 0; i < data.size(); i++) {
-            System.out.println(data.get(i));
+//            System.out.println(data.get(i));
+            System.out.println(vermistPerDag.get(i));
         }
 
     }
@@ -247,7 +257,7 @@ public class ManagerStatsController extends BaseController {
         XYChart.Series series1 = new XYChart.Series();
 
         final CategoryAxis xAxis = new CategoryAxis();
-        final NumberAxis yAxis = new NumberAxis(0, 100, 1);
+        final NumberAxis yAxis = new NumberAxis();
                 final LineChart<String, Number> lineChart
                 = new LineChart<String, Number>(xAxis, yAxis);
                 
@@ -284,16 +294,21 @@ public class ManagerStatsController extends BaseController {
             warning.setVisible(true);
 
         } else {
+            
+            if(date1.getValue().isBefore(date2.getValue())) {
             warning.setVisible(false);
             gegevensVerwerkenLineChart();
             setLineChart();
+            } else {
+                warning.setVisible(true);
+            }
         }
     }
 
     private void changeNederlands(){
         lblStats.setText("Statistieken overzicht");
         lblBeginDate.setText("Begin datum");
-        lblEndDate.setText("End datum");
+        lblEndDate.setText("Eind datum");
         lblAirport.setText("Luchthaven");
         
         btnAddPie.setText("Maak piechart aan!");
