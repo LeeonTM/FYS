@@ -6,17 +6,19 @@
 package com.mycompany.fys;
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
+import com.mycompany.fys.DbClasses.Status;
 import java.io.IOException;
 import java.net.URL;
 import java.util.LinkedList;
-import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
+import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.StageStyle;
 
@@ -25,14 +27,12 @@ import javafx.stage.StageStyle;
  *
  * @author yannick
  */
-public class RepartitionInfoController extends BaseController {
+public class RepartitionEditController extends BaseController {
 
     @FXML
     private AnchorPane basePane;
     @FXML
-    private JFXButton managerButton;
-    @FXML
-    private JFXTextArea descriptionField;
+    private Label lblGeneral;
     @FXML
     private JFXTextField labelField;
     @FXML
@@ -46,27 +46,43 @@ public class RepartitionInfoController extends BaseController {
     @FXML
     private JFXTextField colourField;
     @FXML
+    private JFXTextArea descriptionField;
+    @FXML
+    private Label lblOwnerInfo;
+    @FXML
     private JFXTextField deliveryField;
+    @FXML
+    private Label lblFirstname;
+    @FXML
+    private Label lblLastname;
     @FXML
     private JFXTextField typeDeliveryField;
     @FXML
+    private Label lblEmail;
+    @FXML
     private JFXTextField airportField;
+    @FXML
+    private Label lblAddress;
     @FXML
     private JFXTextField addressField;
     @FXML
+    private JFXComboBox statusField;
+    @FXML
+    private Label lblCountry;
+    @FXML
+    private Label lblCountry1;
+    @FXML
     private JFXTextField dateField;
     @FXML
-    private JFXTextField statusField;
-                          
+    private JFXButton btnDelete;
+    @FXML
+    private JFXButton managerButton;
+
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        if (BaseController.loggedInUser.getRoleId() == 2) {
-            managerButton.setVisible(true);
-        }
-        
         // set all data
         LinkedList<LinkedList> label = repo.executeCustomSelect("SELECT LabelNumber FROM Luggage WHERE Id = '" + BaseController.repartitionId + "' ");
         labelField.setText(label.toString().replace("[", "").replace("]", ""));
@@ -104,21 +120,58 @@ public class RepartitionInfoController extends BaseController {
         LinkedList<LinkedList> date = repo.executeCustomSelect("SELECT Date FROM Repatriation WHERE isDeleted = 0 AND LuggageId = '" + BaseController.repartitionId + "'");
         dateField.setText(date.toString().replace("[", "").replace("]", ""));
         
-        LinkedList<LinkedList> statusId = repo.executeCustomSelect("SELECT StatusId FROM Repatriation WHERE isDeleted = 0 AND LuggageId = '" + BaseController.repartitionId + "'");
-        LinkedList<LinkedList> status = repo.executeCustomSelect("SELECT Name FROM Status WHERE Id = '" + statusId.toString().replace("[", "").replace("]", "") + "'");
-        statusField.setText(status.toString().replace("[", "").replace("]", ""));
+        LinkedList statusses = repo.executeCustomSelect("SELECT count(Id) FROM Status");
+        int limit1 = Integer.parseInt(statusses.toString().replace("[", "").replace("]", ""));
+
+        for (int i = 1; i <= limit1; i++) {
+            LinkedList list = repo.executeCustomSelect("SELECT Name FROM Status where Id = " + i);
+            statusField.getItems().add(list.toString().replace("[", "").replace("]", ""));
+        }
     }    
+
+    @FXML
+    private void EditRepaToDB(ActionEvent event) throws IOException {
+        if (deliveryField.getText().trim().isEmpty() || typeDeliveryField.getText().trim().isEmpty() || airportField.getText().trim().isEmpty()
+                || addressField.getText().trim().isEmpty() || dateField.getText().trim().isEmpty()) {
+
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Informatie");
+            alert.setHeaderText(null);
+            alert.initStyle(StageStyle.UNDECORATED);
+            alert.setContentText("Vul alle velden in!");
+            alert.showAndWait();
+        } else {
+            
+            LinkedList resultStatus = repo.executeSelect("Status", new String[]{"Name"}, new String[]{(String) statusField.getValue()});
+            Status status = new Status();
+            status.fromLinkedList((LinkedList) resultStatus.get(0));
+            
+            //repo.executeInsert("Repatriation", new String[]{"FromAirport", "toAddress", "Transporter", "TransporterType", "StatusId", "PassengerId", "LuggageId"},
+                    //new String[]{airportField.getText(), addressField.getText(), deliveryField.getText(), typeDeliveryField.getText(), Integer.toString(status.getId()), Integer.toString(BaseController.passengerId), Integer.toString(BaseController.repartitionId)});
+            
+            repo.executeUpdate("Repatriation", Integer.toString(BaseController.repartitionId), "Id", new String[]{"FromAirport", "toAddress", "Transporter", "TransporterType", "StatusId", "PassengerId", "LuggageId"}, new String[]{airportField.getText(), addressField.getText(), deliveryField.getText(), typeDeliveryField.getText(), Integer.toString(status.getId()), Integer.toString(BaseController.passengerId), Integer.toString(BaseController.repartitionId)});
+            
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Bevestiging");
+            alert.setHeaderText(null);
+            alert.initStyle(StageStyle.UNDECORATED);
+            alert.setContentText("Repatriering voor koffer met ID " + BaseController.repartitionId + " is gewijzigd!");
+            alert.showAndWait();
+
+            super.swapScene(event, "repartitionInfo.fxml");
+        }
+    }
+
+    @FXML
+    private void handleSchadeClaim(ActionEvent event) throws IOException {
+        super.swapScene(event, "damageOverview.fxml");
+    }
 
     @FXML
     private void handleOverview(ActionEvent event) throws IOException {
         super.swapScene(event, "Overview.fxml");
     }
-    
-    @FXML
-    private void handleSchadeClaim(ActionEvent event) throws IOException {
-        super.swapScene(event, "damageOverview.fxml");
-    }
-    
+
     @FXML
     private void handleSettings(ActionEvent event) throws IOException {
         super.swapScene(event, "Instellingen.fxml");
@@ -130,33 +183,7 @@ public class RepartitionInfoController extends BaseController {
     }
 
     @FXML
-    private void handleManagerOverview(ActionEvent event) throws IOException {
-        super.swapScene(event, "managerStats.fxml");
-    }
-    
-    @FXML
-    private void deleteRepatriation(ActionEvent event) throws IOException {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Bevestig actie");
-        alert.setHeaderText("Verwijderen van een repatriering");
-        alert.initStyle(StageStyle.UNDECORATED);
-        LinkedList<LinkedList> repaID = repo.executeCustomSelect("SELECT Id FROM Repatriation WHERE isDeleted = 0 AND LuggageId = '" + BaseController.repartitionId + "'");
-        alert.setContentText("Weet je zeker dat je deze repatriering met nummer " + repaID.toString().replace("[", "").replace("]", "") + " wilt verwijderen?");
-
-        Optional<ButtonType> result = alert.showAndWait();
-        if (result.get() == ButtonType.OK){
-            repo.executeUpdateQuery("UPDATE Repatriation SET isDeleted = 1 WHERE Id ='" + repaID.toString().replace("[", "").replace("]", "") + "'");
-            super.swapScene(event, "Overview.fxml");
-        }
-    }
-    
-    @FXML
-    private void editRepatriation(ActionEvent event) throws IOException {
-          super.swapScene(event, "repartitionEdit.fxml");
-    }
-    
-    @FXML
-    private void handleHelp(ActionEvent event) throws IOException {
+    private void handleHelp(ActionEvent event) {
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setTitle("Informatie");
         alert.setHeaderText(null);
@@ -164,4 +191,10 @@ public class RepartitionInfoController extends BaseController {
         alert.setContentText("Deze functie is nog in ontwikkeling!");
         alert.showAndWait();
     }
+
+    @FXML
+    private void handleManagerOverview(ActionEvent event) throws IOException {
+        super.swapScene(event, "managerStats.fxml");
+    }
+    
 }
