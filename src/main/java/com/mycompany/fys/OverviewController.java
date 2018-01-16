@@ -44,7 +44,7 @@ import javafx.stage.StageStyle;
 public class OverviewController extends BaseController {
 
     static Luggage selectedItem;
-
+    
     @FXML
     private TableView overviewtable;
     @FXML
@@ -104,20 +104,12 @@ public class OverviewController extends BaseController {
             Luggage luggage = new Luggage();
             LinkedList idVanGemaakteLuggage = super.repo.executeCustomSelect("select max(Id) FROM Luggage");
             int id = Integer.parseInt(idVanGemaakteLuggage.toString().replace("[", "").replace("]", ""));
-            String id2 = Integer.toString(id);
-            System.out.println(id);
-            LinkedList luggageInfo = super.repo.executeCustomSelect("select * FROM Luggage where id = " + id2);
-            System.out.println("test1");
-            
-            
+            LinkedList luggageInfo = super.repo.executeCustomSelect("select * FROM Luggage where id = " + id);    
             for (Object a : luggageInfo) {
                 luggage.fromLinkedList((LinkedList) a);
-                System.out.println("test2");
             }
             fromAddMissingLuggage = 0;
-            System.out.println("test3");
-            luggage = selectedItem;
-            System.out.println(selectedItem.getId());
+            selectedItem = luggage;
             verwerking();
         }
     }
@@ -233,16 +225,11 @@ public class OverviewController extends BaseController {
 
     private void verwerking() {
         ArrayList matchId = new ArrayList();
-        System.out.println("test5");
         matchIdRecord = Integer.toString(selectedItem.getId());
-        System.out.println("test6");
         matchFunctie(matchId);
-        System.out.println("test 10");
         if (matchId.isEmpty()) {
-            System.out.println("test 11");
             showAlertbox();
         } else {
-            System.out.println("test 12");
             showtextBox(matchId);
         }
 
@@ -252,7 +239,6 @@ public class OverviewController extends BaseController {
 
         Luggage luggage = new Luggage();
         LinkedList result = super.repo.executeCustomSelect("select * from Luggage where Id = " + matchIdRecord);
-        System.out.println(super.repo.executeCustomSelect("select * from Luggage where Id = " + matchIdRecord));
         for (Object a : result) {
             luggage.fromLinkedList((LinkedList) a);
         }
