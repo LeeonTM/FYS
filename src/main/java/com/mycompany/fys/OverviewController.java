@@ -80,7 +80,7 @@ public class OverviewController extends BaseController {
         ObservableList<Luggage> list = FXCollections.observableArrayList();
         LinkedList result = super.repo.executeCustomSelect("select * from luggage where isDeleted = 0");
         for (Object a : result) {
-            Luggage luggage = new Luggage();
+            Luggage luggage = new Luggage();    
             luggage.fromLinkedList((LinkedList) a);
 
             list.add(luggage);
@@ -291,6 +291,11 @@ public class OverviewController extends BaseController {
 
         String[] woorden;
         woorden = luggage.getRemarks().split(", ");
+        int gevondenOfVermist = luggage.getStatusId();
+        if(gevondenOfVermist == 1)
+            gevondenOfVermist = 2;
+        else
+            gevondenOfVermist = 1;
 
         for (int j = 0; j < woorden.length; j++) {
 
@@ -298,8 +303,8 @@ public class OverviewController extends BaseController {
             ArrayList idList = new ArrayList();
 
             System.out.println(woorden[j]);
-            LinkedList list = repo.executeCustomSelect("select INSTR(Remarks, '" + woorden[j] + "') from luggage where Id <> " + matchIdRecord + " and isDeleted = 0");
-            LinkedList list2 = repo.executeCustomSelect("select Id from luggage where Id <> " + matchIdRecord + " and isDeleted = 0");
+            LinkedList list = repo.executeCustomSelect("select INSTR(Remarks, '" + woorden[j] + "') from luggage where Id <> " + matchIdRecord + " and isDeleted = 0 and StatusId = " + gevondenOfVermist);
+            LinkedList list2 = repo.executeCustomSelect("select Id from luggage where Id <> " + matchIdRecord + " and isDeleted = 0 and StatusId = " + gevondenOfVermist);
             System.out.println(list.size());
 
             for (int q = 0; q < list.size(); q++) {
