@@ -10,12 +10,7 @@ import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXDatePicker;
 import java.io.IOException;
 import java.net.URL;
-import java.sql.ResultSet;
-import java.sql.Statement;
-import java.time.Instant;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -24,10 +19,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.chart.Axis;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
@@ -36,9 +27,7 @@ import javafx.scene.chart.XYChart;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
-import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import javafx.util.converter.LocalTimeStringConverter;
 
 /**
  * FXML Controller class
@@ -323,15 +312,5 @@ public class ManagerStatsController extends BaseController {
         
         btnAddPie.setText("Add piechart!");
         btnAddLine.setText("Add linechart!");
-    }
-    
-    @FXML
-    private void handleHelp(ActionEvent event) throws IOException {
-        Alert alert = new Alert(Alert.AlertType.WARNING);
-        alert.setTitle("Informatie");
-        alert.setHeaderText(null);
-        alert.initStyle(StageStyle.UNDECORATED);
-        alert.setContentText("Deze functie is nog in ontwikkeling!");
-        alert.showAndWait();
     }
 }

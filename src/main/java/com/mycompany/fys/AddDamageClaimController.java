@@ -8,11 +8,8 @@ package com.mycompany.fys;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
-import com.mycompany.fys.DbClasses.Airport;
-import com.mycompany.fys.DbClasses.Role;
 import java.io.IOException;
 import java.net.URL;
-import java.util.LinkedList;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -138,15 +135,5 @@ public class AddDamageClaimController extends BaseController {
         lblCost.setText("Repair costs");
         lblBagageNum.setText("Luggagenumber with the damageclaim");
         addClaimButton.setText("Create damageclaim!");
-    }
-    
-    @FXML
-    private void handleHelp(ActionEvent event) throws IOException {
-        Alert alert = new Alert(Alert.AlertType.WARNING);
-        alert.setTitle("Informatie");
-        alert.setHeaderText(null);
-        alert.initStyle(StageStyle.UNDECORATED);
-        alert.setContentText("Deze functie is nog in ontwikkeling!");
-        alert.showAndWait();
     }
 }

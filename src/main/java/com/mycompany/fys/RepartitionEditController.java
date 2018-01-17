@@ -16,7 +16,6 @@ import java.util.LinkedList;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
@@ -180,16 +179,6 @@ public class RepartitionEditController extends BaseController {
     @FXML
     private void handleLogout(ActionEvent event) throws IOException {
         super.swapScene(event, "Login.fxml");
-    }
-
-    @FXML
-    private void handleHelp(ActionEvent event) {
-        Alert alert = new Alert(Alert.AlertType.WARNING);
-        alert.setTitle("Informatie");
-        alert.setHeaderText(null);
-        alert.initStyle(StageStyle.UNDECORATED);
-        alert.setContentText("Deze functie is nog in ontwikkeling!");
-        alert.showAndWait();
     }
 
     @FXML

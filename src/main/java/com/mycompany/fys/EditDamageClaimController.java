@@ -14,7 +14,6 @@ import java.util.LinkedList;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.StageStyle;
@@ -117,15 +116,5 @@ public class EditDamageClaimController extends BaseController {
             super.swapScene(event, "damageOverview.fxml");
             
         }
-    }
-    
-    @FXML
-    private void handleHelp(ActionEvent event) throws IOException {
-        Alert alert = new Alert(Alert.AlertType.WARNING);
-        alert.setTitle("Informatie");
-        alert.setHeaderText(null);
-        alert.initStyle(StageStyle.UNDECORATED);
-        alert.setContentText("Deze functie is nog in ontwikkeling!");
-        alert.showAndWait();
     }
 }

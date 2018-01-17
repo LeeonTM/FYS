@@ -9,8 +9,6 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
-import com.mycompany.fys.DbClasses.Repatriation;
-import com.mycompany.fys.DbClasses.Role;
 import com.mycompany.fys.DbClasses.Status;
 import java.io.IOException;
 import java.net.URL;
@@ -155,15 +153,5 @@ public class RepartitionAddController extends BaseController {
             super.swapScene(event, "Overview.fxml");
 
         }
-    }
-    
-    @FXML
-    private void handleHelp(ActionEvent event) throws IOException {
-        Alert alert = new Alert(Alert.AlertType.WARNING);
-        alert.setTitle("Informatie");
-        alert.setHeaderText(null);
-        alert.initStyle(StageStyle.UNDECORATED);
-        alert.setContentText("Deze functie is nog in ontwikkeling!");
-        alert.showAndWait();
     }
 }

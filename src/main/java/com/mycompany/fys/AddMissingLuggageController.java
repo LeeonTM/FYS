@@ -19,11 +19,7 @@ import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.controls.JFXTimePicker;
 import com.mycompany.fys.DbClasses.Airport;
 import com.mycompany.fys.DbClasses.Status;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Calendar;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -347,15 +343,5 @@ public class AddMissingLuggageController extends BaseController {
         btnAdd.setText("Voeg toe!");
         radioGevonden.setText("Gevonden");
         radioVermist.setText("Vermist");
-    }
-    
-    @FXML
-    private void handleHelp(ActionEvent event) throws IOException {
-        Alert alert = new Alert(Alert.AlertType.WARNING);
-        alert.setTitle("Informatie");
-        alert.setHeaderText(null);
-        alert.initStyle(StageStyle.UNDECORATED);
-        alert.setContentText("Deze functie is nog in ontwikkeling!");
-        alert.showAndWait();
     }
 }

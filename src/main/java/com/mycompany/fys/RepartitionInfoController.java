@@ -154,14 +154,4 @@ public class RepartitionInfoController extends BaseController {
     private void editRepatriation(ActionEvent event) throws IOException {
           super.swapScene(event, "repartitionEdit.fxml");
     }
-    
-    @FXML
-    private void handleHelp(ActionEvent event) throws IOException {
-        Alert alert = new Alert(Alert.AlertType.WARNING);
-        alert.setTitle("Informatie");
-        alert.setHeaderText(null);
-        alert.initStyle(StageStyle.UNDECORATED);
-        alert.setContentText("Deze functie is nog in ontwikkeling!");
-        alert.showAndWait();
-    }
 }

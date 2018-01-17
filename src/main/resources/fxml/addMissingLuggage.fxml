@@ -271,19 +271,6 @@
                   <Image url="@../Images/Corendon.png" />
                </image>
             </ImageView>
-            <JFXButton buttonType="RAISED" onAction="#handleHelp" prefHeight="55.0" prefWidth="178.0" ripplerFill="#971818" style="-fx-background-color: #d81e05;" text="Help" textFill="WHITE" GridPane.columnIndex="2" GridPane.halignment="RIGHT">
-               <font>
-                  <Font name="Arial Bold" size="18.0" />
-               </font>
-            </JFXButton>
-            <ImageView fitHeight="55.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.halignment="RIGHT">
-               <image>
-                  <Image url="@../Icons/HelpIcon.png" />
-               </image>
-               <GridPane.margin>
-                  <Insets right="125.0" />
-               </GridPane.margin>
-            </ImageView>
             <JFXButton fx:id="managerButton" buttonType="RAISED" onAction="#handleManagerOverview" prefHeight="49.0" prefWidth="160.0" ripplerFill="#971818" style="-fx-background-color: #d81e05;" text="Manager" textFill="WHITE" visible="false" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                <font>
                   <Font name="Arial Bold" size="18.0" />

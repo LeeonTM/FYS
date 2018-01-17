@@ -89,14 +89,4 @@ public class LoginController extends BaseController {
         lblPassword.setText("Wachtwoord");
         btnLogin.setText("Inloggen");
     }
-    
-    @FXML
-    private void handleHelp(ActionEvent event) throws IOException {
-        Alert alert = new Alert(Alert.AlertType.WARNING);
-        alert.setTitle("Informatie");
-        alert.setHeaderText(null);
-        alert.initStyle(StageStyle.UNDECORATED);
-        alert.setContentText("Deze functie is nog in ontwikkeling!");
-        alert.showAndWait();
-    }
 }
